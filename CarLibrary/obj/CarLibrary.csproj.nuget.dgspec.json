@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\SPSCC\\CIS 266\\CIS-266-Final\\CarLibrary\\CarLibrary.csproj": {}
+    "C:\\Users\\accol\\Desktop\\CIS266\\CIS266 Final\\CarLibrary\\CarLibrary.csproj": {}
   },
   "projects": {
-    "C:\\SPSCC\\CIS 266\\CIS-266-Final\\CarLibrary\\CarLibrary.csproj": {
+    "C:\\Users\\accol\\Desktop\\CIS266\\CIS266 Final\\CarLibrary\\CarLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SPSCC\\CIS 266\\CIS-266-Final\\CarLibrary\\CarLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\accol\\Desktop\\CIS266\\CIS266 Final\\CarLibrary\\CarLibrary.csproj",
         "projectName": "CarLibrary",
-        "projectPath": "C:\\SPSCC\\CIS 266\\CIS-266-Final\\CarLibrary\\CarLibrary.csproj",
-        "packagesPath": "C:\\Users\\puppy\\.nuget\\packages\\",
-        "outputPath": "C:\\SPSCC\\CIS 266\\CIS-266-Final\\CarLibrary\\obj\\",
+        "projectPath": "C:\\Users\\accol\\Desktop\\CIS266\\CIS266 Final\\CarLibrary\\CarLibrary.csproj",
+        "packagesPath": "C:\\Users\\accol\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\accol\\Desktop\\CIS266\\CIS266 Final\\CarLibrary\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\puppy\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\accol\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CarLibrary;
 
 namespace CarDealership
 {
@@ -30,6 +31,12 @@ namespace CarDealership
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
 
+        }
+
+        private void PutUserRegisterData(User user)
+        {
+            // Grab all of the filled in textboxes for registering the user like username and password
+            // Assign it to the properties of user
         }
     }
 }

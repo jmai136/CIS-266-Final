@@ -70,6 +70,6 @@ namespace CarLibrary
     //  Use Generics <T> for the different cars' classes.
     class CarListed<T>
     {
-        public T? CarSubclass { get; set; }
+        public T CarSubclass { get; set; }
     }
 }

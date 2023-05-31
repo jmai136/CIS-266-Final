@@ -1,0 +1,9 @@
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.csproj.AssemblyReference.cache
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.AssemblyInfoInputs.cache
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.AssemblyInfo.cs
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.csproj.CoreCompileInputs.cache
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\bin\Debug\net48\CarLibrary.dll
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\bin\Debug\net48\CarLibrary.pdb
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.dll
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.pdb

@@ -10,7 +10,8 @@ namespace CarLibrary
     {
         public override int id { get; set; }
         public override int userId { get; set; }
-        public override Mercedes make { get; set; }
+        // Use .GetType().Name
+        public override Mercedes make { get; }
         public override string model { get; set; }
         public override string color { get; set; }
         public override float age { get; set; }

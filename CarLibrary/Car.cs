@@ -28,7 +28,7 @@ namespace CarLibrary
 
         public abstract int id { get; set; }
         public abstract int userId { get; set; }
-        public abstract T make { get; set; }
+        public abstract T make { get; }
         public abstract string model {get; set;}
         public abstract string color {get; set; }
         public abstract float age { get; set;}
@@ -49,5 +49,10 @@ namespace CarLibrary
          */
 
         public abstract string[] features { get; set;}
+    }
+
+    public interface ICar
+    {
+        // Declare some functions here, related to features?
     }
 }

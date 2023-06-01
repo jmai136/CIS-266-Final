@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [GroupFinal266]    Script Date: 5/30/2023 10:37:21 AM ******/
+/****** Object:  Database [GroupFinal266]    Script Date: 6/1/2023 2:54:26 PM ******/
 CREATE DATABASE [GroupFinal266]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,7 @@ ALTER DATABASE [GroupFinal266] SET QUERY_STORE = OFF
 GO
 USE [GroupFinal266]
 GO
-/****** Object:  Table [dbo].[Buyers]    Script Date: 5/30/2023 10:37:21 AM ******/
+/****** Object:  Table [dbo].[Buyers]    Script Date: 6/1/2023 2:54:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -96,7 +96,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cars]    Script Date: 5/30/2023 10:37:21 AM ******/
+/****** Object:  Table [dbo].[Cars]    Script Date: 6/1/2023 2:54:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,7 +115,20 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Listing]    Script Date: 5/30/2023 10:37:21 AM ******/
+/****** Object:  Table [dbo].[Comments]    Script Date: 6/1/2023 2:54:26 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Comments](
+	[CommentText] [varchar](256) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CommentText] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Listing]    Script Date: 6/1/2023 2:54:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -124,13 +137,15 @@ CREATE TABLE [dbo].[Listing](
 	[ListingID] [int] NOT NULL,
 	[SellerID] [int] NOT NULL,
 	[CarVIN] [varchar](50) NOT NULL,
+	[CommentText] [varchar](256) NULL,
+	[Description] [varchar](500) NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[ListingID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sellers]    Script Date: 5/30/2023 10:37:21 AM ******/
+/****** Object:  Table [dbo].[Sellers]    Script Date: 6/1/2023 2:54:26 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -148,6 +163,11 @@ ALTER TABLE [dbo].[Listing]  WITH CHECK ADD  CONSTRAINT [FK_Listing_Cars] FOREIG
 REFERENCES [dbo].[Cars] ([CarVIN])
 GO
 ALTER TABLE [dbo].[Listing] CHECK CONSTRAINT [FK_Listing_Cars]
+GO
+ALTER TABLE [dbo].[Listing]  WITH CHECK ADD  CONSTRAINT [FK_Listing_Comments] FOREIGN KEY([CommentText])
+REFERENCES [dbo].[Comments] ([CommentText])
+GO
+ALTER TABLE [dbo].[Listing] CHECK CONSTRAINT [FK_Listing_Comments]
 GO
 ALTER TABLE [dbo].[Listing]  WITH CHECK ADD  CONSTRAINT [FK_Listing_Sellers] FOREIGN KEY([SellerID])
 REFERENCES [dbo].[Sellers] ([SellerID])

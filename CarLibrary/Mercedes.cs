@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CarLibrary
 {
-    public class Mercedes : Car
+    public class Mercedes : Car<Mercedes>
     {
         public override int id { get; set; }
         public override int userId { get; set; }
-        public override string make { get; set; } = "Mercedes";
+        public override Mercedes make { get; set; }
         public override string model { get; set; }
         public override string color { get; set; }
         public override float age { get; set; }

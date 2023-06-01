@@ -67,11 +67,4 @@ namespace CarLibrary
 
         }
     }
-
-    //  Use Generics <T> for the different cars' classes.
-    // Use interface for all subclasses of cars?
-    class CarListed<T>
-    {
-        public T CarSubclass { get; set; }
-    }
 }

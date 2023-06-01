@@ -9,7 +9,8 @@ namespace CarLibrary
     public class Listing
     {
         // should have the properties for Car and the DateTime of the creation of the listing
-        DateTime carCreationTime { get; }
+        Car make { get; set; }
+        DateTime carCreationTime { get; set; }
 
         /*
          * Change the code so you use Interfaces instead.
@@ -68,6 +69,7 @@ namespace CarLibrary
     }
 
     //  Use Generics <T> for the different cars' classes.
+    // Use interface for all subclasses of cars?
     class CarListed<T>
     {
         public T CarSubclass { get; set; }

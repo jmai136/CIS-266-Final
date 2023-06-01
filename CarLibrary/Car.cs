@@ -2,7 +2,8 @@
 
 namespace CarLibrary
 {
-    abstract class Car
+    // Car is the make property
+    public abstract class Car
     {
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract
         // The Car class should have all the common properties: make, model, color, age, and price.
@@ -23,14 +24,14 @@ namespace CarLibrary
          * including a property declaration that uses the override modifier.
          */
 
-        protected abstract int id { get; set; }
-        protected abstract int userId { get; set; }
-        protected abstract string make { get; set; }
-        protected abstract string model {get; set;}
-        protected abstract string color {get; set; }
-        protected abstract float age { get; set;}
-        protected abstract decimal price { get; set;}
-        protected abstract float miles { get; set; }
+        public abstract int id { get; set; }
+        public abstract int userId { get; set; }
+        public abstract string make { get; set; }
+        public abstract string model {get; set;}
+        public abstract string color {get; set; }
+        public abstract float age { get; set;}
+        public abstract decimal price { get; set;}
+        public abstract float miles { get; set; }
 
         /*
          * In addition, the subclasses should have one or more other-features as properties.
@@ -45,6 +46,6 @@ namespace CarLibrary
          * 
          */
 
-        protected abstract string[] features { get; set;}
+        public abstract string[] features { get; set;}
     }
 }

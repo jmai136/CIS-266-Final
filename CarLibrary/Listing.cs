@@ -9,7 +9,7 @@ namespace CarLibrary
     public class Listing
     {
         // should have the properties for Car and the DateTime of the creation of the listing
-        Car make { get; set; }
+        // Grab subclass of car?
         DateTime carCreationTime { get; set; }
 
         /*
@@ -66,5 +66,9 @@ namespace CarLibrary
         {
 
         }
+    }
+
+    public interface IListing
+    {
     }
 }

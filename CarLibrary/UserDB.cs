@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Data.SqlClient;
 using System.Numerics;
 using System.Xml.Linq;
+using System.Data;
 
 namespace CarLibrary
 {
@@ -21,18 +22,23 @@ namespace CarLibrary
         // https://stackoverflow.com/questions/18114458/fastest-way-to-determine-if-record-exists
         // If exists for SQL query
 
-        // NOTE: THESE FUNCTIONS ARE PROBABLY GOING TO BE MOVED TO A DIFFERENT CLASS
-        // OR THIS CLASS WILL BE RENAMED TO USERDB
-        // AS USER SHOULD HOLD PROPERTIES, NOT NECESSARILY VALIDATE
-
-        public static int RegisterUser(User user)
+        public static void RegisterUser(User user)
         {
             // Replace with the user id, this is going to be necessary for the cars
             try
             {
-                return 0;
+                string hashPassword = "";
+
+                if (user.password != "")
+                    hashPassword = HashPassword(user.password);
+
+                // Store the hashed password in the query by adding it
             }
             catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (DataException ex)
             {
                 throw ex;
             }
@@ -42,7 +48,7 @@ namespace CarLibrary
             }
         }
 
-        public static string EncryptPassword(string password)
+        public static string HashPassword(string password)
         {
             // https://www.c-sharpcorner.com/article/compute-sha256-hash-in-c-sharp/
             // Create a SHA256   

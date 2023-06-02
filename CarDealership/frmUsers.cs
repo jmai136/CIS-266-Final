@@ -35,8 +35,9 @@ namespace CarDealership
 
         private void PutUserRegisterData(User user)
         {
-            // Grab all of the filled in textboxes for registering the user like username and password
+            // Grab all of the filled in textboxes for registering the user like first name, last name, email address, password
             // Assign it to the properties of user
+            // Then pass this in to UserDB and have UserDB handle the data.
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -57,6 +58,10 @@ namespace CarDealership
                 }
 
                 // Insert query here
+
+                // Because hashes are deterministic, two same passwords will always share the same hash
+                // So grab the password that you inputted, call HashPassword, pass that in, then check to see
+                // If the hashed password stored in the query matches the hashed password you inputted
             }
             catch (Exception ex)
             {

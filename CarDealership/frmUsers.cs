@@ -44,8 +44,11 @@ namespace CarDealership
             //https://www.w3schools.blog/loop-over-object-properties-c
             // If one is empty then bAllDataIsFilled is false and just return that.
             foreach (var property in user.GetType().GetProperties())
-                if (property.GetValue(user) == null || property.GetValue(user).ToString() == "")
+                if (property.GetValue(user) == null || property.GetValue(user).ToString() == "") {
+                    MessageBox.Show("Please input a " + property.Name, property.Name.ToUpper() + " not found");
                     bAllDataIsFilled = false;
+                    return bAllDataIsFilled;
+                }
 
             return bAllDataIsFilled;
 

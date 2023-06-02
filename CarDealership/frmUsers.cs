@@ -41,7 +41,27 @@ namespace CarDealership
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            // Put in validation here to see if it exists in the SQL database
+            try
+            {
+                if (buyerUserNameTextBox.Text == "")
+                {
+                    MessageBox.Show("Please input a username", "Username not found");
+                    return;
+                }
 
+                if (txtPassword.Text == "")
+                {
+                    MessageBox.Show("Please input a password", "Password not found");
+                    return;
+                }
+
+                // Insert query here
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
         }
     }
 }

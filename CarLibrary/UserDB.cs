@@ -42,45 +42,6 @@ namespace CarLibrary
             }
         }
 
-        // OR put these two into one 
-        public static User VerifyLoginUser(string username, string password, out string msgText, out string msgCaption)
-        {
-            // Temporary
-            User user = new User();
-
-            // Put in validation here to see if it exists in the SQL database
-            try
-            {
-                if (username == null)
-                {
-                    msgText = "Please input a username";
-                    msgCaption = "Username not found";
-
-                    return user;
-                }
-
-                if (password == null)
-                {
-                    msgText = "Please input a password";
-                    msgCaption = "Password not found";
-
-                    return user;
-                }
-
-                // Insert query here
-            }
-            catch (Exception ex)
-            {
-                msgText = ex.Message;
-                msgCaption = ex.GetType().ToString();
-            }
-
-            msgText = "";
-            msgCaption = "";
-
-            return user;
-        }
-
         public static string EncryptPassword(string password)
         {
             // https://www.c-sharpcorner.com/article/compute-sha256-hash-in-c-sharp/

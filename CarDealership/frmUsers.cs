@@ -33,11 +33,23 @@ namespace CarDealership
 
         }
 
-        private void PutUserRegisterData(User user)
+        private bool PutUserRegisterData(User user)
         {
             // Grab all of the filled in textboxes for registering the user like first name, last name, email address, password
             // Assign it to the properties of user
-            // Then pass this in to UserDB and have UserDB handle the data.
+
+            bool bAllDataIsFilled = true;
+
+            // Loop through all the properties to make sure none of them are empty.
+            //https://www.w3schools.blog/loop-over-object-properties-c
+            // If one is empty then bAllDataIsFilled is false and just return that.
+            foreach (var property in user.GetType().GetProperties())
+                if (property.GetValue(user) == null || property.GetValue(user).ToString() == "")
+                    bAllDataIsFilled = false;
+
+            return bAllDataIsFilled;
+
+            // Then pass User in to UserDB and have UserDB handle the data if registered data is true.
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

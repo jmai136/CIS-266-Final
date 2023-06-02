@@ -32,7 +32,7 @@ namespace CarDealership {
         
         private SellersDataTable tableSellers;
         
-        private UsersDataTable tableUsers;
+        private CommentsDataTable tableComments;
         
         private global::System.Data.DataRelation relationFK_Listing_Cars;
         
@@ -80,8 +80,8 @@ namespace CarDealership {
                 if ((ds.Tables["Sellers"] != null)) {
                     base.Tables.Add(new SellersDataTable(ds.Tables["Sellers"]));
                 }
-                if ((ds.Tables["Users"] != null)) {
-                    base.Tables.Add(new UsersDataTable(ds.Tables["Users"]));
+                if ((ds.Tables["Comments"] != null)) {
+                    base.Tables.Add(new CommentsDataTable(ds.Tables["Comments"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -145,9 +145,9 @@ namespace CarDealership {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public UsersDataTable Users {
+        public CommentsDataTable Comments {
             get {
-                return this.tableUsers;
+                return this.tableComments;
             }
         }
         
@@ -230,8 +230,8 @@ namespace CarDealership {
                 if ((ds.Tables["Sellers"] != null)) {
                     base.Tables.Add(new SellersDataTable(ds.Tables["Sellers"]));
                 }
-                if ((ds.Tables["Users"] != null)) {
-                    base.Tables.Add(new UsersDataTable(ds.Tables["Users"]));
+                if ((ds.Tables["Comments"] != null)) {
+                    base.Tables.Add(new CommentsDataTable(ds.Tables["Comments"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -290,10 +290,10 @@ namespace CarDealership {
                     this.tableSellers.InitVars();
                 }
             }
-            this.tableUsers = ((UsersDataTable)(base.Tables["Users"]));
+            this.tableComments = ((CommentsDataTable)(base.Tables["Comments"]));
             if ((initTable == true)) {
-                if ((this.tableUsers != null)) {
-                    this.tableUsers.InitVars();
+                if ((this.tableComments != null)) {
+                    this.tableComments.InitVars();
                 }
             }
             this.relationFK_Listing_Cars = this.Relations["FK_Listing_Cars"];
@@ -317,8 +317,8 @@ namespace CarDealership {
             base.Tables.Add(this.tableListing);
             this.tableSellers = new SellersDataTable();
             base.Tables.Add(this.tableSellers);
-            this.tableUsers = new UsersDataTable();
-            base.Tables.Add(this.tableUsers);
+            this.tableComments = new CommentsDataTable();
+            base.Tables.Add(this.tableComments);
             this.relationFK_Listing_Cars = new global::System.Data.DataRelation("FK_Listing_Cars", new global::System.Data.DataColumn[] {
                         this.tableCars.CarVINColumn}, new global::System.Data.DataColumn[] {
                         this.tableListing.CarVINColumn}, false);
@@ -359,7 +359,7 @@ namespace CarDealership {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        private bool ShouldSerializeUsers() {
+        private bool ShouldSerializeComments() {
             return false;
         }
         
@@ -431,7 +431,7 @@ namespace CarDealership {
         public delegate void SellersRowChangeEventHandler(object sender, SellersRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public delegate void UsersRowChangeEventHandler(object sender, UsersRowChangeEvent e);
+        public delegate void CommentsRowChangeEventHandler(object sender, CommentsRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -1104,6 +1104,10 @@ namespace CarDealership {
             
             private global::System.Data.DataColumn columnCarVIN;
             
+            private global::System.Data.DataColumn columnCommentText;
+            
+            private global::System.Data.DataColumn columnDescription;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public ListingDataTable() {
@@ -1163,6 +1167,22 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn CommentTextColumn {
+                get {
+                    return this.columnCommentText;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1198,12 +1218,14 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ListingRow AddListingRow(int ListingID, SellersRow parentSellersRowByFK_Listing_Sellers, CarsRow parentCarsRowByFK_Listing_Cars) {
+            public ListingRow AddListingRow(int ListingID, SellersRow parentSellersRowByFK_Listing_Sellers, CarsRow parentCarsRowByFK_Listing_Cars, string CommentText, string Description) {
                 ListingRow rowListingRow = ((ListingRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ListingID,
                         null,
-                        null};
+                        null,
+                        CommentText,
+                        Description};
                 if ((parentSellersRowByFK_Listing_Sellers != null)) {
                     columnValuesArray[1] = parentSellersRowByFK_Listing_Sellers[0];
                 }
@@ -1242,6 +1264,8 @@ namespace CarDealership {
                 this.columnListingID = base.Columns["ListingID"];
                 this.columnSellerID = base.Columns["SellerID"];
                 this.columnCarVIN = base.Columns["CarVIN"];
+                this.columnCommentText = base.Columns["CommentText"];
+                this.columnDescription = base.Columns["Description"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1253,6 +1277,10 @@ namespace CarDealership {
                 base.Columns.Add(this.columnSellerID);
                 this.columnCarVIN = new global::System.Data.DataColumn("CarVIN", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCarVIN);
+                this.columnCommentText = new global::System.Data.DataColumn("CommentText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCommentText);
+                this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDescription);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnListingID}, true));
                 this.columnListingID.AllowDBNull = false;
@@ -1260,6 +1288,8 @@ namespace CarDealership {
                 this.columnSellerID.AllowDBNull = false;
                 this.columnCarVIN.AllowDBNull = false;
                 this.columnCarVIN.MaxLength = 50;
+                this.columnCommentText.MaxLength = 256;
+                this.columnDescription.MaxLength = 500;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1668,20 +1698,14 @@ namespace CarDealership {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class UsersDataTable : global::System.Data.TypedTableBase<UsersRow> {
+        public partial class CommentsDataTable : global::System.Data.TypedTableBase<CommentsRow> {
             
-            private global::System.Data.DataColumn columnUserID;
-            
-            private global::System.Data.DataColumn columnEmailAddress;
-            
-            private global::System.Data.DataColumn columnFirstName;
-            
-            private global::System.Data.DataColumn columnLastName;
+            private global::System.Data.DataColumn columnCommentText;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public UsersDataTable() {
-                this.TableName = "Users";
+            public CommentsDataTable() {
+                this.TableName = "Comments";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -1689,7 +1713,7 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal UsersDataTable(global::System.Data.DataTable table) {
+            internal CommentsDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -1706,40 +1730,16 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            protected UsersDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected CommentsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn UserIDColumn {
+            public global::System.Data.DataColumn CommentTextColumn {
                 get {
-                    return this.columnUserID;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn EmailAddressColumn {
-                get {
-                    return this.columnEmailAddress;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn FirstNameColumn {
-                get {
-                    return this.columnFirstName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn LastNameColumn {
-                get {
-                    return this.columnLastName;
+                    return this.columnCommentText;
                 }
             }
             
@@ -1754,55 +1754,52 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public UsersRow this[int index] {
+            public CommentsRow this[int index] {
                 get {
-                    return ((UsersRow)(this.Rows[index]));
+                    return ((CommentsRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event UsersRowChangeEventHandler UsersRowChanging;
+            public event CommentsRowChangeEventHandler CommentsRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event UsersRowChangeEventHandler UsersRowChanged;
+            public event CommentsRowChangeEventHandler CommentsRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event UsersRowChangeEventHandler UsersRowDeleting;
+            public event CommentsRowChangeEventHandler CommentsRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public event UsersRowChangeEventHandler UsersRowDeleted;
+            public event CommentsRowChangeEventHandler CommentsRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void AddUsersRow(UsersRow row) {
+            public void AddCommentsRow(CommentsRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public UsersRow AddUsersRow(int UserID, string EmailAddress, string FirstName, string LastName) {
-                UsersRow rowUsersRow = ((UsersRow)(this.NewRow()));
+            public CommentsRow AddCommentsRow(string CommentText) {
+                CommentsRow rowCommentsRow = ((CommentsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        UserID,
-                        EmailAddress,
-                        FirstName,
-                        LastName};
-                rowUsersRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowUsersRow);
-                return rowUsersRow;
+                        CommentText};
+                rowCommentsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowCommentsRow);
+                return rowCommentsRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public UsersRow FindByUserID(int UserID) {
-                return ((UsersRow)(this.Rows.Find(new object[] {
-                            UserID})));
+            public CommentsRow FindByCommentText(string CommentText) {
+                return ((CommentsRow)(this.Rows.Find(new object[] {
+                            CommentText})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                UsersDataTable cln = ((UsersDataTable)(base.Clone()));
+                CommentsDataTable cln = ((CommentsDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -1810,63 +1807,51 @@ namespace CarDealership {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new UsersDataTable();
+                return new CommentsDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             internal void InitVars() {
-                this.columnUserID = base.Columns["UserID"];
-                this.columnEmailAddress = base.Columns["EmailAddress"];
-                this.columnFirstName = base.Columns["FirstName"];
-                this.columnLastName = base.Columns["LastName"];
+                this.columnCommentText = base.Columns["CommentText"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             private void InitClass() {
-                this.columnUserID = new global::System.Data.DataColumn("UserID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnUserID);
-                this.columnEmailAddress = new global::System.Data.DataColumn("EmailAddress", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmailAddress);
-                this.columnFirstName = new global::System.Data.DataColumn("FirstName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFirstName);
-                this.columnLastName = new global::System.Data.DataColumn("LastName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLastName);
+                this.columnCommentText = new global::System.Data.DataColumn("CommentText", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCommentText);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnUserID}, true));
-                this.columnUserID.AllowDBNull = false;
-                this.columnUserID.Unique = true;
-                this.columnEmailAddress.MaxLength = 100;
-                this.columnFirstName.MaxLength = 45;
-                this.columnLastName.AllowDBNull = false;
-                this.columnLastName.MaxLength = 45;
+                                this.columnCommentText}, true));
+                this.columnCommentText.AllowDBNull = false;
+                this.columnCommentText.Unique = true;
+                this.columnCommentText.MaxLength = 256;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public UsersRow NewUsersRow() {
-                return ((UsersRow)(this.NewRow()));
+            public CommentsRow NewCommentsRow() {
+                return ((CommentsRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new UsersRow(builder);
+                return new CommentsRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(UsersRow);
+                return typeof(CommentsRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.UsersRowChanged != null)) {
-                    this.UsersRowChanged(this, new UsersRowChangeEvent(((UsersRow)(e.Row)), e.Action));
+                if ((this.CommentsRowChanged != null)) {
+                    this.CommentsRowChanged(this, new CommentsRowChangeEvent(((CommentsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1874,8 +1859,8 @@ namespace CarDealership {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.UsersRowChanging != null)) {
-                    this.UsersRowChanging(this, new UsersRowChangeEvent(((UsersRow)(e.Row)), e.Action));
+                if ((this.CommentsRowChanging != null)) {
+                    this.CommentsRowChanging(this, new CommentsRowChangeEvent(((CommentsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1883,8 +1868,8 @@ namespace CarDealership {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.UsersRowDeleted != null)) {
-                    this.UsersRowDeleted(this, new UsersRowChangeEvent(((UsersRow)(e.Row)), e.Action));
+                if ((this.CommentsRowDeleted != null)) {
+                    this.CommentsRowDeleted(this, new CommentsRowChangeEvent(((CommentsRow)(e.Row)), e.Action));
                 }
             }
             
@@ -1892,14 +1877,14 @@ namespace CarDealership {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.UsersRowDeleting != null)) {
-                    this.UsersRowDeleting(this, new UsersRowChangeEvent(((UsersRow)(e.Row)), e.Action));
+                if ((this.CommentsRowDeleting != null)) {
+                    this.CommentsRowDeleting(this, new CommentsRowChangeEvent(((CommentsRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void RemoveUsersRow(UsersRow row) {
+            public void RemoveCommentsRow(CommentsRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -1926,7 +1911,7 @@ namespace CarDealership {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "UsersDataTable";
+                attribute2.FixedValue = "CommentsDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -2189,6 +2174,38 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string CommentText {
+                get {
+                    try {
+                        return ((string)(this[this.tableListing.CommentTextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CommentText\' in table \'Listing\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableListing.CommentTextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Description {
+                get {
+                    try {
+                        return ((string)(this[this.tableListing.DescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Description\' in table \'Listing\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableListing.DescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public CarsRow CarsRow {
                 get {
                     return ((CarsRow)(this.GetParentRow(this.Table.ParentRelations["FK_Listing_Cars"])));
@@ -2207,6 +2224,30 @@ namespace CarDealership {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Listing_Sellers"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsCommentTextNull() {
+                return this.IsNull(this.tableListing.CommentTextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetCommentTextNull() {
+                this[this.tableListing.CommentTextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsDescriptionNull() {
+                return this.IsNull(this.tableListing.DescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetDescriptionNull() {
+                this[this.tableListing.DescriptionColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2272,93 +2313,26 @@ namespace CarDealership {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class UsersRow : global::System.Data.DataRow {
+        public partial class CommentsRow : global::System.Data.DataRow {
             
-            private UsersDataTable tableUsers;
+            private CommentsDataTable tableComments;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            internal UsersRow(global::System.Data.DataRowBuilder rb) : 
+            internal CommentsRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableUsers = ((UsersDataTable)(this.Table));
+                this.tableComments = ((CommentsDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int UserID {
+            public string CommentText {
                 get {
-                    return ((int)(this[this.tableUsers.UserIDColumn]));
+                    return ((string)(this[this.tableComments.CommentTextColumn]));
                 }
                 set {
-                    this[this.tableUsers.UserIDColumn] = value;
+                    this[this.tableComments.CommentTextColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string EmailAddress {
-                get {
-                    try {
-                        return ((string)(this[this.tableUsers.EmailAddressColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'EmailAddress\' in table \'Users\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableUsers.EmailAddressColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string FirstName {
-                get {
-                    try {
-                        return ((string)(this[this.tableUsers.FirstNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FirstName\' in table \'Users\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableUsers.FirstNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string LastName {
-                get {
-                    return ((string)(this[this.tableUsers.LastNameColumn]));
-                }
-                set {
-                    this[this.tableUsers.LastNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsEmailAddressNull() {
-                return this.IsNull(this.tableUsers.EmailAddressColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetEmailAddressNull() {
-                this[this.tableUsers.EmailAddressColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsFirstNameNull() {
-                return this.IsNull(this.tableUsers.FirstNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetFirstNameNull() {
-                this[this.tableUsers.FirstNameColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2502,22 +2476,22 @@ namespace CarDealership {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public class UsersRowChangeEvent : global::System.EventArgs {
+        public class CommentsRowChangeEvent : global::System.EventArgs {
             
-            private UsersRow eventRow;
+            private CommentsRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public UsersRowChangeEvent(UsersRow row, global::System.Data.DataRowAction action) {
+            public CommentsRowChangeEvent(CommentsRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public UsersRow Row {
+            public CommentsRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3463,35 +3437,47 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
             tableMapping.ColumnMappings.Add("ListingID", "ListingID");
             tableMapping.ColumnMappings.Add("SellerID", "SellerID");
             tableMapping.ColumnMappings.Add("CarVIN", "CarVIN");
+            tableMapping.ColumnMappings.Add("CommentText", "CommentText");
+            tableMapping.ColumnMappings.Add("Description", "Description");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Listing] WHERE (([ListingID] = @Original_ListingID) AND ([Sell" +
-                "erID] = @Original_SellerID) AND ([CarVIN] = @Original_CarVIN))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Listing] WHERE (([ListingID] = @Original_ListingID) AND ([SellerID] = @Original_SellerID) AND ([CarVIN] = @Original_CarVIN) AND ((@IsNull_CommentText = 1 AND [CommentText] IS NULL) OR ([CommentText] = @Original_CommentText)) AND ((@IsNull_Description = 1 AND [Description] IS NULL) OR ([Description] = @Original_Description)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ListingID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ListingID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SellerID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellerID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_CommentText", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Description", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Listing] ([ListingID], [SellerID], [CarVIN]) VALUES (@ListingI" +
-                "D, @SellerID, @CarVIN);\r\nSELECT ListingID, SellerID, CarVIN FROM Listing WHERE (" +
-                "ListingID = @ListingID)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Listing] ([ListingID], [SellerID], [CarVIN], [CommentText], [Description]) VALUES (@ListingID, @SellerID, @CarVIN, @CommentText, @Description);
+SELECT ListingID, SellerID, CarVIN, CommentText, Description FROM Listing WHERE (ListingID = @ListingID)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ListingID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ListingID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SellerID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellerID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Listing] SET [ListingID] = @ListingID, [SellerID] = @SellerID, [CarVIN] = @CarVIN WHERE (([ListingID] = @Original_ListingID) AND ([SellerID] = @Original_SellerID) AND ([CarVIN] = @Original_CarVIN));
-SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Listing] SET [ListingID] = @ListingID, [SellerID] = @SellerID, [CarVIN] = @CarVIN, [CommentText] = @CommentText, [Description] = @Description WHERE (([ListingID] = @Original_ListingID) AND ([SellerID] = @Original_SellerID) AND ([CarVIN] = @Original_CarVIN) AND ((@IsNull_CommentText = 1 AND [CommentText] IS NULL) OR ([CommentText] = @Original_CommentText)) AND ((@IsNull_Description = 1 AND [Description] IS NULL) OR ([Description] = @Original_Description)));
+SELECT ListingID, SellerID, CarVIN, CommentText, Description FROM Listing WHERE (ListingID = @ListingID)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ListingID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ListingID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SellerID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellerID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ListingID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ListingID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SellerID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellerID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_CommentText", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Description", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3507,7 +3493,7 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT ListingID, SellerID, CarVIN FROM dbo.Listing";
+            this._commandCollection[0].CommandText = "SELECT ListingID, SellerID, CarVIN, CommentText, Description FROM Listing";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3568,7 +3554,7 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_ListingID, int Original_SellerID, string Original_CarVIN) {
+        public virtual int Delete(int Original_ListingID, int Original_SellerID, string Original_CarVIN, string Original_CommentText, string Original_Description) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_ListingID));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_SellerID));
             if ((Original_CarVIN == null)) {
@@ -3576,6 +3562,22 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_CarVIN));
+            }
+            if ((Original_CommentText == null)) {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_CommentText));
+            }
+            if ((Original_Description == null)) {
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((string)(Original_Description));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3597,7 +3599,7 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int ListingID, int SellerID, string CarVIN) {
+        public virtual int Insert(int ListingID, int SellerID, string CarVIN, string CommentText, string Description) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(ListingID));
             this.Adapter.InsertCommand.Parameters[1].Value = ((int)(SellerID));
             if ((CarVIN == null)) {
@@ -3605,6 +3607,18 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
             }
             else {
                 this.Adapter.InsertCommand.Parameters[2].Value = ((string)(CarVIN));
+            }
+            if ((CommentText == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(CommentText));
+            }
+            if ((Description == null)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Description));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3626,7 +3640,7 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int ListingID, int SellerID, string CarVIN, int Original_ListingID, int Original_SellerID, string Original_CarVIN) {
+        public virtual int Update(int ListingID, int SellerID, string CarVIN, string CommentText, string Description, int Original_ListingID, int Original_SellerID, string Original_CarVIN, string Original_CommentText, string Original_Description) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(ListingID));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(SellerID));
             if ((CarVIN == null)) {
@@ -3635,13 +3649,41 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
             else {
                 this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(CarVIN));
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_ListingID));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_SellerID));
+            if ((CommentText == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(CommentText));
+            }
+            if ((Description == null)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Description));
+            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_ListingID));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_SellerID));
             if ((Original_CarVIN == null)) {
                 throw new global::System.ArgumentNullException("Original_CarVIN");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_CarVIN));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_CarVIN));
+            }
+            if ((Original_CommentText == null)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_CommentText));
+            }
+            if ((Original_Description == null)) {
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_Description));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -3663,8 +3705,8 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int SellerID, string CarVIN, int Original_ListingID, int Original_SellerID, string Original_CarVIN) {
-            return this.Update(Original_ListingID, SellerID, CarVIN, Original_ListingID, Original_SellerID, Original_CarVIN);
+        public virtual int Update(int SellerID, string CarVIN, string CommentText, string Description, int Original_ListingID, int Original_SellerID, string Original_CarVIN, string Original_CommentText, string Original_Description) {
+            return this.Update(Original_ListingID, SellerID, CarVIN, CommentText, Description, Original_ListingID, Original_SellerID, Original_CarVIN, Original_CommentText, Original_Description);
         }
     }
     
@@ -3997,7 +4039,7 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class UsersTableAdapter : global::System.ComponentModel.Component {
+    public partial class CommentsTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -4011,7 +4053,7 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-        public UsersTableAdapter() {
+        public CommentsTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -4108,47 +4150,28 @@ SELECT ListingID, SellerID, CarVIN FROM Listing WHERE (ListingID = @ListingID)";
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Users";
-            tableMapping.ColumnMappings.Add("UserID", "UserID");
-            tableMapping.ColumnMappings.Add("EmailAddress", "EmailAddress");
-            tableMapping.ColumnMappings.Add("FirstName", "FirstName");
-            tableMapping.ColumnMappings.Add("LastName", "LastName");
+            tableMapping.DataSetTable = "Comments";
+            tableMapping.ColumnMappings.Add("CommentText", "CommentText");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Users] WHERE (([UserID] = @Original_UserID) AND ((@IsNull_EmailAddress = 1 AND [EmailAddress] IS NULL) OR ([EmailAddress] = @Original_EmailAddress)) AND ((@IsNull_FirstName = 1 AND [FirstName] IS NULL) OR ([FirstName] = @Original_FirstName)) AND ([LastName] = @Original_LastName))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Comments] WHERE (([CommentText] = @Original_CommentText))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EmailAddress", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailAddress", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EmailAddress", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailAddress", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_FirstName", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_FirstName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LastName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Users] ([UserID], [EmailAddress], [FirstName], [LastName]) VAL" +
-                "UES (@UserID, @EmailAddress, @FirstName, @LastName);\r\nSELECT UserID, EmailAddres" +
-                "s, FirstName, LastName FROM Users WHERE (UserID = @UserID)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Comments] ([CommentText]) VALUES (@CommentText);\r\nSELECT Comme" +
+                "ntText FROM Comments WHERE (CommentText = @CommentText)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EmailAddress", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailAddress", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FirstName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Users] SET [UserID] = @UserID, [EmailAddress] = @EmailAddress, [FirstName] = @FirstName, [LastName] = @LastName WHERE (([UserID] = @Original_UserID) AND ((@IsNull_EmailAddress = 1 AND [EmailAddress] IS NULL) OR ([EmailAddress] = @Original_EmailAddress)) AND ((@IsNull_FirstName = 1 AND [FirstName] IS NULL) OR ([FirstName] = @Original_FirstName)) AND ([LastName] = @Original_LastName));
-SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @UserID)";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Comments] SET [CommentText] = @CommentText WHERE (([CommentText] = " +
+                "@Original_CommentText));\r\nSELECT CommentText FROM Comments WHERE (CommentText = " +
+                "@CommentText)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EmailAddress", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailAddress", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FirstName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EmailAddress", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailAddress", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EmailAddress", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailAddress", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_FirstName", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_FirstName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LastName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CommentText", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CommentText", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4164,7 +4187,7 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT UserID, EmailAddress, FirstName, LastName FROM dbo.Users";
+            this._commandCollection[0].CommandText = "SELECT CommentText FROM dbo.Comments";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4172,7 +4195,7 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(GroupFinal266DataSet.UsersDataTable dataTable) {
+        public virtual int Fill(GroupFinal266DataSet.CommentsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -4185,9 +4208,9 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual GroupFinal266DataSet.UsersDataTable GetData() {
+        public virtual GroupFinal266DataSet.CommentsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            GroupFinal266DataSet.UsersDataTable dataTable = new GroupFinal266DataSet.UsersDataTable();
+            GroupFinal266DataSet.CommentsDataTable dataTable = new GroupFinal266DataSet.CommentsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -4195,7 +4218,7 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(GroupFinal266DataSet.UsersDataTable dataTable) {
+        public virtual int Update(GroupFinal266DataSet.CommentsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
@@ -4203,7 +4226,7 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(GroupFinal266DataSet dataSet) {
-            return this.Adapter.Update(dataSet, "Users");
+            return this.Adapter.Update(dataSet, "Comments");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4225,29 +4248,12 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_UserID, string Original_EmailAddress, string Original_FirstName, string Original_LastName) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_UserID));
-            if ((Original_EmailAddress == null)) {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
+        public virtual int Delete(string Original_CommentText) {
+            if ((Original_CommentText == null)) {
+                throw new global::System.ArgumentNullException("Original_CommentText");
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_EmailAddress));
-            }
-            if ((Original_FirstName == null)) {
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_FirstName));
-            }
-            if ((Original_LastName == null)) {
-                throw new global::System.ArgumentNullException("Original_LastName");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_LastName));
+                this.Adapter.DeleteCommand.Parameters[0].Value = ((string)(Original_CommentText));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -4269,25 +4275,12 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int UserID, string EmailAddress, string FirstName, string LastName) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(UserID));
-            if ((EmailAddress == null)) {
-                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
+        public virtual int Insert(string CommentText) {
+            if ((CommentText == null)) {
+                throw new global::System.ArgumentNullException("CommentText");
             }
             else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(EmailAddress));
-            }
-            if ((FirstName == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(FirstName));
-            }
-            if ((LastName == null)) {
-                throw new global::System.ArgumentNullException("LastName");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(LastName));
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(CommentText));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -4309,48 +4302,18 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int UserID, string EmailAddress, string FirstName, string LastName, int Original_UserID, string Original_EmailAddress, string Original_FirstName, string Original_LastName) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(UserID));
-            if ((EmailAddress == null)) {
-                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
+        public virtual int Update(string CommentText, string Original_CommentText) {
+            if ((CommentText == null)) {
+                throw new global::System.ArgumentNullException("CommentText");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(EmailAddress));
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(CommentText));
             }
-            if ((FirstName == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(FirstName));
-            }
-            if ((LastName == null)) {
-                throw new global::System.ArgumentNullException("LastName");
+            if ((Original_CommentText == null)) {
+                throw new global::System.ArgumentNullException("Original_CommentText");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(LastName));
-            }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_UserID));
-            if ((Original_EmailAddress == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_EmailAddress));
-            }
-            if ((Original_FirstName == null)) {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_FirstName));
-            }
-            if ((Original_LastName == null)) {
-                throw new global::System.ArgumentNullException("Original_LastName");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_LastName));
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Original_CommentText));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -4372,8 +4335,8 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string EmailAddress, string FirstName, string LastName, int Original_UserID, string Original_EmailAddress, string Original_FirstName, string Original_LastName) {
-            return this.Update(Original_UserID, EmailAddress, FirstName, LastName, Original_UserID, Original_EmailAddress, Original_FirstName, Original_LastName);
+        public virtual int Update(string Original_CommentText) {
+            return this.Update(Original_CommentText, Original_CommentText);
         }
     }
     
@@ -4397,7 +4360,7 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         
         private SellersTableAdapter _sellersTableAdapter;
         
-        private UsersTableAdapter _usersTableAdapter;
+        private CommentsTableAdapter _commentsTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -4475,12 +4438,12 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public UsersTableAdapter UsersTableAdapter {
+        public CommentsTableAdapter CommentsTableAdapter {
             get {
-                return this._usersTableAdapter;
+                return this._commentsTableAdapter;
             }
             set {
-                this._usersTableAdapter = value;
+                this._commentsTableAdapter = value;
             }
         }
         
@@ -4519,9 +4482,9 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
                             && (this._sellersTableAdapter.Connection != null))) {
                     return this._sellersTableAdapter.Connection;
                 }
-                if (((this._usersTableAdapter != null) 
-                            && (this._usersTableAdapter.Connection != null))) {
-                    return this._usersTableAdapter.Connection;
+                if (((this._commentsTableAdapter != null) 
+                            && (this._commentsTableAdapter.Connection != null))) {
+                    return this._commentsTableAdapter.Connection;
                 }
                 return null;
             }
@@ -4548,7 +4511,7 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
                 if ((this._sellersTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._usersTableAdapter != null)) {
+                if ((this._commentsTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -4598,12 +4561,12 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._usersTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._commentsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Comments.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._usersTableAdapter.Update(updatedRows));
+                    result = (result + this._commentsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -4649,11 +4612,11 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._usersTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._commentsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Comments.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._usersTableAdapter.Update(addedRows));
+                    result = (result + this._commentsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -4667,11 +4630,11 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateDeletedRows(GroupFinal266DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._usersTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Users.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._commentsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Comments.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._usersTableAdapter.Update(deletedRows));
+                    result = (result + this._commentsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -4766,8 +4729,8 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
-            if (((this._usersTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._usersTableAdapter.Connection) == false))) {
+            if (((this._commentsTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._commentsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -4839,13 +4802,13 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
                         adaptersWithAcceptChangesDuringUpdate.Add(this._sellersTableAdapter.Adapter);
                     }
                 }
-                if ((this._usersTableAdapter != null)) {
-                    revertConnections.Add(this._usersTableAdapter, this._usersTableAdapter.Connection);
-                    this._usersTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._usersTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._usersTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._usersTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._usersTableAdapter.Adapter);
+                if ((this._commentsTableAdapter != null)) {
+                    revertConnections.Add(this._commentsTableAdapter, this._commentsTableAdapter.Connection);
+                    this._commentsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._commentsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._commentsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._commentsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._commentsTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -4922,9 +4885,9 @@ SELECT UserID, EmailAddress, FirstName, LastName FROM Users WHERE (UserID = @Use
                     this._sellersTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._sellersTableAdapter]));
                     this._sellersTableAdapter.Transaction = null;
                 }
-                if ((this._usersTableAdapter != null)) {
-                    this._usersTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._usersTableAdapter]));
-                    this._usersTableAdapter.Transaction = null;
+                if ((this._commentsTableAdapter != null)) {
+                    this._commentsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._commentsTableAdapter]));
+                    this._commentsTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

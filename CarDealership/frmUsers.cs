@@ -38,5 +38,10 @@ namespace CarDealership
             // Grab all of the filled in textboxes for registering the user like username and password
             // Assign it to the properties of user
         }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

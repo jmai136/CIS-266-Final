@@ -8,7 +8,8 @@ namespace CarLibrary
 {
     public class User
     {
-        private int userID { get; set; }
+        public int userID { get; set; }
+        public string carVIN { get; set; }
         public string email { get; set; }
         public string firstName {get;set;}
         public string lastName { get; set; }

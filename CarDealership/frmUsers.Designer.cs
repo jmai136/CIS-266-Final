@@ -77,7 +77,6 @@
             this.tableAdapterManager.ListingTableAdapter = null;
             this.tableAdapterManager.SellersTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = CarDealership.GroupFinal266DataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.UsersTableAdapter = null;
             // 
             // buyerUserNameTextBox
             // 

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,9 @@ namespace CarDealership
 {
     public partial class frmUsers : Form
     {
+        static SqlConnection sqlConnection = new SqlConnection();
+        static string connectionString { get; } = System.Configuration.ConfigurationManager.ConnectionStrings["CarDealership.Properties.Settings.GroupFinal266ConnectionString"].ConnectionString;
+        
         public frmUsers()
         {
             InitializeComponent();
@@ -31,28 +36,47 @@ namespace CarDealership
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
 
+            // Use the connection string already present in the app config.
+            sqlConnection.ConnectionString = connectionString;
         }
 
         private bool PutUserRegisterData(User user)
         {
-            // Grab all of the filled in textboxes for registering the user like first name, last name, email address, password
-            // Assign it to the properties of user
+            try
+            {
+                // Grab all of the filled in textboxes for registering the user like first name, last name, email address, password
+                // Assign it to the properties of user
 
-            bool bAllDataIsFilled = true;
+                bool bAllDataIsFilled = true;
 
-            // Loop through all the properties to make sure none of them are empty.
-            //https://www.w3schools.blog/loop-over-object-properties-c
-            // If one is empty then bAllDataIsFilled is false and just return that.
-            foreach (var property in user.GetType().GetProperties())
-                if (property.GetValue(user) == null || property.GetValue(user).ToString() == "") {
-                    MessageBox.Show("Please input a " + property.Name, property.Name.ToUpper() + " not found");
-                    bAllDataIsFilled = false;
-                    return bAllDataIsFilled;
-                }
+                // Loop through all the properties to make sure none of them are empty.
+                //https://www.w3schools.blog/loop-over-object-properties-c
+                // If one is empty then bAllDataIsFilled is false and just return that.
+                foreach (var property in user.GetType().GetProperties())
+                    if (property.GetValue(user) == null || property.GetValue(user).ToString() == "")
+                    {
+                        MessageBox.Show("Please input a " + property.Name, property.Name.ToUpper() + " not found");
+                        bAllDataIsFilled = false;
+                        return bAllDataIsFilled;
+                    }
 
-            return bAllDataIsFilled;
+                return bAllDataIsFilled;
+            }
+            catch (DataException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             // Then pass User in to UserDB and have UserDB handle the data if registered data is true.
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            // Temporary user
+            User user = new User();
+
+            if (PutUserRegisterData(user))
+                UserDB.RegisterUser(user, sqlConnection);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

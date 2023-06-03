@@ -55,9 +55,20 @@ namespace CarLibrary
             {
                 // Replace with a query or a stored procedure
                 SqlCommand cmd = new SqlCommand(
-                    "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password  " +
-                    "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password)",
+                   "IF EXISTS " +
+                   "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND WHERE Password==HASHBYTES('SHA2_512', @Password))\r\n    " +
+                    "BEGIN\r\n       " +
+                    "SET @SellerID=(SELECT SellerID FROM Sellers WHERE Email=@Email AND WHERE Password==HASHBYTES('SHA2_512', @Password))",
                     sqlConnection);
+
+                // TShould use query to assign the user id?
+                cmd.Parameters.AddWithValue("@SellerID", user.userID);
+                cmd.Parameters.AddWithValue("@Email", user.email);
+                cmd.Parameters.AddWithValue("@Password", user.password);
+
+                // Hopefully it retusn SellerID?
+                sqlConnection.Open();
+                cmd.ExecuteScalar();
             }
             catch (SqlException ex)
             {

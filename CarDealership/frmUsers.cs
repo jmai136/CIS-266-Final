@@ -41,27 +41,21 @@ namespace CarDealership
                 // Grab all of the filled in textboxes for registering the user like first name, last name, email address, password
                 // Assign it to the properties of user
 
-                bool bAllDataIsFilled = true;
-
                 // Loop through all the properties to make sure none of them are empty.
                 //https://www.w3schools.blog/loop-over-object-properties-c
-                // If one is empty then bAllDataIsFilled is false and just return that.
+                // If one is empty then throw an error and return false.
                 foreach (var property in user.GetType().GetProperties())
-                    if (property.GetValue(user) == null || property.GetValue(user).ToString() == "")
-                    {
-                        MessageBox.Show("Please input a " + property.Name, property.Name.ToUpper() + " not found");
-                        bAllDataIsFilled = false;
-                        return bAllDataIsFilled;
-                    }
+                    if (string.IsNullOrEmpty(property.GetValue(user).ToString()))
+                        throw new ArgumentException("Please input a " + property.Name, property.Name.ToUpper() + " not found");
 
-                return bAllDataIsFilled;
+                return true;
             }
-            catch (DataException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
 
-            return true;
+            return false;
 
             // Then pass User in to UserDB and have UserDB handle the data if registered data is true.
         }
@@ -80,17 +74,11 @@ namespace CarDealership
             // Put in validation here to see if it exists in the SQL database
             try
             {
-                if (buyerUserNameTextBox.Text == "")
-                {
-                    MessageBox.Show("Please input a username", "Username not found");
-                    return;
-                }
+                if (string.IsNullOrEmpty(buyerUserNameTextBox.Text))
+                    throw new ArgumentException("Please input a username", "Username not found");
 
-                if (txtPassword.Text == "")
-                {
-                    MessageBox.Show("Please input a password", "Password not found");
-                    return;
-                }
+                if (string.IsNullOrEmpty(txtPassword.Text))
+                    throw new ArgumentException("Please input a password", "Password not found");
 
                 // Insert query here
 

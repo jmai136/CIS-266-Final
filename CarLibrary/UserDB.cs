@@ -48,5 +48,29 @@ namespace CarLibrary
                 sqlConnection.Close();
             }
         }
+
+        public static void VerifyLoginUser(User user, SqlConnection sqlConnection)
+        {
+            try
+            {
+                // Replace with a query or a stored procedure
+                SqlCommand cmd = new SqlCommand(
+                    "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password  " +
+                    "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password)",
+                    sqlConnection);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (DataException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
     }
 }

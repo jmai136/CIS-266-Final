@@ -15,9 +15,6 @@ namespace CarDealership
 {
     public partial class frmUsers : Form
     {
-        static SqlConnection sqlConnection = new SqlConnection();
-        static string connectionString { get; } = System.Configuration.ConfigurationManager.ConnectionStrings["CarDealership.Properties.Settings.GroupFinal266ConnectionString"].ConnectionString;
-        
         public frmUsers()
         {
             InitializeComponent();
@@ -37,7 +34,7 @@ namespace CarDealership
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
 
             // Use the connection string already present in the app config.
-            sqlConnection.ConnectionString = connectionString;
+            Program.sqlConnection.ConnectionString = Program.connectionString;
         }
 
         private bool PutUserRegisterData(User user)
@@ -66,6 +63,8 @@ namespace CarDealership
             {
                 MessageBox.Show(ex.Message);
             }
+
+            return true;
 
             // Then pass User in to UserDB and have UserDB handle the data if registered data is true.
         }

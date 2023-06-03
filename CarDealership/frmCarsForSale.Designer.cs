@@ -102,7 +102,6 @@
             this.tableAdapterManager.ListingTableAdapter = this.listingTableAdapter;
             this.tableAdapterManager.SellersTableAdapter = this.sellersTableAdapter;
             this.tableAdapterManager.UpdateOrder = CarDealership.GroupFinal266DataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.UsersTableAdapter = null;
             // 
             // carsBindingNavigator
             // 

@@ -32,9 +32,6 @@ namespace CarDealership
         {
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
-
-            // Use the connection string already present in the app config.
-            Program.sqlConnection.ConnectionString = Program.connectionString;
         }
 
         private bool PutUserRegisterData(User user)
@@ -75,7 +72,7 @@ namespace CarDealership
             User user = new User();
 
             if (PutUserRegisterData(user))
-                UserDB.RegisterUser(user, sqlConnection);
+                UserDB.RegisterUser(user, Program.sqlConnection);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

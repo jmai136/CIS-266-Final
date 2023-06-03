@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [GroupFinal266]    Script Date: 6/1/2023 2:54:26 PM ******/
+/****** Object:  Database [GroupFinal266]    Script Date: 6/3/2023 12:41:36 PM ******/
 CREATE DATABASE [GroupFinal266]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,7 @@ ALTER DATABASE [GroupFinal266] SET QUERY_STORE = OFF
 GO
 USE [GroupFinal266]
 GO
-/****** Object:  Table [dbo].[Buyers]    Script Date: 6/1/2023 2:54:26 PM ******/
+/****** Object:  Table [dbo].[Buyers]    Script Date: 6/3/2023 12:41:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -96,7 +96,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cars]    Script Date: 6/1/2023 2:54:26 PM ******/
+/****** Object:  Table [dbo].[Cars]    Script Date: 6/3/2023 12:41:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,7 +115,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Comments]    Script Date: 6/1/2023 2:54:26 PM ******/
+/****** Object:  Table [dbo].[Comments]    Script Date: 6/3/2023 12:41:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -128,7 +128,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Listing]    Script Date: 6/1/2023 2:54:26 PM ******/
+/****** Object:  Table [dbo].[Listing]    Script Date: 6/3/2023 12:41:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -145,7 +145,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Sellers]    Script Date: 6/1/2023 2:54:26 PM ******/
+/****** Object:  Table [dbo].[Sellers]    Script Date: 6/3/2023 12:41:36 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -153,6 +153,10 @@ GO
 CREATE TABLE [dbo].[Sellers](
 	[SellerID] [int] NOT NULL,
 	[CarVIN] [varchar](50) NOT NULL,
+	[FirstName] [varchar](30) NOT NULL,
+	[LastName] [varchar](30) NOT NULL,
+	[Email] [varchar](45) NOT NULL,
+	[Password] [varchar](30) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[SellerID] ASC

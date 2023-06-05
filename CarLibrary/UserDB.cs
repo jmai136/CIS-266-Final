@@ -16,15 +16,40 @@ namespace CarLibrary
         // https://stackoverflow.com/questions/18114458/fastest-way-to-determine-if-record-exists
         // If exists for SQL query
 
-        public static void RegisterUser(User user, SqlConnection sqlConnection)
+        public static bool RegisterUser(User user, SqlConnection sqlConnection)
         {
             // Replace with the user id, this is going to be necessary for the cars
             try
             {
-                SqlCommand cmd = new SqlCommand(
-                    "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password  " +
-                    "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password)",
-                    sqlConnection);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+
+                cmd.CommandText =  "IF EXISTS " +
+                  "(SELECT TOP 1 SellerID FROM Sellers " +
+                      "WHERE FirstName = @FirstName " +
+                      "AND WHERE LastName = @LastName " +
+                      "AND WHERE Email=@Email " +
+                      "AND WHERE Password==HASHBYTES('SHA2_512', @Password))\r\n    " +
+                   "BEGIN\r\n       " +
+                   "SET @SellerID=(SELECT SellerID FROM Sellers " +
+                        "WHERE FirstName = @FirstName " +
+                        "AND WHERE LastName = @LastName " +
+                        "AND WHERE Email=@Email " +
+                        "AND WHERE Password==HASHBYTES('SHA2_512', @Password))";
+
+                cmd.Parameters.AddWithValue("@SellerID", user.userID);
+                cmd.Parameters.AddWithValue("@FirstName", user.firstName);
+                cmd.Parameters.AddWithValue("@LastName", user.lastName);
+                cmd.Parameters.AddWithValue("@Email", user.email);
+                cmd.Parameters.AddWithValue("@Password", user.password);
+
+                bool REPLACE_WITH_SQL_CODE_TO_CHECK_IF_EXISTS = true;
+                
+                if (REPLACE_WITH_SQL_CODE_TO_CHECK_IF_EXISTS)
+                    return false;
+
+                cmd.CommandText = "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password  " +
+                    "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password)";
 
                 cmd.Parameters.AddWithValue("@SellerID", user.userID);
                 cmd.Parameters.AddWithValue("@CarVIN", user.carVIN);
@@ -34,6 +59,8 @@ namespace CarLibrary
                 cmd.Parameters.AddWithValue("@Password", user.password);
 
                 sqlConnection.Open();
+
+                return true;
             }
             catch (SqlException ex)
             {

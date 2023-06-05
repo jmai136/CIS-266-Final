@@ -15,6 +15,9 @@ namespace CarDealership
 {
     public partial class frmUsers : Form
     {
+        // Temporary user
+        User user = new User();
+
         public frmUsers()
         {
             InitializeComponent();
@@ -34,12 +37,23 @@ namespace CarDealership
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
         }
 
+        private void AssignUserRegistrationData(User user)
+        {
+            user.userName = txtRegisterEmail.Text;
+            user.password = txtRegisterPassword.Text;
+            user.firstName = txtRegisterFirstName.Text;
+            user.lastName = txtRegisterLastName.Text;
+        }
+
         private bool PutUserRegisterData(User user)
         {
             try
             {
-                // Grab all of the filled in textboxes for registering the user like first name, last name, email address, password
-                // Assign it to the properties of user
+                // Temporary values for userID and CarVIN, because they'd need to be updated later
+                user.userID = 0;
+                user.carVIN = "VIN";
+
+                AssignUserRegistrationData(user);
 
                 // Loop through all the properties to make sure none of them are empty.
                 //https://www.w3schools.blog/loop-over-object-properties-c
@@ -62,11 +76,15 @@ namespace CarDealership
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            // Temporary user
-            User user = new User();
+            if (!PutUserRegisterData(user))
+                return;
 
-            if (PutUserRegisterData(user))
-                UserDB.RegisterUser(user, Program.sqlConnection);
+            if (!UserDB.RegisterUser(user, Program.sqlConnection)) {
+                MessageBox.Show("User already exists.", "Invalid registration");
+                return;
+            }
+
+            EnterFormCarsForSale();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -74,22 +92,38 @@ namespace CarDealership
             // Put in validation here to see if it exists in the SQL database
             try
             {
-                if (string.IsNullOrEmpty(buyerUserNameTextBox.Text))
+                if (string.IsNullOrEmpty(txtSellerEmailLogin.Text))
                     throw new ArgumentException("Please input a username", "Username not found");
 
                 if (string.IsNullOrEmpty(txtPassword.Text))
                     throw new ArgumentException("Please input a password", "Password not found");
 
                 // Insert query here
+                UserDB.VerifyLoginUser(user, Program.sqlConnection);
 
                 // Because hashes are deterministic, two same passwords will always share the same hash
                 // So grab the password that you inputted, call HashPassword, pass that in, then check to see
                 // If the hashed password stored in the query matches the hashed password you inputted
+
+                EnterFormCarsForSale();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
+        }
+
+        private void EnterFormCarsForSale()
+        {
+            // Check if int is null or empty
+            if (string.IsNullOrEmpty(user.userID.ToString()))
+                return;
+
+            int sellerID = user.userID;
+
+            // Probably go to the new form then using the user?
+            // Maybe we do need an argument constructor
+            frmCarsForSale carsForSale = new frmCarsForSale();
         }
     }
 }

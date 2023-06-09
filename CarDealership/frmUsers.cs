@@ -95,7 +95,7 @@ namespace CarDealership
                 if (string.IsNullOrEmpty(txtSellerEmailLogin.Text))
                     throw new ArgumentException("Please input a username", "Username not found");
 
-                if (string.IsNullOrEmpty(txtPassword.Text))
+                if (string.IsNullOrEmpty(txtLoginPassword.Text))
                     throw new ArgumentException("Please input a password", "Password not found");
 
                 // Insert query here
@@ -124,6 +124,24 @@ namespace CarDealership
             // Probably go to the new form then using the user?
             // Maybe we do need an argument constructor
             frmCarsForSale carsForSale = new frmCarsForSale();
+        }
+
+        private void btnShowPassword_Click(object sender, EventArgs e)
+        {
+            if (txtRegisterPassword.UseSystemPasswordChar || txtLoginPassword.UseSystemPasswordChar)
+            {
+                txtRegisterPassword.UseSystemPasswordChar = false;
+                txtLoginPassword.UseSystemPasswordChar = false;
+            }
+        }
+
+        private void btnHidePassword_Click(object sender, EventArgs e)
+        {
+            if (!txtRegisterPassword.UseSystemPasswordChar || !txtLoginPassword.UseSystemPasswordChar)
+            {
+                txtRegisterPassword.UseSystemPasswordChar = true;
+                txtLoginPassword.UseSystemPasswordChar = true;
+            }
         }
     }
 }

@@ -36,22 +36,22 @@
             this.tableAdapterManager = new CarDealership.GroupFinal266DataSetTableAdapters.TableAdapterManager();
             this.txtSellerEmailLogin = new System.Windows.Forms.TextBox();
             this.lblPasswordLogin = new System.Windows.Forms.Label();
-            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtLoginPassword = new System.Windows.Forms.TextBox();
             this.btnShowPassword = new System.Windows.Forms.Button();
             this.btnHidePassword = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBoxLogin = new System.Windows.Forms.GroupBox();
             this.groupBoxRegister = new System.Windows.Forms.GroupBox();
+            this.lblLastName = new System.Windows.Forms.Label();
+            this.txtRegisterLastName = new System.Windows.Forms.TextBox();
+            this.txtRegisterFirstName = new System.Windows.Forms.TextBox();
+            this.lblFirstName = new System.Windows.Forms.Label();
             this.btnRegister = new System.Windows.Forms.Button();
             this.lblRegisterPassword = new System.Windows.Forms.Label();
             this.txtRegisterPassword = new System.Windows.Forms.TextBox();
             this.txtRegisterEmail = new System.Windows.Forms.TextBox();
             this.lblRegisterEmail = new System.Windows.Forms.Label();
-            this.lblLastName = new System.Windows.Forms.Label();
-            this.txtRegisterLastName = new System.Windows.Forms.TextBox();
-            this.txtRegisterFirstName = new System.Windows.Forms.TextBox();
-            this.lblFirstName = new System.Windows.Forms.Label();
             lblSellerEmailLogin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).BeginInit();
@@ -109,12 +109,12 @@
             this.lblPasswordLogin.TabIndex = 3;
             this.lblPasswordLogin.Text = "Password:";
             // 
-            // txtPassword
+            // txtLoginPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(104, 71);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(100, 20);
-            this.txtPassword.TabIndex = 4;
+            this.txtLoginPassword.Location = new System.Drawing.Point(104, 71);
+            this.txtLoginPassword.Name = "txtLoginPassword";
+            this.txtLoginPassword.Size = new System.Drawing.Size(100, 20);
+            this.txtLoginPassword.TabIndex = 4;
             // 
             // btnShowPassword
             // 
@@ -124,6 +124,7 @@
             this.btnShowPassword.TabIndex = 5;
             this.btnShowPassword.Text = "Show password";
             this.btnShowPassword.UseVisualStyleBackColor = true;
+            this.btnShowPassword.Click += new System.EventHandler(this.btnShowPassword_Click);
             // 
             // btnHidePassword
             // 
@@ -133,6 +134,7 @@
             this.btnHidePassword.TabIndex = 6;
             this.btnHidePassword.Text = "Hide password";
             this.btnHidePassword.UseVisualStyleBackColor = true;
+            this.btnHidePassword.Click += new System.EventHandler(this.btnHidePassword_Click);
             // 
             // btnLogin
             // 
@@ -155,7 +157,7 @@
             // 
             // groupBoxLogin
             // 
-            this.groupBoxLogin.Controls.Add(this.txtPassword);
+            this.groupBoxLogin.Controls.Add(this.txtLoginPassword);
             this.groupBoxLogin.Controls.Add(this.btnHidePassword);
             this.groupBoxLogin.Controls.Add(this.btnLogin);
             this.groupBoxLogin.Controls.Add(this.btnShowPassword);
@@ -187,6 +189,40 @@
             this.groupBoxRegister.TabIndex = 10;
             this.groupBoxRegister.TabStop = false;
             this.groupBoxRegister.Text = "Register";
+            // 
+            // lblLastName
+            // 
+            this.lblLastName.AutoSize = true;
+            this.lblLastName.Location = new System.Drawing.Point(249, 71);
+            this.lblLastName.Name = "lblLastName";
+            this.lblLastName.Size = new System.Drawing.Size(61, 13);
+            this.lblLastName.TabIndex = 15;
+            this.lblLastName.Text = "Last Name:";
+            // 
+            // txtRegisterLastName
+            // 
+            this.txtRegisterLastName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
+            this.txtRegisterLastName.Location = new System.Drawing.Point(316, 68);
+            this.txtRegisterLastName.Name = "txtRegisterLastName";
+            this.txtRegisterLastName.Size = new System.Drawing.Size(100, 20);
+            this.txtRegisterLastName.TabIndex = 14;
+            // 
+            // txtRegisterFirstName
+            // 
+            this.txtRegisterFirstName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
+            this.txtRegisterFirstName.Location = new System.Drawing.Point(316, 30);
+            this.txtRegisterFirstName.Name = "txtRegisterFirstName";
+            this.txtRegisterFirstName.Size = new System.Drawing.Size(100, 20);
+            this.txtRegisterFirstName.TabIndex = 13;
+            // 
+            // lblFirstName
+            // 
+            this.lblFirstName.AutoSize = true;
+            this.lblFirstName.Location = new System.Drawing.Point(250, 34);
+            this.lblFirstName.Name = "lblFirstName";
+            this.lblFirstName.Size = new System.Drawing.Size(60, 13);
+            this.lblFirstName.TabIndex = 12;
+            this.lblFirstName.Text = "First Name:";
             // 
             // btnRegister
             // 
@@ -232,40 +268,6 @@
             this.lblRegisterEmail.TabIndex = 0;
             this.lblRegisterEmail.Text = "Email:";
             // 
-            // lblLastName
-            // 
-            this.lblLastName.AutoSize = true;
-            this.lblLastName.Location = new System.Drawing.Point(249, 71);
-            this.lblLastName.Name = "lblLastName";
-            this.lblLastName.Size = new System.Drawing.Size(61, 13);
-            this.lblLastName.TabIndex = 15;
-            this.lblLastName.Text = "Last Name:";
-            // 
-            // txtRegisterLastName
-            // 
-            this.txtRegisterLastName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
-            this.txtRegisterLastName.Location = new System.Drawing.Point(316, 68);
-            this.txtRegisterLastName.Name = "txtRegisterLastName";
-            this.txtRegisterLastName.Size = new System.Drawing.Size(100, 20);
-            this.txtRegisterLastName.TabIndex = 14;
-            // 
-            // txtRegisterFirstName
-            // 
-            this.txtRegisterFirstName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
-            this.txtRegisterFirstName.Location = new System.Drawing.Point(316, 30);
-            this.txtRegisterFirstName.Name = "txtRegisterFirstName";
-            this.txtRegisterFirstName.Size = new System.Drawing.Size(100, 20);
-            this.txtRegisterFirstName.TabIndex = 13;
-            // 
-            // lblFirstName
-            // 
-            this.lblFirstName.AutoSize = true;
-            this.lblFirstName.Location = new System.Drawing.Point(250, 34);
-            this.lblFirstName.Name = "lblFirstName";
-            this.lblFirstName.Size = new System.Drawing.Size(60, 13);
-            this.lblFirstName.TabIndex = 12;
-            this.lblFirstName.Text = "First Name:";
-            // 
             // frmUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -294,7 +296,7 @@
         private GroupFinal266DataSetTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.TextBox txtSellerEmailLogin;
         private System.Windows.Forms.Label lblPasswordLogin;
-        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.TextBox txtLoginPassword;
         private System.Windows.Forms.Button btnShowPassword;
         private System.Windows.Forms.Button btnHidePassword;
         private System.Windows.Forms.Button btnLogin;

@@ -18,7 +18,6 @@ namespace CarLibrary
 
         public static bool RegisterUser(User user, SqlConnection sqlConnection)
         {
-            // Replace with the user id, this is going to be necessary for the cars
             try
             {
                 SqlCommand cmd = new SqlCommand();
@@ -29,13 +28,13 @@ namespace CarLibrary
                       "WHERE FirstName = @FirstName " +
                       "AND WHERE LastName = @LastName " +
                       "AND WHERE Email=@Email " +
-                      "AND WHERE Password==HASHBYTES('SHA2_512', @Password))\r\n    " +
+                      "AND WHERE [Password]=HASHBYTES('SHA2_512', @Password))\r\n    " +
                    "BEGIN\r\n       " +
                    "SET @SellerID=(SELECT SellerID FROM Sellers " +
                         "WHERE FirstName = @FirstName " +
                         "AND WHERE LastName = @LastName " +
                         "AND WHERE Email=@Email " +
-                        "AND WHERE Password==HASHBYTES('SHA2_512', @Password))";
+                        "AND WHERE [Password]=HASHBYTES('SHA2_512', @Password))";
 
                 cmd.Parameters.AddWithValue("@SellerID", user.userID);
                 cmd.Parameters.AddWithValue("@FirstName", user.firstName);
@@ -43,11 +42,13 @@ namespace CarLibrary
                 cmd.Parameters.AddWithValue("@Email", user.email);
                 cmd.Parameters.AddWithValue("@Password", user.password);
 
-                bool REPLACE_WITH_SQL_CODE_TO_CHECK_IF_EXISTS = true;
-                
-                if (REPLACE_WITH_SQL_CODE_TO_CHECK_IF_EXISTS)
+                // Check if the user already exists
+                // If they already exist, which means the id cannot be -1, you'd then insert that information into the sellers table
+                if (user.userID != -1)
                     return false;
 
+                // Why do we have a CarVIN for the seller?
+                // Shouldn't the car hold the data for the CarVIN since one seller can have multiple CarVIN?
                 cmd.CommandText = "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password  " +
                     "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password)";
 
@@ -82,10 +83,13 @@ namespace CarLibrary
             {
                 // Replace with a query or a stored procedure
                 SqlCommand cmd = new SqlCommand(
-                   "IF EXISTS " +
-                   "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND WHERE Password==HASHBYTES('SHA2_512', @Password))\r\n    " +
-                    "BEGIN\r\n       " +
-                    "SET @SellerID=(SELECT SellerID FROM Sellers WHERE Email=@Email AND WHERE Password==HASHBYTES('SHA2_512', @Password))",
+                  "IF EXISTS \r\n" +
+                  "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password))\r\n" +
+                  "BEGIN \r\n" +
+                  "\tSET @SellerID=(SELECT SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password))\r\n" +
+                  "END\r\n" +
+                  "ELSE \r\n" +
+                  "\tSET @SellerID = -1",
                     sqlConnection);
 
                 // TShould use query to assign the user id?

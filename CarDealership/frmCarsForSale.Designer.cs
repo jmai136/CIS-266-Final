@@ -39,7 +39,13 @@
             this.carsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.carsTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.CarsTableAdapter();
             this.tableAdapterManager = new CarDealership.GroupFinal266DataSetTableAdapters.TableAdapterManager();
+            this.buyersTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.BuyersTableAdapter();
+            this.listingTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.ListingTableAdapter();
+            this.sellersTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.SellersTableAdapter();
             this.carsBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+            this.filterByToolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.filterByToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.viewAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.carsDataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,22 +55,19 @@
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buyersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.buyersTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.BuyersTableAdapter();
             this.buyerIDTextBox = new System.Windows.Forms.TextBox();
             this.buyerFNameTextBox = new System.Windows.Forms.TextBox();
             this.buyerLNameTextBox = new System.Windows.Forms.TextBox();
             this.sellersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.sellersTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.SellersTableAdapter();
             this.sellerIDTextBox = new System.Windows.Forms.TextBox();
             this.listingBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.listingTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.ListingTableAdapter();
             this.listingIDTextBox = new System.Windows.Forms.TextBox();
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnComments = new System.Windows.Forms.Button();
-            this.filterByToolStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.filterByToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
-            this.viewAllToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.carListingPropertyStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.carPropertyStripComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.filterToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             buyerIDLabel = new System.Windows.Forms.Label();
             buyerFNameLabel = new System.Windows.Forms.Label();
             buyerLNameLabel = new System.Windows.Forms.Label();
@@ -79,6 +82,51 @@
             ((System.ComponentModel.ISupportInitialize)(this.sellersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.listingBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // buyerIDLabel
+            // 
+            buyerIDLabel.AutoSize = true;
+            buyerIDLabel.Location = new System.Drawing.Point(51, 119);
+            buyerIDLabel.Name = "buyerIDLabel";
+            buyerIDLabel.Size = new System.Drawing.Size(51, 13);
+            buyerIDLabel.TabIndex = 2;
+            buyerIDLabel.Text = "Buyer ID:";
+            // 
+            // buyerFNameLabel
+            // 
+            buyerFNameLabel.AutoSize = true;
+            buyerFNameLabel.Location = new System.Drawing.Point(8, 168);
+            buyerFNameLabel.Name = "buyerFNameLabel";
+            buyerFNameLabel.Size = new System.Drawing.Size(90, 13);
+            buyerFNameLabel.TabIndex = 4;
+            buyerFNameLabel.Text = "Buyer First Name:";
+            // 
+            // buyerLNameLabel
+            // 
+            buyerLNameLabel.AutoSize = true;
+            buyerLNameLabel.Location = new System.Drawing.Point(11, 216);
+            buyerLNameLabel.Name = "buyerLNameLabel";
+            buyerLNameLabel.Size = new System.Drawing.Size(91, 13);
+            buyerLNameLabel.TabIndex = 6;
+            buyerLNameLabel.Text = "Buyer Last Name:";
+            // 
+            // sellerIDLabel
+            // 
+            sellerIDLabel.AutoSize = true;
+            sellerIDLabel.Location = new System.Drawing.Point(48, 82);
+            sellerIDLabel.Name = "sellerIDLabel";
+            sellerIDLabel.Size = new System.Drawing.Size(50, 13);
+            sellerIDLabel.TabIndex = 8;
+            sellerIDLabel.Text = "Seller ID:";
+            // 
+            // listingIDLabel
+            // 
+            listingIDLabel.AutoSize = true;
+            listingIDLabel.Location = new System.Drawing.Point(48, 49);
+            listingIDLabel.Name = "listingIDLabel";
+            listingIDLabel.Size = new System.Drawing.Size(54, 13);
+            listingIDLabel.TabIndex = 10;
+            listingIDLabel.Text = "Listing ID:";
             // 
             // groupFinal266DataSet
             // 
@@ -99,9 +147,22 @@
             this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
             this.tableAdapterManager.BuyersTableAdapter = this.buyersTableAdapter;
             this.tableAdapterManager.CarsTableAdapter = this.carsTableAdapter;
+            this.tableAdapterManager.CommentsTableAdapter = null;
             this.tableAdapterManager.ListingTableAdapter = this.listingTableAdapter;
             this.tableAdapterManager.SellersTableAdapter = this.sellersTableAdapter;
             this.tableAdapterManager.UpdateOrder = CarDealership.GroupFinal266DataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            // 
+            // buyersTableAdapter
+            // 
+            this.buyersTableAdapter.ClearBeforeFill = true;
+            // 
+            // listingTableAdapter
+            // 
+            this.listingTableAdapter.ClearBeforeFill = true;
+            // 
+            // sellersTableAdapter
+            // 
+            this.sellersTableAdapter.ClearBeforeFill = true;
             // 
             // carsBindingNavigator
             // 
@@ -112,6 +173,9 @@
             this.carsBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.filterByToolStripLabel,
             this.filterByToolStripComboBox,
+            this.filterToolStripSeparator,
+            this.carListingPropertyStripLabel,
+            this.carPropertyStripComboBox,
             this.viewAllToolStripButton});
             this.carsBindingNavigator.Location = new System.Drawing.Point(0, 0);
             this.carsBindingNavigator.MoveFirstItem = null;
@@ -123,6 +187,28 @@
             this.carsBindingNavigator.Size = new System.Drawing.Size(808, 25);
             this.carsBindingNavigator.TabIndex = 0;
             this.carsBindingNavigator.Text = "bindingNavigator1";
+            // 
+            // filterByToolStripLabel
+            // 
+            this.filterByToolStripLabel.Name = "filterByToolStripLabel";
+            this.filterByToolStripLabel.Size = new System.Drawing.Size(52, 22);
+            this.filterByToolStripLabel.Text = "Filter By:";
+            // 
+            // filterByToolStripComboBox
+            // 
+            this.filterByToolStripComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.filterByToolStripComboBox.Name = "filterByToolStripComboBox";
+            this.filterByToolStripComboBox.Size = new System.Drawing.Size(121, 25);
+            this.filterByToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.filterByToolStripComboBox_SelectedIndexChanged);
+            // 
+            // viewAllToolStripButton
+            // 
+            this.viewAllToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.viewAllToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("viewAllToolStripButton.Image")));
+            this.viewAllToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.viewAllToolStripButton.Name = "viewAllToolStripButton";
+            this.viewAllToolStripButton.Size = new System.Drawing.Size(53, 22);
+            this.viewAllToolStripButton.Text = "View All";
             // 
             // carsDataGridView
             // 
@@ -189,19 +275,6 @@
             this.buyersBindingSource.DataMember = "Buyers";
             this.buyersBindingSource.DataSource = this.groupFinal266DataSet;
             // 
-            // buyersTableAdapter
-            // 
-            this.buyersTableAdapter.ClearBeforeFill = true;
-            // 
-            // buyerIDLabel
-            // 
-            buyerIDLabel.AutoSize = true;
-            buyerIDLabel.Location = new System.Drawing.Point(51, 119);
-            buyerIDLabel.Name = "buyerIDLabel";
-            buyerIDLabel.Size = new System.Drawing.Size(51, 13);
-            buyerIDLabel.TabIndex = 2;
-            buyerIDLabel.Text = "Buyer ID:";
-            // 
             // buyerIDTextBox
             // 
             this.buyerIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerID", true));
@@ -211,15 +284,6 @@
             this.buyerIDTextBox.Size = new System.Drawing.Size(190, 20);
             this.buyerIDTextBox.TabIndex = 3;
             // 
-            // buyerFNameLabel
-            // 
-            buyerFNameLabel.AutoSize = true;
-            buyerFNameLabel.Location = new System.Drawing.Point(8, 168);
-            buyerFNameLabel.Name = "buyerFNameLabel";
-            buyerFNameLabel.Size = new System.Drawing.Size(90, 13);
-            buyerFNameLabel.TabIndex = 4;
-            buyerFNameLabel.Text = "Buyer First Name:";
-            // 
             // buyerFNameTextBox
             // 
             this.buyerFNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerFName", true));
@@ -228,15 +292,6 @@
             this.buyerFNameTextBox.ReadOnly = true;
             this.buyerFNameTextBox.Size = new System.Drawing.Size(190, 20);
             this.buyerFNameTextBox.TabIndex = 5;
-            // 
-            // buyerLNameLabel
-            // 
-            buyerLNameLabel.AutoSize = true;
-            buyerLNameLabel.Location = new System.Drawing.Point(11, 216);
-            buyerLNameLabel.Name = "buyerLNameLabel";
-            buyerLNameLabel.Size = new System.Drawing.Size(91, 13);
-            buyerLNameLabel.TabIndex = 6;
-            buyerLNameLabel.Text = "Buyer Last Name:";
             // 
             // buyerLNameTextBox
             // 
@@ -252,19 +307,6 @@
             this.sellersBindingSource.DataMember = "Sellers";
             this.sellersBindingSource.DataSource = this.groupFinal266DataSet;
             // 
-            // sellersTableAdapter
-            // 
-            this.sellersTableAdapter.ClearBeforeFill = true;
-            // 
-            // sellerIDLabel
-            // 
-            sellerIDLabel.AutoSize = true;
-            sellerIDLabel.Location = new System.Drawing.Point(48, 82);
-            sellerIDLabel.Name = "sellerIDLabel";
-            sellerIDLabel.Size = new System.Drawing.Size(50, 13);
-            sellerIDLabel.TabIndex = 8;
-            sellerIDLabel.Text = "Seller ID:";
-            // 
             // sellerIDTextBox
             // 
             this.sellerIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sellersBindingSource, "SellerID", true));
@@ -278,19 +320,6 @@
             // 
             this.listingBindingSource.DataMember = "FK_Listing_Sellers";
             this.listingBindingSource.DataSource = this.sellersBindingSource;
-            // 
-            // listingTableAdapter
-            // 
-            this.listingTableAdapter.ClearBeforeFill = true;
-            // 
-            // listingIDLabel
-            // 
-            listingIDLabel.AutoSize = true;
-            listingIDLabel.Location = new System.Drawing.Point(48, 49);
-            listingIDLabel.Name = "listingIDLabel";
-            listingIDLabel.Size = new System.Drawing.Size(54, 13);
-            listingIDLabel.TabIndex = 10;
-            listingIDLabel.Text = "Listing ID:";
             // 
             // listingIDTextBox
             // 
@@ -328,25 +357,21 @@
             this.btnComments.Text = "Comments";
             this.btnComments.UseVisualStyleBackColor = true;
             // 
-            // filterByToolStripLabel
+            // carListingPropertyStripLabel
             // 
-            this.filterByToolStripLabel.Name = "filterByToolStripLabel";
-            this.filterByToolStripLabel.Size = new System.Drawing.Size(52, 22);
-            this.filterByToolStripLabel.Text = "Filter By:";
+            this.carListingPropertyStripLabel.Name = "carListingPropertyStripLabel";
+            this.carListingPropertyStripLabel.Size = new System.Drawing.Size(146, 22);
+            this.carListingPropertyStripLabel.Text = "Car Listing Property Filter: ";
             // 
-            // filterByToolStripComboBox
+            // carPropertyStripComboBox
             // 
-            this.filterByToolStripComboBox.Name = "filterByToolStripComboBox";
-            this.filterByToolStripComboBox.Size = new System.Drawing.Size(121, 25);
+            this.carPropertyStripComboBox.Name = "carPropertyStripComboBox";
+            this.carPropertyStripComboBox.Size = new System.Drawing.Size(121, 25);
             // 
-            // viewAllToolStripButton
+            // filterToolStripSeparator
             // 
-            this.viewAllToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.viewAllToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("viewAllToolStripButton.Image")));
-            this.viewAllToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.viewAllToolStripButton.Name = "viewAllToolStripButton";
-            this.viewAllToolStripButton.Size = new System.Drawing.Size(53, 22);
-            this.viewAllToolStripButton.Text = "View All";
+            this.filterToolStripSeparator.Name = "filterToolStripSeparator";
+            this.filterToolStripSeparator.Size = new System.Drawing.Size(6, 25);
             // 
             // frmCarsForSale
             // 
@@ -417,6 +442,9 @@
         private System.Windows.Forms.ToolStripLabel filterByToolStripLabel;
         private System.Windows.Forms.ToolStripComboBox filterByToolStripComboBox;
         private System.Windows.Forms.ToolStripButton viewAllToolStripButton;
+        private System.Windows.Forms.ToolStripLabel carListingPropertyStripLabel;
+        private System.Windows.Forms.ToolStripComboBox carPropertyStripComboBox;
+        private System.Windows.Forms.ToolStripSeparator filterToolStripSeparator;
     }
 }
 

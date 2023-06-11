@@ -12,6 +12,9 @@ namespace CarDealership
 {
     public partial class frmCarsForSale : Form
     {
+        DataTable carsDataTable;
+        Dictionary<string, Func<IEnumerable<string>>> filterByDictionary;
+
         public frmCarsForSale()
         {
             InitializeComponent();
@@ -36,6 +39,41 @@ namespace CarDealership
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Cars' table. You can move, or remove it, as needed.
             this.carsTableAdapter.Fill(this.groupFinal266DataSet.Cars);
 
+            SetUpFilterByComboBox();
+            SetUpFilterByDictionary();
+        }
+
+        private void SetUpFilterByDictionary()
+        {
+            carsDataTable = groupFinal266DataSet.Cars;
+            filterByDictionary = new Dictionary<string, Func<IEnumerable<string>>>
+            {
+                { "Make", () => carsDataTable.AsEnumerable().Select(row => row.Field<string>("CarMake")).Distinct() },
+                { "Model", () => carsDataTable.AsEnumerable().Select(row => row.Field<string>("CarModel")).Distinct() },
+                { "Age", () => carsDataTable.AsEnumerable().Select(row => row.Field<int>("CarYear").ToString()).Distinct() },
+                { "Price", () =>carsDataTable.AsEnumerable().Select(row => row.Field<decimal>("CarPrice").ToString()).Distinct() }
+            };
+        }
+
+        private void SetUpFilterByComboBox()
+        {
+            filterByToolStripComboBox.ComboBox.Items.Add("Make");
+            filterByToolStripComboBox.ComboBox.Items.Add("Color");
+            filterByToolStripComboBox.ComboBox.Items.Add("Age");
+            filterByToolStripComboBox.ComboBox.Items.Add("Price");
+
+            filterByToolStripComboBox.ComboBox.SelectedIndex = 0;
+            filterByToolStripComboBox.ComboBox.SelectedValue = 0;
+        }
+
+        private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Func<IEnumerable<string>> options = filterByDictionary[filterByToolStripComboBox.ComboBox.SelectedValue.ToString()];
+
+            // Error
+            /*
+            foreach (var option in options)
+                carPropertyStripComboBox.ComboBox.Items.Add(option.ToString());*/
         }
     }
 }

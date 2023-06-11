@@ -209,6 +209,7 @@
             this.viewAllToolStripButton.Name = "viewAllToolStripButton";
             this.viewAllToolStripButton.Size = new System.Drawing.Size(53, 22);
             this.viewAllToolStripButton.Text = "View All";
+            this.viewAllToolStripButton.Click += new System.EventHandler(this.viewAllToolStripButton_Click);
             // 
             // carsDataGridView
             // 

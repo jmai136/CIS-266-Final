@@ -74,5 +74,10 @@ namespace CarDealership
             foreach (var option in options)
                 carPropertyStripComboBox.ComboBox.Items.Add(option.ToString());*/
         }
+
+        private void viewAllToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

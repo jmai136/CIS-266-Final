@@ -23,18 +23,22 @@ namespace CarLibrary
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
 
-                cmd.CommandText =  "IF EXISTS " +
-                  "(SELECT TOP 1 SellerID FROM Sellers " +
-                      "WHERE FirstName = @FirstName " +
-                      "AND WHERE LastName = @LastName " +
-                      "AND WHERE Email=@Email " +
-                      "AND WHERE [Password]=HASHBYTES('SHA2_512', @Password))\r\n    " +
-                   "BEGIN\r\n       " +
-                   "SET @SellerID=(SELECT SellerID FROM Sellers " +
-                        "WHERE FirstName = @FirstName " +
-                        "AND WHERE LastName = @LastName " +
-                        "AND WHERE Email=@Email " +
-                        "AND WHERE [Password]=HASHBYTES('SHA2_512', @Password))";
+                cmd.CommandText = 
+                    "IF EXISTS " +
+                        "(SELECT TOP 1 SellerID FROM Sellers " +
+                            "WHERE FirstName = @FirstName " +
+                            "AND LastName = @LastName " +
+                            "AND Email=@Email " +
+                            "AND Password=HASHBYTES('SHA2_512', @Password)) " +
+                        "BEGIN " +
+                            "SET @SellerID=(SELECT SellerID FROM Sellers " +
+                            "WHERE FirstName = @FirstName " +
+                            "AND LastName = @LastName " +
+                            "AND Email=@Email " +
+                            "AND Password =HASHBYTES('SHA2_512', @Password)) " +
+                        "END " +
+                    "ELSE " +
+                    "SET @SellerID = -1";
 
                 cmd.Parameters.AddWithValue("@SellerID", user.userID);
                 cmd.Parameters.AddWithValue("@FirstName", user.firstName);
@@ -83,13 +87,13 @@ namespace CarLibrary
             {
                 // Replace with a query or a stored procedure
                 SqlCommand cmd = new SqlCommand(
-                  "IF EXISTS \r\n" +
-                  "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password))\r\n" +
-                  "BEGIN \r\n" +
-                  "\tSET @SellerID=(SELECT SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password))\r\n" +
-                  "END\r\n" +
-                  "ELSE \r\n" +
-                  "\tSET @SellerID = -1",
+                  "IF EXISTS " +
+                      "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password)) " +
+                          "BEGIN " +
+                          "SET @SellerID=(SELECT SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password)) " +
+                      "END " +
+                  "ELSE " +
+                  "SET @SellerID = -1",
                     sqlConnection);
 
                 // TShould use query to assign the user id?

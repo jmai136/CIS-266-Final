@@ -25,7 +25,6 @@ namespace CarDealership
             this.Validate();
             this.carsBindingSource.EndEdit();
             this.tableAdapterManager.UpdateAll(this.groupFinal266DataSet);
-
         }
 
         private void frmCarsForSale_Load(object sender, EventArgs e)
@@ -63,14 +62,14 @@ namespace CarDealership
             filterByToolStripComboBox.ComboBox.Items.Add("Price");
 
             filterByToolStripComboBox.ComboBox.SelectedIndex = 0;
-            filterByToolStripComboBox.ComboBox.SelectedValue = 0;
         }
 
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Func<IEnumerable<string>> options = filterByDictionary[filterByToolStripComboBox.ComboBox.SelectedValue.ToString()];
+            string filterProperty = filterByToolStripComboBox.ComboBox.SelectedItem.ToString();
+            carListingPropertyStripLabel.Text = filterProperty + ": ";
 
-            // Error
+            Func<IEnumerable<string>> options = filterByDictionary[filterProperty];
             /*
             foreach (var option in options)
                 carPropertyStripComboBox.ComboBox.Items.Add(option.ToString());*/

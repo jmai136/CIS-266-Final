@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,8 @@ namespace CarLibrary
         // Should have all three methods somewhere: creating query through designer, execute scalar, and stored procedures
         public static void GetAllCars()
         {
-
+            List<Car<Mercedes>> car = new List<Car<Mercedes>>();
+            car.Add(new Mercedes() { /*Assign properties here*/ });
         }
 
         // Insert in the parameters here

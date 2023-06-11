@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CarLibrary
 {
@@ -52,6 +54,40 @@ namespace CarLibrary
          * Then display the appropriate car listings in those subsections ordered by
          * listings' creation times. 
          */
+
+        public static void GetCarPropertyFilteredByComboBoxValues(string filterProperty, SqlConnection sqlConnection, out List<string> options)
+        {
+            try
+            {
+                options = new List<string>();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+                cmd.CommandText = String.Format("SELECT DISTINCT {0} FROM Cars WHERE {0} IS NOT NULL", filterProperty);
+
+                sqlConnection.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+                    // https://stackoverflow.com/questions/24557550/sql-c-sharp-cant-convert-int32-to-string
+                    options.Add(reader[0].ToString());
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (DataException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
         public static void GetCarFilteredBy()
         {
             // Use IComparable by age, etc

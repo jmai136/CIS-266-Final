@@ -7,13 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CarLibrary;
 
 namespace CarDealership
 {
     public partial class frmCarsForSale : Form
     {
-        DataTable carsDataTable;
-        Dictionary<string, Func<IEnumerable<string>>> filterByDictionary;
+        Dictionary<string, string> filterByDictionary = new Dictionary<string, string>
+        {
+            { "Make", "CarMake" },
+            { "Color", "CarColor" },
+            { "Age", "CarYear" },
+            { "Price", "CarPrice" }
+        };
 
         public frmCarsForSale()
         {
@@ -39,19 +45,6 @@ namespace CarDealership
             this.carsTableAdapter.Fill(this.groupFinal266DataSet.Cars);
 
             SetUpFilterByComboBox();
-            SetUpFilterByDictionary();
-        }
-
-        private void SetUpFilterByDictionary()
-        {
-            carsDataTable = groupFinal266DataSet.Cars;
-            filterByDictionary = new Dictionary<string, Func<IEnumerable<string>>>
-            {
-                { "Make", () => carsDataTable.AsEnumerable().Select(row => row.Field<string>("CarMake")).Distinct() },
-                { "Model", () => carsDataTable.AsEnumerable().Select(row => row.Field<string>("CarModel")).Distinct() },
-                { "Age", () => carsDataTable.AsEnumerable().Select(row => row.Field<int>("CarYear").ToString()).Distinct() },
-                { "Price", () =>carsDataTable.AsEnumerable().Select(row => row.Field<decimal>("CarPrice").ToString()).Distinct() }
-            };
         }
 
         private void SetUpFilterByComboBox()
@@ -66,13 +59,19 @@ namespace CarDealership
 
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            carPropertyStripComboBox.ComboBox.Items.Clear();
+
             string filterProperty = filterByToolStripComboBox.ComboBox.SelectedItem.ToString();
             carListingPropertyStripLabel.Text = filterProperty + ": ";
 
-            Func<IEnumerable<string>> options = filterByDictionary[filterProperty];
-            /*
+            List<string> options;
+
+            ListingDB.GetCarPropertyFilteredByComboBoxValues(filterByDictionary[filterProperty], Program.sqlConnection, out options);
+
             foreach (var option in options)
-                carPropertyStripComboBox.ComboBox.Items.Add(option.ToString());*/
+                carPropertyStripComboBox.ComboBox.Items.Add(option.ToString());
+
+            carPropertyStripComboBox.ComboBox.SelectedIndex = 0;
         }
 
         private void viewAllToolStripButton_Click(object sender, EventArgs e)

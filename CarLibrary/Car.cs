@@ -5,7 +5,7 @@ namespace CarLibrary
     // Car is the make property
     //  Use Generics <T> for the different cars' classes.
     // Use interface for all subclasses of cars?
-    public abstract class Car<T>
+    public abstract class Car
     {
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract
         // The Car class should have all the common properties: make, model, color, age, and price.
@@ -26,14 +26,14 @@ namespace CarLibrary
          * including a property declaration that uses the override modifier.
          */
 
-        public abstract int id { get; set; }
-        public abstract int userId { get; set; }
-        public abstract T make { get; }
-        public abstract string model {get; set;}
-        public abstract string color {get; set; }
-        public abstract float age { get; set;}
-        public abstract decimal price { get; set;}
-        public abstract float miles { get; set; }
+        public int id { get; set; }
+        public int userId { get; set; }
+        public string make { get; set; }
+        public string model {get; set;}
+        public string color {get; set; }
+        public float age { get; set;}
+        public decimal price { get; set;}
+        public float miles { get; set; }
 
         /*
          * In addition, the subclasses should have one or more other-features as properties.
@@ -47,8 +47,6 @@ namespace CarLibrary
          * base.ToString(+ inserted string)
          * 
          */
-
-        public abstract string[] features { get; set;}
     }
 
     public interface ICar

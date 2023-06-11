@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarLibrary
 {
-    public class Mercedes<T> : Car
+    public class Honda<T> : Car
     {
-       public T engine { get; set; }
+        public T mileage { get; set; }
     }
 }

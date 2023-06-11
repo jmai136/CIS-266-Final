@@ -24,7 +24,7 @@ namespace CarLibrary
         // Should have all three methods somewhere: creating query through designer, execute scalar, and stored procedures
         public static void GetAllCars()
         {
-           
+
         }
 
         // Insert in the parameters here

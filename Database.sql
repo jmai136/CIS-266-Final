@@ -156,7 +156,7 @@ CREATE TABLE [dbo].[Sellers](
 	[FirstName] [varchar](30) NOT NULL,
 	[LastName] [varchar](30) NOT NULL,
 	[Email] [varchar](45) NOT NULL,
-	[Password] [varchar](30) NOT NULL,
+	[Password] [varchar](MAX) NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[SellerID] ASC

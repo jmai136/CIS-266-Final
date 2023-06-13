@@ -24,7 +24,7 @@ namespace CarDealership
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmCarsForSale());
+            Application.Run(new frmUsers());
         }
     }
 }

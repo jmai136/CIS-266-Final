@@ -45,6 +45,9 @@
             this.carsBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.filterByToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.filterByToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.filterToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.carListingPropertyStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.carPropertyStripComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.viewAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.carsDataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,9 +68,10 @@
             this.btnUpload = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnComments = new System.Windows.Forms.Button();
-            this.carListingPropertyStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.carPropertyStripComboBox = new System.Windows.Forms.ToolStripComboBox();
-            this.filterToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.commentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.commentsTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.CommentsTableAdapter();
+            this.commentsDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             buyerIDLabel = new System.Windows.Forms.Label();
             buyerFNameLabel = new System.Windows.Forms.Label();
             buyerLNameLabel = new System.Windows.Forms.Label();
@@ -81,6 +85,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sellersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.listingBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.commentsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.commentsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // buyerIDLabel
@@ -184,7 +190,7 @@
             this.carsBindingNavigator.MovePreviousItem = null;
             this.carsBindingNavigator.Name = "carsBindingNavigator";
             this.carsBindingNavigator.PositionItem = null;
-            this.carsBindingNavigator.Size = new System.Drawing.Size(808, 25);
+            this.carsBindingNavigator.Size = new System.Drawing.Size(810, 25);
             this.carsBindingNavigator.TabIndex = 0;
             this.carsBindingNavigator.Text = "bindingNavigator1";
             // 
@@ -200,6 +206,22 @@
             this.filterByToolStripComboBox.Name = "filterByToolStripComboBox";
             this.filterByToolStripComboBox.Size = new System.Drawing.Size(121, 25);
             this.filterByToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.filterByToolStripComboBox_SelectedIndexChanged);
+            // 
+            // filterToolStripSeparator
+            // 
+            this.filterToolStripSeparator.Name = "filterToolStripSeparator";
+            this.filterToolStripSeparator.Size = new System.Drawing.Size(6, 25);
+            // 
+            // carListingPropertyStripLabel
+            // 
+            this.carListingPropertyStripLabel.Name = "carListingPropertyStripLabel";
+            this.carListingPropertyStripLabel.Size = new System.Drawing.Size(146, 22);
+            this.carListingPropertyStripLabel.Text = "Car Listing Property Filter: ";
+            // 
+            // carPropertyStripComboBox
+            // 
+            this.carPropertyStripComboBox.Name = "carPropertyStripComboBox";
+            this.carPropertyStripComboBox.Size = new System.Drawing.Size(121, 25);
             // 
             // viewAllToolStripButton
             // 
@@ -333,7 +355,7 @@
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(548, 445);
+            this.btnUpload.Location = new System.Drawing.Point(585, 430);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 30);
             this.btnUpload.TabIndex = 12;
@@ -342,7 +364,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(678, 445);
+            this.btnDelete.Location = new System.Drawing.Point(715, 430);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 13;
@@ -351,34 +373,46 @@
             // 
             // btnComments
             // 
-            this.btnComments.Location = new System.Drawing.Point(678, 481);
+            this.btnComments.Location = new System.Drawing.Point(715, 466);
             this.btnComments.Name = "btnComments";
             this.btnComments.Size = new System.Drawing.Size(75, 35);
             this.btnComments.TabIndex = 14;
             this.btnComments.Text = "Comments";
             this.btnComments.UseVisualStyleBackColor = true;
             // 
-            // carListingPropertyStripLabel
+            // commentsBindingSource
             // 
-            this.carListingPropertyStripLabel.Name = "carListingPropertyStripLabel";
-            this.carListingPropertyStripLabel.Size = new System.Drawing.Size(146, 22);
-            this.carListingPropertyStripLabel.Text = "Car Listing Property Filter: ";
+            this.commentsBindingSource.DataMember = "Comments";
+            this.commentsBindingSource.DataSource = this.groupFinal266DataSet;
             // 
-            // carPropertyStripComboBox
+            // commentsTableAdapter
             // 
-            this.carPropertyStripComboBox.Name = "carPropertyStripComboBox";
-            this.carPropertyStripComboBox.Size = new System.Drawing.Size(121, 25);
+            this.commentsTableAdapter.ClearBeforeFill = true;
             // 
-            // filterToolStripSeparator
+            // commentsDataGridView
             // 
-            this.filterToolStripSeparator.Name = "filterToolStripSeparator";
-            this.filterToolStripSeparator.Size = new System.Drawing.Size(6, 25);
+            this.commentsDataGridView.AutoGenerateColumns = false;
+            this.commentsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.commentsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn8});
+            this.commentsDataGridView.DataSource = this.commentsBindingSource;
+            this.commentsDataGridView.Location = new System.Drawing.Point(11, 443);
+            this.commentsDataGridView.Name = "commentsDataGridView";
+            this.commentsDataGridView.Size = new System.Drawing.Size(417, 291);
+            this.commentsDataGridView.TabIndex = 15;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "CommentText";
+            this.dataGridViewTextBoxColumn8.HeaderText = "CommentText";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             // 
             // frmCarsForSale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 528);
+            this.ClientSize = new System.Drawing.Size(810, 716);
+            this.Controls.Add(this.commentsDataGridView);
             this.Controls.Add(this.btnComments);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnUpload);
@@ -406,6 +440,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sellersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.listingBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.commentsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.commentsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -446,6 +482,10 @@
         private System.Windows.Forms.ToolStripLabel carListingPropertyStripLabel;
         private System.Windows.Forms.ToolStripComboBox carPropertyStripComboBox;
         private System.Windows.Forms.ToolStripSeparator filterToolStripSeparator;
+        private System.Windows.Forms.BindingSource commentsBindingSource;
+        private GroupFinal266DataSetTableAdapters.CommentsTableAdapter commentsTableAdapter;
+        private System.Windows.Forms.DataGridView commentsDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
     }
 }
 

@@ -38,22 +38,7 @@ namespace CarLibrary
                             "AND Password =HASHBYTES('SHA2_512', @Password)) " +
                         "END " +
                     "ELSE " +
-                    "SET @SellerID = -1";
-
-                cmd.Parameters.AddWithValue("@SellerID", user.userID);
-                cmd.Parameters.AddWithValue("@FirstName", user.firstName);
-                cmd.Parameters.AddWithValue("@LastName", user.lastName);
-                cmd.Parameters.AddWithValue("@Email", user.email);
-                cmd.Parameters.AddWithValue("@Password", user.password);
-
-                // Check if the user already exists
-                // If they already exist, which means the id cannot be -1, you'd then insert that information into the sellers table
-                if (user.userID != -1)
-                    return false;
-
-                // Why do we have a CarVIN for the seller?
-                // Shouldn't the car hold the data for the CarVIN since one seller can have multiple CarVIN?
-                cmd.CommandText = "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password  " +
+                    "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password)  " +
                     "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password)";
 
                 cmd.Parameters.AddWithValue("@SellerID", user.userID);
@@ -62,6 +47,10 @@ namespace CarLibrary
                 cmd.Parameters.AddWithValue("@LastName", user.lastName);
                 cmd.Parameters.AddWithValue("@Email", user.email);
                 cmd.Parameters.AddWithValue("@Password", user.password);
+
+                // Check if the user already exists
+                if (string.IsNullOrEmpty(user.userID.ToString()) || string.IsNullOrWhiteSpace(user.userID.ToString()))
+                    return false;
 
                 sqlConnection.Open();
 

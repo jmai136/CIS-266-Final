@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,7 +40,7 @@ namespace CarDealership
 
         private void AssignUserRegistrationData(User user)
         {
-            user.userName = txtRegisterEmail.Text;
+            user.email = txtRegisterEmail.Text;
             user.password = txtRegisterPassword.Text;
             user.firstName = txtRegisterFirstName.Text;
             user.lastName = txtRegisterLastName.Text;
@@ -58,9 +59,9 @@ namespace CarDealership
                 // Loop through all the properties to make sure none of them are empty.
                 //https://www.w3schools.blog/loop-over-object-properties-c
                 // If one is empty then throw an error and return false.
-                foreach (var property in user.GetType().GetProperties())
-                    if (string.IsNullOrEmpty(property.GetValue(user).ToString()))
-                        throw new ArgumentException("Please input a " + property.Name, property.Name.ToUpper() + " not found");
+                foreach (PropertyInfo property in user.GetType().GetProperties())
+                    if (property.GetValue(user) != null && string.IsNullOrEmpty(property.GetValue(user).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
 
                 return true;
             }
@@ -84,7 +85,8 @@ namespace CarDealership
                 return;
             }
 
-            EnterFormCarsForSale();
+            foreach (TextBox textBox in registerGroupBox.Controls.OfType<TextBox>())
+                textBox.Clear();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -116,7 +118,7 @@ namespace CarDealership
         private void EnterFormCarsForSale()
         {
             // Check if int is null or empty
-            if (string.IsNullOrEmpty(user.userID.ToString()))
+            if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID == -1)
                 return;
 
             int sellerID = user.userID;

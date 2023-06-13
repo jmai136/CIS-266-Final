@@ -35,6 +35,8 @@ namespace CarDealership
 
         private void frmCarsForSale_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'groupFinal266DataSet.Comments' table. You can move, or remove it, as needed.
+            this.commentsTableAdapter.Fill(this.groupFinal266DataSet.Comments);
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Listing' table. You can move, or remove it, as needed.
             this.listingTableAdapter.Fill(this.groupFinal266DataSet.Listing);
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Sellers' table. You can move, or remove it, as needed.

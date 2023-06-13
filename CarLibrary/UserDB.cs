@@ -39,7 +39,7 @@ namespace CarLibrary
                         "END " +
                     "ELSE " +
                     "INSERT Sellers (SellerID, CarVIN, FirstName, LastName, Email, Password)  " +
-                    "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password)";
+                    "VALUES (@SellerID, @CarVIN, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
 
                 cmd.Parameters.AddWithValue("@SellerID", user.userID);
                 cmd.Parameters.AddWithValue("@CarVIN", user.carVIN);
@@ -53,6 +53,7 @@ namespace CarLibrary
                     return false;
 
                 sqlConnection.Open();
+                cmd.ExecuteNonQuery();
 
                 return true;
             }

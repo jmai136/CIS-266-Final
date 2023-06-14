@@ -41,7 +41,7 @@
             this.btnHidePassword = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.groupBoxLogin = new System.Windows.Forms.GroupBox();
+            this.loginGroupBox = new System.Windows.Forms.GroupBox();
             this.registerGroupBox = new System.Windows.Forms.GroupBox();
             this.lblLastName = new System.Windows.Forms.Label();
             this.txtRegisterLastName = new System.Windows.Forms.TextBox();
@@ -55,7 +55,7 @@
             lblSellerEmailLogin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).BeginInit();
-            this.groupBoxLogin.SuspendLayout();
+            this.loginGroupBox.SuspendLayout();
             this.registerGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,22 +155,22 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // groupBoxLogin
+            // loginGroupBox
             // 
-            this.groupBoxLogin.Controls.Add(this.txtLoginPassword);
-            this.groupBoxLogin.Controls.Add(this.btnHidePassword);
-            this.groupBoxLogin.Controls.Add(this.btnLogin);
-            this.groupBoxLogin.Controls.Add(this.btnShowPassword);
-            this.groupBoxLogin.Controls.Add(this.btnCancel);
-            this.groupBoxLogin.Controls.Add(this.txtSellerEmailLogin);
-            this.groupBoxLogin.Controls.Add(lblSellerEmailLogin);
-            this.groupBoxLogin.Controls.Add(this.lblPasswordLogin);
-            this.groupBoxLogin.Location = new System.Drawing.Point(22, 198);
-            this.groupBoxLogin.Name = "groupBoxLogin";
-            this.groupBoxLogin.Size = new System.Drawing.Size(467, 152);
-            this.groupBoxLogin.TabIndex = 9;
-            this.groupBoxLogin.TabStop = false;
-            this.groupBoxLogin.Text = "Login";
+            this.loginGroupBox.Controls.Add(this.txtLoginPassword);
+            this.loginGroupBox.Controls.Add(this.btnHidePassword);
+            this.loginGroupBox.Controls.Add(this.btnLogin);
+            this.loginGroupBox.Controls.Add(this.btnShowPassword);
+            this.loginGroupBox.Controls.Add(this.btnCancel);
+            this.loginGroupBox.Controls.Add(this.txtSellerEmailLogin);
+            this.loginGroupBox.Controls.Add(lblSellerEmailLogin);
+            this.loginGroupBox.Controls.Add(this.lblPasswordLogin);
+            this.loginGroupBox.Location = new System.Drawing.Point(22, 198);
+            this.loginGroupBox.Name = "loginGroupBox";
+            this.loginGroupBox.Size = new System.Drawing.Size(467, 152);
+            this.loginGroupBox.TabIndex = 9;
+            this.loginGroupBox.TabStop = false;
+            this.loginGroupBox.Text = "Login";
             // 
             // registerGroupBox
             // 
@@ -274,14 +274,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 362);
             this.Controls.Add(this.registerGroupBox);
-            this.Controls.Add(this.groupBoxLogin);
+            this.Controls.Add(this.loginGroupBox);
             this.Name = "frmUsers";
             this.Text = "Users";
             this.Load += new System.EventHandler(this.Users_Load);
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).EndInit();
-            this.groupBoxLogin.ResumeLayout(false);
-            this.groupBoxLogin.PerformLayout();
+            this.loginGroupBox.ResumeLayout(false);
+            this.loginGroupBox.PerformLayout();
             this.registerGroupBox.ResumeLayout(false);
             this.registerGroupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -301,7 +301,7 @@
         private System.Windows.Forms.Button btnHidePassword;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.GroupBox groupBoxLogin;
+        private System.Windows.Forms.GroupBox loginGroupBox;
         private System.Windows.Forms.GroupBox registerGroupBox;
         private System.Windows.Forms.Label lblRegisterEmail;
         private System.Windows.Forms.Label lblRegisterPassword;

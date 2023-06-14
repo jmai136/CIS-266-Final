@@ -12,6 +12,8 @@ namespace CarLibrary
         void AssignBusinessObjectData();
 
         bool PutBusinessObjectData();
+
+        void EnableControls(bool enable = true);
     }
 
     // Use to verify login user for the user form

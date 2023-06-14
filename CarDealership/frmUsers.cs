@@ -120,11 +120,25 @@ namespace CarDealership
                 // If the hashed password stored in the query matches the hashed password you inputted
 
                 EnterFormCarsForSale();
+                EnableControls(false);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
+        }
+
+        public void EnableControls(bool enable = true)
+        {
+            foreach (GroupBox groupBox in Controls)
+                foreach (Control c in groupBox.Controls)
+                {
+                    if (c is Button)
+                        c.Enabled = enable;
+
+                    if (c is TextBox)
+                        c.Enabled = enable;
+                }
         }
 
         private void EnterFormCarsForSale()

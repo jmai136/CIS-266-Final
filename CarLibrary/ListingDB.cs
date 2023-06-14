@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace CarLibrary
 {
-    public class ListingDB
+    public class ListingDB : IDatabase
     {
         // should have the properties for Car and the DateTime of the creation of the listing
         // Grab subclass of car?
@@ -93,14 +93,14 @@ namespace CarLibrary
             // Use IComparable by age, etc
         }
 
-        public static void UploadCarListing()
+        public bool Upload(object obj, SqlConnection sqlConnection)
         {
-
+            return true;
         }
 
-        public static void DeleteCarListing()
+        public bool Delete(object obj, SqlConnection sqlConnection)
         {
-
+            return true;
         }
 
         // Comment section where a potential buyer can ask questions to the seller.
@@ -109,10 +109,5 @@ namespace CarLibrary
         {
 
         }
-    }
-
-    public interface IListingDB
-    {
-        void FilterBy();
     }
 }

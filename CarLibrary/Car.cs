@@ -48,9 +48,4 @@ namespace CarLibrary
          * 
          */
     }
-
-    public interface ICar
-    {
-        // Declare some functions here, related to features?
-    }
 }

@@ -56,7 +56,7 @@ namespace CarDealership
             filterByToolStripComboBox.ComboBox.Items.Add("Age");
             filterByToolStripComboBox.ComboBox.Items.Add("Price");
 
-            filterByToolStripComboBox.ComboBox.SelectedIndex = 0;
+            // filterByToolStripComboBox.ComboBox.SelectedIndex = 0;
         }
 
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,7 +73,7 @@ namespace CarDealership
             foreach (var option in options)
                 carPropertyStripComboBox.ComboBox.Items.Add(option.ToString());
 
-            carPropertyStripComboBox.ComboBox.SelectedIndex = 0;
+            // carPropertyStripComboBox.ComboBox.SelectedIndex = 0;
         }
 
         private void viewAllToolStripButton_Click(object sender, EventArgs e)

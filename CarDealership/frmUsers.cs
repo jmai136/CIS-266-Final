@@ -14,7 +14,7 @@ using CarLibrary;
 
 namespace CarDealership
 {
-    public partial class frmUsers : Form
+    public partial class frmUsers : Form,  IUser, IUtility
     {
         // Temporary user
         User user = new User();
@@ -29,7 +29,6 @@ namespace CarDealership
             this.Validate();
             this.buyersBindingSource.EndEdit();
             this.tableAdapterManager.UpdateAll(this.groupFinal266DataSet);
-
         }
 
         private void Users_Load(object sender, EventArgs e)
@@ -38,7 +37,7 @@ namespace CarDealership
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
         }
 
-        private void AssignUserRegistrationData(User user)
+        public void AssignBusinessObjectData()
         {
             user.email = txtRegisterEmail.Text;
             user.password = txtRegisterPassword.Text;
@@ -46,15 +45,14 @@ namespace CarDealership
             user.lastName = txtRegisterLastName.Text;
         }
 
-        private bool PutUserRegisterData(User user)
+        public bool PutBusinessObjectData()
         {
             try
             {
                 // Temporary values for userID and CarVIN, because they'd need to be updated later
                 user.userID = 0;
-                user.carVIN = "VIN";
 
-                AssignUserRegistrationData(user);
+                AssignBusinessObjectData();
 
                 // Loop through all the properties to make sure none of them are empty.
                 //https://www.w3schools.blog/loop-over-object-properties-c
@@ -77,10 +75,12 @@ namespace CarDealership
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            if (!PutUserRegisterData(user))
+            if (!PutBusinessObjectData())
                 return;
 
-            if (!UserDB.RegisterUser(user, Program.sqlConnection)) {
+            UserDB userDB = new UserDB();
+
+            if (!userDB.Upload(user, Program.sqlConnection)) {
                 MessageBox.Show("User already exists.", "Invalid registration");
                 return;
             }
@@ -91,6 +91,11 @@ namespace CarDealership
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            UserAuthentication();
+        }
+
+        public void UserAuthentication()
+        {
             // Put in validation here to see if it exists in the SQL database
             try
             {
@@ -100,8 +105,15 @@ namespace CarDealership
                 if (string.IsNullOrEmpty(txtLoginPassword.Text))
                     throw new ArgumentException("Please input a password", "Password not found");
 
+                user.email = txtSellerEmailLogin.Text;
+                user.password = txtLoginPassword.Text;
+
+                string msgText = "", msgCaption = "";
+
                 // Insert query here
-                UserDB.VerifyLoginUser(user, Program.sqlConnection);
+                UserDB.VerifyLoginUser(user, Program.sqlConnection, out msgText, out msgCaption);
+
+                // MessageBox.Show(msgText, msgCaption);
 
                 // Because hashes are deterministic, two same passwords will always share the same hash
                 // So grab the password that you inputted, call HashPassword, pass that in, then check to see
@@ -126,6 +138,7 @@ namespace CarDealership
             // Probably go to the new form then using the user?
             // Maybe we do need an argument constructor
             frmCarsForSale carsForSale = new frmCarsForSale();
+            carsForSale.Show();
         }
 
         private void btnShowPassword_Click(object sender, EventArgs e)

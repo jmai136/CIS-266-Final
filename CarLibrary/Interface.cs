@@ -39,6 +39,9 @@ namespace CarLibrary
 
     public interface IDatabase
     {
+        string MsgText { get; set; }
+        string MsgCaption { get; set; }
+
         bool Upload(object obj, SqlConnection sqlConnection);
 
         bool Delete(object obj, SqlConnection sqlConnection);

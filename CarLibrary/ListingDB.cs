@@ -11,6 +11,9 @@ namespace CarLibrary
 {
     public class ListingDB : IDatabase
     {
+        public string MsgText { get; set; } = "";
+        public string MsgCaption { get; set; } = "";
+
         // should have the properties for Car and the DateTime of the creation of the listing
         // Grab subclass of car?
         DateTime carCreationTime { get; set; }

@@ -25,3 +25,4 @@ C:\Users\accol\Desktop\CIS266\CIS266 Final\CarDealership\obj\Debug\CarDealership
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarDealership\bin\Debug\CarLibrary.dll
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarDealership\bin\Debug\CarLibrary.pdb
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarDealership\obj\Debug\CarDealership.csproj.CopyComplete
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarDealership\bin\Debug\CarLibrary.dll.config

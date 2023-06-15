@@ -15,6 +15,9 @@ namespace CarLibrary
 {
     public class UserDB : IDatabase
     {
+        public string MsgText { get; set; } = "";
+        public string MsgCaption { get; set; } = "";
+
         // https://stackoverflow.com/questions/18114458/fastest-way-to-determine-if-record-exists
         // If exists for SQL query
 
@@ -22,69 +25,60 @@ namespace CarLibrary
         {
             try
             {
-                if (obj is User)
-                {
+                if (obj is User == false)
+                    throw new ArgumentException("Argument passed in isn't correct type User", "object");
 
-                    List<object> userProperties = new List<object>();
+                List<object> userProperties = new List<object>();
 
-                    foreach (PropertyInfo property in obj.GetType().GetProperties())
-                        if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
-                        {
-                            return false;
-                        }
-                        else {
-                            userProperties.Add(property.GetValue(obj));
-                        }
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                    else
+                        userProperties.Add(property.GetValue(obj));
+                
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
 
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = sqlConnection;
+                cmd.CommandText =
+                    "IF EXISTS " +
+                        "(SELECT TOP 1 SellerID FROM Sellers " +
+                            "WHERE FirstName = @FirstName " +
+                             "AND LastName = @LastName " +
+                             "AND Email=@Email " +
+                             "AND Password=HASHBYTES('SHA2_512', @Password)) " +
+                         "BEGIN " +
+                             "SET @SellerID=(SELECT SellerID FROM Sellers " +
+                             "WHERE FirstName = @FirstName " +
+                             "AND LastName = @LastName " +
+                             "AND Email=@Email " +
+                             "AND Password =HASHBYTES('SHA2_512', @Password)) " +
+                         "END " +
+                     "ELSE " +
+                     "INSERT Sellers (FirstName, LastName, Email, Password)  " +
+                     "VALUES (@FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
 
-                    cmd.CommandText =
-                        "IF EXISTS " +
-                            "(SELECT TOP 1 SellerID FROM Sellers " +
-                                "WHERE FirstName = @FirstName " +
-                                "AND LastName = @LastName " +
-                                "AND Email=@Email " +
-                                "AND Password=HASHBYTES('SHA2_512', @Password)) " +
-                            "BEGIN " +
-                                "SET @SellerID=(SELECT SellerID FROM Sellers " +
-                                "WHERE FirstName = @FirstName " +
-                                "AND LastName = @LastName " +
-                                "AND Email=@Email " +
-                                "AND Password =HASHBYTES('SHA2_512', @Password)) " +
-                            "END " +
-                        "ELSE " +
-                        "INSERT Sellers (FirstName, LastName, Email, Password)  " +
-                        "VALUES (@FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
+                cmd.Parameters.AddWithValue("@SellerID", userProperties[0]);
+                cmd.Parameters.AddWithValue("@FirstName", userProperties[1]);
+                cmd.Parameters.AddWithValue("@LastName", userProperties[2]);
+                cmd.Parameters.AddWithValue("@Email", userProperties[3]);
+                cmd.Parameters.AddWithValue("@Password", userProperties[4]);
 
-                    cmd.Parameters.AddWithValue("@SellerID",userProperties[0]);
-                    cmd.Parameters.AddWithValue("@FirstName", userProperties[1]);
-                    cmd.Parameters.AddWithValue("@LastName", userProperties[2]);
-                    cmd.Parameters.AddWithValue("@Email", userProperties[3]);
-                    cmd.Parameters.AddWithValue("@Password", userProperties[4]);
+                sqlConnection.Open();
+                cmd.ExecuteNonQuery();
 
-                    // Check if the user already exists
-                    if (string.IsNullOrEmpty(userProperties[0].ToString()) || string.IsNullOrWhiteSpace(userProperties[0].ToString()))
-                        return false;
+                if (Int32.Parse(userProperties[0].ToString()) != -1)
+                    throw new Exception("Seller already exists");
 
-                    sqlConnection.Open();
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
-                else
-                { return false; }
+                sqlConnection.Close();
+                return true;
             }
             catch (Exception ex)
             {
-                /*
-                msgText = ex.Message;
-                msgCaption = ex.GetType().ToString();*/
-                return false;
-            }
-            finally
-            {
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
+
                 sqlConnection.Close();
+                return false;
             }
         }
 

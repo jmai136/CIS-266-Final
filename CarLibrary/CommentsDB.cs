@@ -9,6 +9,9 @@ namespace CarLibrary
 {
     public class CommentsDB : IDatabase
     {
+        public string MsgText { get; set; } = "";
+        public string MsgCaption { get; set; } = "";
+
         public bool Upload(object obj, SqlConnection sqlConnection)
         {
             return true;

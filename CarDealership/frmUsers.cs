@@ -17,7 +17,7 @@ namespace CarDealership
     public partial class frmUsers : Form,  IUser, IUtility
     {
         // Temporary user
-        User user = new User();
+        User user = new User() { userID = -1 };
 
         public frmUsers()
         {
@@ -54,9 +54,6 @@ namespace CarDealership
         {
             try
             {
-                // Temporary values for userID and CarVIN, because they'd need to be updated later
-                user.userID = 0;
-
                 AssignBusinessObjectData();
 
                 // Loop through all the properties to make sure none of them are empty.
@@ -74,8 +71,6 @@ namespace CarDealership
             }
 
             return false;
-
-            // Then pass User in to UserDB and have UserDB handle the data if registered data is true.
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -86,7 +81,7 @@ namespace CarDealership
             UserDB userDB = new UserDB();
 
             if (!userDB.Upload(user, Program.sqlConnection)) {
-                MessageBox.Show("User already exists.", "Invalid registration");
+                MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
                 return;
             }
 

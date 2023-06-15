@@ -9,14 +9,79 @@ using System.Data.SqlClient;
 
 namespace CarLibrary
 {
+    struct FilterByMake : IFilter
+    {
+        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetAll(object obj)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    struct FilterByColor : IFilter
+    {
+        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetAll(object obj)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    struct FilterByAge : IFilter
+    {
+        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetAll(object obj)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    struct FilterByPrice : IFilter
+    {
+        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
+        {
+            options = new List<string>();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = sqlConnection;
+
+            switch (filterProperty)
+            {
+                case "$5000-":
+                    break;
+                case "$5000 - 9,999":
+                    break;
+                case "$10,000+":
+                    break;
+                default:
+                    break;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public void GetAll(object obj)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class ListingDB : IDatabase
     {
         public string MsgText { get; set; } = "";
         public string MsgCaption { get; set; } = "";
-
-        // should have the properties for Car and the DateTime of the creation of the listing
-        // Grab subclass of car?
-        DateTime carCreationTime { get; set; }
 
         /*
          * Change the code so you use Interfaces instead.
@@ -28,14 +93,63 @@ namespace CarLibrary
         // Select statements here or grab the query created in the designer
         // Should have all three methods somewhere: creating query through designer, execute scalar, and stored procedures
         
-        public static void GetAllListings()
+        public static void GetAllListings(SqlConnection sqlConnection)
         {
-            
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+               
+                sqlConnection.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (DataException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
         }
         
-        public static void GetAllCars()
+        // Put GetAll in a separate CarsDB in order to use interfaces
+        public static void GetAllCars(int sellerID, SqlConnection sqlConnection)
         {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
 
+                sqlConnection.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (DataException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
         }
 
         // Insert in the parameters here
@@ -66,6 +180,7 @@ namespace CarLibrary
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
+                // Use this command for colors and make specifically
                 cmd.CommandText = String.Format("SELECT DISTINCT {0} FROM Cars WHERE {0} IS NOT NULL", filterProperty);
 
                 sqlConnection.Open();

@@ -11,8 +11,9 @@ using CarLibrary;
 
 namespace CarDealership
 {
-    public partial class frmCarsForSale : Form
+    public partial class frmCarsForSale : Form, IUser, IUtility
     {
+        int SellerID { get; set; }
         Dictionary<string, string> filterByDictionary = new Dictionary<string, string>
         {
             { "Make", "CarMake" },
@@ -23,6 +24,12 @@ namespace CarDealership
 
         public frmCarsForSale()
         {
+            InitializeComponent();
+        }
+
+        public frmCarsForSale(int sellerID)
+        {
+            SellerID = sellerID;
             InitializeComponent();
         }
 
@@ -45,8 +52,29 @@ namespace CarDealership
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Cars' table. You can move, or remove it, as needed.
             this.carsTableAdapter.Fill(this.groupFinal266DataSet.Cars);
-
+            
             SetUpFilterByComboBox();
+
+            // ListingDB.GetAllCars(SellerID, Program.sqlConnection);
+        }
+
+        // Authenticate first, if the authentication fails, then closes the form.
+        public void UserAuthentication()
+        {
+            // Put in validation here to see if it exists in the SQL database
+            try
+            {
+                EnableControls(false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+        public void EnableControls(bool enable = true)
+        {
+            
         }
 
         private void SetUpFilterByComboBox()
@@ -79,6 +107,16 @@ namespace CarDealership
         private void viewAllToolStripButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void AssignBusinessObjectData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PutBusinessObjectData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

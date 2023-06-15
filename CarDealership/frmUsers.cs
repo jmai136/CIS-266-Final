@@ -16,8 +16,8 @@ namespace CarDealership
 {
     public partial class frmUsers : Form,  IUser, IUtility
     {
-        // Temporary user
         User user = new User() { userID = -1 };
+        UserDB userDB = new UserDB();
 
         public frmUsers()
         {
@@ -33,6 +33,8 @@ namespace CarDealership
 
         private void Users_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'groupFinal266DataSet.Sellers' table. You can move, or remove it, as needed.
+            this.sellersTableAdapter.Fill(this.groupFinal266DataSet.Sellers);
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
 
@@ -78,8 +80,6 @@ namespace CarDealership
             if (!PutBusinessObjectData())
                 return;
 
-            UserDB userDB = new UserDB();
-
             if (!userDB.Upload(user, Program.sqlConnection)) {
                 MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
                 return;
@@ -108,19 +108,12 @@ namespace CarDealership
                 user.email = txtSellerEmailLogin.Text;
                 user.password = txtLoginPassword.Text;
 
-                /*string msgText = "", msgCaption = "";*/
-
-                // Insert query here
-                if (UserDB.VerifyLoginUser(user, Program.sqlConnection/*, out msgText, out msgCaption*/)) {
-                    EnterFormCarsForSale();
-                    EnableControls(false);
-                }
-
-                // MessageBox.Show(msgText, msgCaption);
-
                 // Because hashes are deterministic, two same passwords will always share the same hash
-                // So grab the password that you inputted, call HashPassword, pass that in, then check to see
-                // If the hashed password stored in the query matches the hashed password you inputted
+                if (!userDB.VerifyLoginUser(user, Program.sqlConnection))
+                    MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
+
+                EnterFormCarsForSale();
+                EnableControls(false);
             }
             catch (Exception ex)
             {
@@ -147,11 +140,9 @@ namespace CarDealership
             if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID == -1)
                 return;
 
-            int sellerID = user.userID;
-
             // Probably go to the new form then using the user?
             // Maybe we do need an argument constructor
-            frmCarsForSale carsForSale = new frmCarsForSale();
+            frmCarsForSale carsForSale = new frmCarsForSale(user.userID);
             carsForSale.Show();
         }
 

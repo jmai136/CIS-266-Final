@@ -355,7 +355,7 @@
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(585, 430);
+            this.btnUpload.Location = new System.Drawing.Point(514, 664);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 30);
             this.btnUpload.TabIndex = 12;
@@ -364,7 +364,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(715, 430);
+            this.btnDelete.Location = new System.Drawing.Point(715, 664);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 13;
@@ -373,9 +373,9 @@
             // 
             // btnComments
             // 
-            this.btnComments.Location = new System.Drawing.Point(715, 466);
+            this.btnComments.Location = new System.Drawing.Point(613, 664);
             this.btnComments.Name = "btnComments";
-            this.btnComments.Size = new System.Drawing.Size(75, 35);
+            this.btnComments.Size = new System.Drawing.Size(75, 30);
             this.btnComments.TabIndex = 14;
             this.btnComments.Text = "Comments";
             this.btnComments.UseVisualStyleBackColor = true;
@@ -398,7 +398,7 @@
             this.commentsDataGridView.DataSource = this.commentsBindingSource;
             this.commentsDataGridView.Location = new System.Drawing.Point(11, 443);
             this.commentsDataGridView.Name = "commentsDataGridView";
-            this.commentsDataGridView.Size = new System.Drawing.Size(417, 291);
+            this.commentsDataGridView.Size = new System.Drawing.Size(779, 202);
             this.commentsDataGridView.TabIndex = 15;
             // 
             // dataGridViewTextBoxColumn8
@@ -411,7 +411,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 716);
+            this.ClientSize = new System.Drawing.Size(810, 711);
             this.Controls.Add(this.commentsDataGridView);
             this.Controls.Add(this.btnComments);
             this.Controls.Add(this.btnDelete);

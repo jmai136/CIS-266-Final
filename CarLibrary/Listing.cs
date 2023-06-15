@@ -13,5 +13,9 @@ namespace CarLibrary
         public int buyerID {get; set;}
         public string buyerFirstName { get; set; }
         public string buyerLastName {get; set;}
+        Car car { get; set; }
+        // should have the properties for Car and the DateTime of the creation of the listing
+        // Grab subclass of car?
+        DateTime carCreationTime { get; set; }
     }
 }

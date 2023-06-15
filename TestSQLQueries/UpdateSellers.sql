@@ -10,8 +10,8 @@ IF EXISTS
 	AND LastName = @LastName 
 	AND Email=@Email 
 	AND Password=HASHBYTES('SHA2_512', @Password)) 
-                         BEGIN 
-                             SET @SellerID=(SELECT SellerID FROM Sellers 
+	BEGIN 
+SET @SellerID=(SELECT SellerID FROM Sellers 
                              WHERE FirstName = @FirstName 
                              AND LastName = @LastName 
                              AND Email=@Email 

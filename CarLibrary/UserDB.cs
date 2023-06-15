@@ -65,7 +65,7 @@ namespace CarLibrary
                 sqlConnection.Open();
                 
                 if (cmd.ExecuteScalar() != null)
-                    throw new Exception("Seller already exists");
+                    throw new DataException("User already exists");
             }
             catch (Exception ex)
             {
@@ -82,7 +82,7 @@ namespace CarLibrary
             return canUpload;
         }
 
-        public static bool VerifyLoginUser(User user, SqlConnection sqlConnection)
+        public bool VerifyLoginUser(User user, SqlConnection sqlConnection)
         {
             bool canLogin = true;
 
@@ -112,10 +112,8 @@ namespace CarLibrary
             }
             catch (Exception ex)
             {
-                /*
                 MsgText = ex.Message;
                 MsgCaption = ex.GetType().ToString();
-                */
 
                 canLogin = false;
             }
@@ -129,7 +127,52 @@ namespace CarLibrary
 
         public bool Delete(object obj, SqlConnection sqlConnection)
         {
-            return true;
+            bool isDeleted = true;
+
+            try
+            {
+                if (obj is User == false)
+                    throw new ArgumentException("Argument passed in isn't correct type User", "object");
+
+                List<object> userProperties = new List<object>();
+
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                    else
+                        userProperties.Add(property.GetValue(obj));
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+
+                cmd.CommandText = "DELETE FROM Sellers WHERE Email=@Email AND Password=@Password";
+
+                cmd.Parameters.AddWithValue("@Email", userProperties[3]);
+                cmd.Parameters.AddWithValue("@Password", userProperties[4]);
+
+                sqlConnection.Open();
+
+                int recordsAmount = cmd.ExecuteNonQuery();
+
+                if (recordsAmount > 1)
+                    throw new DataException("Too many records for the same user");
+
+                if (recordsAmount != 1)
+                    throw new DataException("No user to delete");
+            }
+            catch (Exception ex)
+            {
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
+
+                isDeleted = false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return isDeleted;
         }
     }
 }

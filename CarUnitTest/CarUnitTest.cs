@@ -5,10 +5,10 @@ using CarLibrary;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CarDealershipUnitTest
+namespace CarUnitTest
 {
     [TestClass]
-    public class CarDealershipUnitTest
+    public class CarUnitTest
     {
         // https://stackoverflow.com/questions/21853793/how-can-i-access-to-an-internal-static-class-from-another-assembly
 
@@ -38,9 +38,11 @@ namespace CarDealershipUnitTest
             {
                 email = "zzm4h94sr1a@icznn.com",
                 password = "u3AeOX ^ 686 & h",
+                firstName = "Hoshi",
+                lastName = "Kash"
             };
 
-            Assert.IsFalse(userDB.Upload(user, Program.sqlConnection), "Should be false due to already existing user");
+            Assert.IsFalse(userDB.Upload(user, Program.sqlConnection), "Should be false due to already existing user regardless of user's name");
         }
 
         [TestMethod]

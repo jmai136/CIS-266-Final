@@ -9,6 +9,7 @@ using System.Numerics;
 using System.Xml.Linq;
 using System.Data;
 using System.Reflection;
+using System.CodeDom;
 
 namespace CarLibrary
 {
@@ -21,55 +22,65 @@ namespace CarLibrary
         {
             try
             {
-                User user = (User)obj;
+                if (obj is User)
+                {
 
-                foreach (PropertyInfo property in user.GetType().GetProperties())
-                    if (property.GetValue(user) != null && string.IsNullOrEmpty(property.GetValue(user).ToString()))
+                    List<object> userProperties = new List<object>();
+
+                    foreach (PropertyInfo property in obj.GetType().GetProperties())
+                        if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        {
+                            return false;
+                        }
+                        else {
+                            userProperties.Add(property.GetValue(obj));
+                        }
+
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = sqlConnection;
+
+                    cmd.CommandText =
+                        "IF EXISTS " +
+                            "(SELECT TOP 1 SellerID FROM Sellers " +
+                                "WHERE FirstName = @FirstName " +
+                                "AND LastName = @LastName " +
+                                "AND Email=@Email " +
+                                "AND Password=HASHBYTES('SHA2_512', @Password)) " +
+                            "BEGIN " +
+                                "SET @SellerID=(SELECT SellerID FROM Sellers " +
+                                "WHERE FirstName = @FirstName " +
+                                "AND LastName = @LastName " +
+                                "AND Email=@Email " +
+                                "AND Password =HASHBYTES('SHA2_512', @Password)) " +
+                            "END " +
+                        "ELSE " +
+                        "INSERT Sellers (FirstName, LastName, Email, Password)  " +
+                        "VALUES (@FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
+
+                    cmd.Parameters.AddWithValue("@SellerID",userProperties[0]);
+                    cmd.Parameters.AddWithValue("@FirstName", userProperties[1]);
+                    cmd.Parameters.AddWithValue("@LastName", userProperties[2]);
+                    cmd.Parameters.AddWithValue("@Email", userProperties[3]);
+                    cmd.Parameters.AddWithValue("@Password", userProperties[4]);
+
+                    // Check if the user already exists
+                    if (string.IsNullOrEmpty(userProperties[0].ToString()) || string.IsNullOrWhiteSpace(userProperties[0].ToString()))
                         return false;
 
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection;
+                    sqlConnection.Open();
+                    cmd.ExecuteNonQuery();
 
-                cmd.CommandText = 
-                    "IF EXISTS " +
-                        "(SELECT TOP 1 SellerID FROM Sellers " +
-                            "WHERE FirstName = @FirstName " +
-                            "AND LastName = @LastName " +
-                            "AND Email=@Email " +
-                            "AND Password=HASHBYTES('SHA2_512', @Password)) " +
-                        "BEGIN " +
-                            "SET @SellerID=(SELECT SellerID FROM Sellers " +
-                            "WHERE FirstName = @FirstName " +
-                            "AND LastName = @LastName " +
-                            "AND Email=@Email " +
-                            "AND Password =HASHBYTES('SHA2_512', @Password)) " +
-                        "END " +
-                    "ELSE " +
-                    "INSERT Sellers (SellerID, FirstName, LastName, Email, Password)  " +
-                    "VALUES (@SellerID, @FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
-
-                cmd.Parameters.AddWithValue("@SellerID", user.userID);
-                cmd.Parameters.AddWithValue("@FirstName", user.firstName);
-                cmd.Parameters.AddWithValue("@LastName", user.lastName);
-                cmd.Parameters.AddWithValue("@Email", user.email);
-                cmd.Parameters.AddWithValue("@Password", user.password);
-
-                // Check if the user already exists
-                if (string.IsNullOrEmpty(user.userID.ToString()) || string.IsNullOrWhiteSpace(user.userID.ToString()))
-                    return false;
-
-                sqlConnection.Open();
-                cmd.ExecuteNonQuery();
-
-                return true;
+                    return true;
+                }
+                else
+                { return false; }
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                throw ex;
-            }
-            catch (DataException ex)
-            {
-                throw ex;
+                /*
+                msgText = ex.Message;
+                msgCaption = ex.GetType().ToString();*/
+                return false;
             }
             finally
             {
@@ -77,12 +88,14 @@ namespace CarLibrary
             }
         }
 
-        public static void VerifyLoginUser(User user, SqlConnection sqlConnection, out string msgText, out string msgCaption)
+        public static bool VerifyLoginUser(User user, SqlConnection sqlConnection/*, out string msgText, out string msgCaption*/)
         {
             try
             {
+                /*
                 msgText = "";
                 msgCaption = "";
+                */
 
                 // Replace with a query or a stored procedure
                 SqlCommand cmd = new SqlCommand(
@@ -103,22 +116,17 @@ namespace CarLibrary
                 // Hopefully it retusn SellerID?
                 sqlConnection.Open();
                 cmd.ExecuteReader();
+
+                return (user.userID != -1) ? true : false;
             }
             catch (Exception ex)
             {
+                /*
                 msgText = ex.Message;
                 msgCaption = ex.GetType().ToString();
+                */
+                throw ex;
             }
-            /*catch (SqlException ex)
-            {
-                msgText = ex.Message;
-                msgCaption = ex.GetType().ToString();
-            }
-            catch (DataException ex)
-            {
-                msgText = ex.Message;
-                msgCaption = ex.GetType().ToString();
-            }*/
             finally
             {
                 sqlConnection.Close();

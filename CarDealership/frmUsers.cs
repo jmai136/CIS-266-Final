@@ -35,6 +35,11 @@ namespace CarDealership
         {
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
+
+            txtRegisterEmail.Text = "zzm4h94sr1a@icznn.com";
+            txtRegisterPassword.Text = "u3AeOX ^ 686 & h";
+            txtRegisterFirstName.Text = "Hoshi";
+            txtRegisterLastName.Text = "Kash";
         }
 
         public void AssignBusinessObjectData()
@@ -58,7 +63,7 @@ namespace CarDealership
                 //https://www.w3schools.blog/loop-over-object-properties-c
                 // If one is empty then throw an error and return false.
                 foreach (PropertyInfo property in user.GetType().GetProperties())
-                    if (property.GetValue(user) != null && string.IsNullOrEmpty(property.GetValue(user).ToString()))
+                    if (property.GetValue(user) == null || string.IsNullOrEmpty(property.GetValue(user).ToString()))
                         throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
 
                 return true;
@@ -108,19 +113,19 @@ namespace CarDealership
                 user.email = txtSellerEmailLogin.Text;
                 user.password = txtLoginPassword.Text;
 
-                string msgText = "", msgCaption = "";
+                /*string msgText = "", msgCaption = "";*/
 
                 // Insert query here
-                UserDB.VerifyLoginUser(user, Program.sqlConnection, out msgText, out msgCaption);
+                if (UserDB.VerifyLoginUser(user, Program.sqlConnection/*, out msgText, out msgCaption*/)) {
+                    EnterFormCarsForSale();
+                    EnableControls(false);
+                }
 
                 // MessageBox.Show(msgText, msgCaption);
 
                 // Because hashes are deterministic, two same passwords will always share the same hash
                 // So grab the password that you inputted, call HashPassword, pass that in, then check to see
                 // If the hashed password stored in the query matches the hashed password you inputted
-
-                EnterFormCarsForSale();
-                EnableControls(false);
             }
             catch (Exception ex)
             {

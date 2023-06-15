@@ -39,10 +39,24 @@ namespace CarUnitTest
                 email = "zzm4h94sr1a@icznn.com",
                 password = "u3AeOX ^ 686 & h",
                 firstName = "Hoshi",
-                lastName = "Kash"
+                lastName = "Kask"
             };
 
             Assert.IsFalse(userDB.Upload(user, Program.sqlConnection), "Should be false due to already existing user regardless of user's name");
+        }
+
+        public void UserFailedRegistrationBecauseShareSameEmailAndPassword()
+        {
+            // Make sure to already have this in the database.
+            User user = new User()
+            {
+                email = "zzm4h94sr1a@icznn.com",
+                password = "u3AeOX ^ 686 & h",
+                firstName = "Narric",
+                lastName = "Maric"
+            };
+
+            Assert.IsFalse(userDB.Upload(user, Program.sqlConnection), "Should be false due to not being able to register with the same email and password for two different users");
         }
 
         [TestMethod]

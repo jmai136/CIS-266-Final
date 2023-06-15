@@ -30,7 +30,7 @@ namespace CarLibrary
         
         public static void GetAllListings()
         {
-
+            
         }
         
         public static void GetAllCars()

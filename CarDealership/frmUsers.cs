@@ -39,7 +39,7 @@ namespace CarDealership
             txtRegisterEmail.Text = "zzm4h94sr1a@icznn.com";
             txtRegisterPassword.Text = "u3AeOX ^ 686 & h";
             txtRegisterFirstName.Text = "Hoshi";
-            txtRegisterLastName.Text = "Kash";
+            txtRegisterLastName.Text = "Kask";
         }
 
         public void AssignBusinessObjectData()

@@ -23,6 +23,8 @@ namespace CarLibrary
 
         public bool Upload(object obj, SqlConnection sqlConnection)
         {
+            bool canUpload = true;
+
             try
             {
                 if (obj is User == false)
@@ -42,64 +44,57 @@ namespace CarLibrary
                 cmd.CommandText =
                     "IF EXISTS " +
                         "(SELECT TOP 1 SellerID FROM Sellers " +
+                            "WHERE Email=@Email " +
+                             "AND Password=HASHBYTES('SHA2_512', @Password)) " + 
+                        "BEGIN " +
+                            "SELECT SellerID FROM Sellers " +
                             "WHERE FirstName = @FirstName " +
-                             "AND LastName = @LastName " +
-                             "AND Email=@Email " +
-                             "AND Password=HASHBYTES('SHA2_512', @Password)) " +
-                         "BEGIN " +
-                             "SET @SellerID=(SELECT SellerID FROM Sellers " +
-                             "WHERE FirstName = @FirstName " +
-                             "AND LastName = @LastName " +
-                             "AND Email=@Email " +
-                             "AND Password =HASHBYTES('SHA2_512', @Password)) " +
-                         "END " +
+                            "AND LastName = @LastName " +
+                            "AND Email=@Email " +
+                            "AND Password =HASHBYTES('SHA2_512', @Password) " +
+                        "END " +
                      "ELSE " +
-                     "INSERT Sellers (FirstName, LastName, Email, Password)  " +
+                     "INSERT INTO Sellers (FirstName, LastName, Email, Password)  " +
                      "VALUES (@FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
 
-                cmd.Parameters.AddWithValue("@SellerID", userProperties[0]);
                 cmd.Parameters.AddWithValue("@FirstName", userProperties[1]);
                 cmd.Parameters.AddWithValue("@LastName", userProperties[2]);
                 cmd.Parameters.AddWithValue("@Email", userProperties[3]);
                 cmd.Parameters.AddWithValue("@Password", userProperties[4]);
 
                 sqlConnection.Open();
-                cmd.ExecuteNonQuery();
-
-                if (Int32.Parse(userProperties[0].ToString()) != -1)
+                
+                if (cmd.ExecuteScalar() != null)
                     throw new Exception("Seller already exists");
-
-                sqlConnection.Close();
-                return true;
             }
             catch (Exception ex)
             {
                 MsgText = ex.Message;
                 MsgCaption = ex.GetType().ToString();
 
-                sqlConnection.Close();
-                return false;
+                canUpload = false;
             }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return canUpload;
         }
 
-        public static bool VerifyLoginUser(User user, SqlConnection sqlConnection/*, out string msgText, out string msgCaption*/)
+        public static bool VerifyLoginUser(User user, SqlConnection sqlConnection)
         {
+            bool canLogin = true;
+
             try
             {
-                /*
-                msgText = "";
-                msgCaption = "";
-                */
-
                 // Replace with a query or a stored procedure
                 SqlCommand cmd = new SqlCommand(
                   "IF EXISTS " +
-                      "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password)) " +
-                          "BEGIN " +
-                          "SET @SellerID=(SELECT SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password)) " +
-                      "END " +
-                  "ELSE " +
-                  "SET @SellerID = -1",
+                        "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password)) " +
+                      "BEGIN " +
+                        "SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password) " +
+                      "END",
                     sqlConnection);
 
                 // TShould use query to assign the user id?
@@ -109,22 +104,27 @@ namespace CarLibrary
 
                 // Hopefully it retusn SellerID?
                 sqlConnection.Open();
-                cmd.ExecuteReader();
 
-                return (user.userID != -1) ? true : false;
+                user.userID = Convert.ToInt32(cmd.ExecuteScalar());
+
+                if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID == -1)
+                    throw new DataException("User doesn't exist");
             }
             catch (Exception ex)
             {
                 /*
-                msgText = ex.Message;
-                msgCaption = ex.GetType().ToString();
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
                 */
-                throw ex;
+
+                canLogin = false;
             }
             finally
             {
                 sqlConnection.Close();
             }
+
+            return canLogin;
         }
 
         public bool Delete(object obj, SqlConnection sqlConnection)

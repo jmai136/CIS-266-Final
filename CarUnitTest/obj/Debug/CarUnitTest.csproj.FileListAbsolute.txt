@@ -40,3 +40,4 @@ C:\Users\accol\Desktop\CIS266\CIS266 Final\CarUnitTest\obj\Debug\CarUnitTest.csp
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarUnitTest\obj\Debug\CarUnitTest.csproj.CopyComplete
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarUnitTest\obj\Debug\CarDealershipUnitTest.dll
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarUnitTest\obj\Debug\CarDealershipUnitTest.pdb
+C:\Users\accol\Desktop\CIS266\CIS266 Final\CarUnitTest\bin\Debug\CarLibrary.dll.config

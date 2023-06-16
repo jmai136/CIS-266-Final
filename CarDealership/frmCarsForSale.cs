@@ -17,6 +17,9 @@ namespace CarDealership
     {
         int SellerID { get; set; } = -1;
 
+        Listing listing = new Listing();
+        ListingDB listingDB = new ListingDB();
+
         struct filterByStruct
         {
             // Grab the other structs then use commands to filter
@@ -49,8 +52,6 @@ namespace CarDealership
                 {"Price", carPriceRanges }
             };
         }
-
-        Listing listing = new Listing();
 
         public frmCarsForSale()
         {
@@ -86,6 +87,7 @@ namespace CarDealership
             UserAuthentication();
 
             SetUpFilterByComboBox();
+            SetUpCarMakeOptions();
         }
 
         // Authenticate first, if the authentication fails, then closes the form.
@@ -116,6 +118,14 @@ namespace CarDealership
             filterByToolStripComboBox.ComboBox.Items.Add("Price");
         }
 
+        private void SetUpCarMakeOptions()
+        {
+            carMakeComboBox.Items.Add("Mercedes");
+            carMakeComboBox.Items.Add("BMW");
+            carMakeComboBox.Items.Add("Honda");
+            carMakeComboBox.Items.Add("Toyota");
+        }
+
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             carPropertyStripComboBox.ComboBox.SelectedItem = "";
@@ -130,13 +140,44 @@ namespace CarDealership
 
         private void viewAllToolStripButton_Click(object sender, EventArgs e)
         {
+            // Get every car in database then remove it from there
+            List<Car> cars = listingDB.GetAllCars(SellerID, Program.sqlConnection);
 
+            switch (filterByToolStripComboBox.ComboBox.SelectedItem)
+            {
+                case "Make":
+                    ListingDB.FilterByMake filterByMake = new ListingDB.FilterByMake();
+                    cars = filterByMake.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    break;
+                case "Color":
+                    ListingDB.FilterByColor filterByColor = new ListingDB.FilterByColor();
+                    cars = filterByColor.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    break;
+                case "Age":
+                    ListingDB.FilterByAge filterByAge = new ListingDB.FilterByAge();
+                    cars = filterByAge.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    break;
+                case "Price":
+                    ListingDB.FilterByPrice filterByPrice = new ListingDB.FilterByPrice();
+                    cars = filterByPrice.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    break;
+                default:
+                    break;
+            }
+
+            while (carsDataGridView.Rows.Count > 0)
+                carsDataGridView.Rows.Remove(carsDataGridView.Rows[0]);
+
+            foreach (Car car in cars)
+                carsDataGridView.Rows.Add(car.carVIN, car.age, car.make, car.model, car.price, car.color, car.miles);
+
+            // Each of those CarVIN, look up those listings, select listings with those carVINs, put them in listing grid
         }
 
         // This should be for uploading
         public void AssignBusinessObjectData()
         {
-            throw new NotImplementedException();
+            listing.listingID = Convert.ToInt32(listingIDTextBox.Text);
         }
 
         public bool PutBusinessObjectData()
@@ -189,7 +230,7 @@ namespace CarDealership
             }*/
 
             // Does not work due to Seller constraint
-            try
+            /*try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = Program.sqlConnection;
@@ -216,7 +257,9 @@ namespace CarDealership
             finally
             {
                 Program.sqlConnection.Close();
-            }
+            }*/
+
+
         }
 
         private void btnSubmitComment_Click(object sender, EventArgs e)

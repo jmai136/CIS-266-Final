@@ -13,7 +13,7 @@ using System.CodeDom;
 
 namespace CarLibrary
 {
-    public class UserDB : IDatabase
+    public class UserDB : IDatabase<User>
     {
         public string MsgText { get; set; } = "";
         public string MsgCaption { get; set; } = "";
@@ -21,7 +21,7 @@ namespace CarLibrary
         // https://stackoverflow.com/questions/18114458/fastest-way-to-determine-if-record-exists
         // If exists for SQL query
 
-        public bool Upload(object obj, SqlConnection sqlConnection)
+        public bool Upload(User obj, SqlConnection sqlConnection)
         {
             bool canUpload = true;
 
@@ -30,13 +30,9 @@ namespace CarLibrary
                 if (obj is User == false)
                     throw new ArgumentException("Argument passed in isn't correct type User", "object");
 
-                List<object> userProperties = new List<object>();
-
                 foreach (PropertyInfo property in obj.GetType().GetProperties())
                     if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
                         throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
-                    else
-                        userProperties.Add(property.GetValue(obj));
                 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
@@ -57,10 +53,10 @@ namespace CarLibrary
                      "INSERT INTO Sellers (FirstName, LastName, Email, Password)  " +
                      "VALUES (@FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
 
-                cmd.Parameters.AddWithValue("@FirstName", userProperties[1]);
-                cmd.Parameters.AddWithValue("@LastName", userProperties[2]);
-                cmd.Parameters.AddWithValue("@Email", userProperties[3]);
-                cmd.Parameters.AddWithValue("@Password", userProperties[4]);
+                cmd.Parameters.AddWithValue("@FirstName", obj.firstName);
+                cmd.Parameters.AddWithValue("@LastName", obj.lastName);
+                cmd.Parameters.AddWithValue("@Email", obj.email);
+                cmd.Parameters.AddWithValue("@Password", obj.password);
 
                 sqlConnection.Open();
                 
@@ -159,7 +155,7 @@ namespace CarLibrary
             return isLoggedIn;
         }
 
-        public bool Delete(object obj, SqlConnection sqlConnection)
+        public bool Delete(User obj, SqlConnection sqlConnection)
         {
             bool isDeleted = true;
 

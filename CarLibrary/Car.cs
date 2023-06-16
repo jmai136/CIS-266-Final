@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace CarLibrary
 {
@@ -26,7 +27,7 @@ namespace CarLibrary
          * including a property declaration that uses the override modifier.
          */
 
-        public int id { get; set; }
+        public string carVIN { get; set; }
         public int userId { get; set; }
         public string make { get; set; }
         public string model {get; set;}

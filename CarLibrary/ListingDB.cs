@@ -9,77 +9,86 @@ using System.Data.SqlClient;
 using System.Reflection;
 
 namespace CarLibrary
-{
-    struct FilterByMake : IFilter
-    {
-        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAll(object obj)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    struct FilterByColor : IFilter
-    {
-        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAll(object obj)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    struct FilterByAge : IFilter
-    {
-        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAll(object obj)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    struct FilterByPrice : IFilter
-    {
-        public void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options)
-        {
-            options = new List<string>();
-
-            // https://www.akadia.com/services/dotnet_find_methods.html
-
-            switch (filterProperty)
-            {
-                case "$5000-":
-                    break;
-                case "$5000 - 9,999":
-                    break;
-                case "$10,000+":
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void GetAll(object obj)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ListingDB : IDatabase
+{ 
+    public class ListingDB : IDatabase<Listing>
     {
         public string MsgText { get; set; } = "";
         public string MsgCaption { get; set; } = "";
+
+        public struct FilterByMake : IFilter<Car>
+        {
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void GetAll(object obj)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public struct FilterByColor : IFilter<Car>
+        {
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void GetAll(object obj)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public struct FilterByAge : IFilter<Car>
+        {
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void GetAll(object obj)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public struct FilterByPrice : IFilter<Car>
+        {
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            {
+                // https://www.akadia.com/services/dotnet_find_methods.html
+
+                switch (filterProperty)
+                {
+                    case "$5000-":
+                        break;
+                    case "$5000 - 9,999":
+                        break;
+                    case "$10,000+":
+                        break;
+                    default:
+                        break;
+                }
+
+                return new List<Car>();
+            }
+
+            public void GetAll(object obj)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        private static Dictionary<string, Func<Car>> carsCreationDictionary = new Dictionary<string, Func<Car>>()
+        {
+            { "Mercedes", () => new Mercedes<string>() },
+            { "BMW", () => new BMW<string>() },
+            { "Toyota", () => new Toyota<int>() },
+            { "Honda", () => new BMW<int>() }
+        };
 
         /*
          * Change the code so you use Interfaces instead.
@@ -90,7 +99,7 @@ namespace CarLibrary
 
         // Select statements here or grab the query created in the designer
         // Should have all three methods somewhere: creating query through designer, execute scalar, and stored procedures
-        
+
         public static void GetAllListings(SqlConnection sqlConnection)
         {
             try
@@ -121,33 +130,46 @@ namespace CarLibrary
         }
         
         // Put GetAll in a separate CarsDB in order to use interfaces
-        public static void GetAllCars(int sellerID, SqlConnection sqlConnection)
+        public List<Car> GetAllCars(int sellerID, SqlConnection sqlConnection)
         {
+            List<Car> cars = new List<Car>();
+
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection;
+                SqlCommand cmd = new SqlCommand()
+                {
+                    Connection = sqlConnection,
+                    CommandText = "SELECT FROM Cars"
+                 };
 
                 sqlConnection.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (reader.Read())
                 {
+                    Car car = carsCreationDictionary[reader.GetString(reader.GetOrdinal("CarMake"))].Invoke();
+                    car.carVIN = reader.GetOrdinal("CarVIN").ToString();
+                    car.age = reader.GetOrdinal("CarYear");
+                    car.make = reader.GetOrdinal("CarMake").ToString();
+                    car.model = reader.GetOrdinal("CarModel").ToString();
+                    car.price= reader.GetOrdinal("CarPrice");
+                    car.color = reader.GetOrdinal("CarColor").ToString();
+                    car.miles = reader.GetOrdinal("CarMiles");
 
+                    cars.Add(car);
                 }
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                throw ex;
-            }
-            catch (DataException ex)
-            {
-                throw ex;
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
             }
             finally
             {
                 sqlConnection.Close();
             }
+
+            return cars;
         }
 
         // Insert in the parameters here
@@ -207,20 +229,12 @@ namespace CarLibrary
             // Use IComparable by age, etc
         }
 
-        public bool Upload(object obj, SqlConnection sqlConnection)
+        public bool Upload(Listing obj, SqlConnection sqlConnection)
         {
             try
             {
                 if (obj is Listing == false)
                     throw new ArgumentException("Argument passed in isn't correct type Listing", "object");
-
-                List<object> userProperties = new List<object>();
-
-                foreach (PropertyInfo property in obj.GetType().GetProperties())
-                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
-                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
-                    else
-                        userProperties.Add(property.GetValue(obj));
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
@@ -235,17 +249,21 @@ namespace CarLibrary
                         "END ";
 
                 // Pass in Listings
-                cmd.Parameters.AddWithValue("@SellerID", 1);
-                cmd.Parameters.AddWithValue("@CarVIN", "4JGBB5GB6BA625034");
-                cmd.Parameters.AddWithValue("@Description", "");
+                cmd.Parameters.AddWithValue("@SellerID", obj.sellerID);
+                cmd.Parameters.AddWithValue("@CarVIN", obj.car.carVIN);
+                cmd.Parameters.AddWithValue("@Description", obj.description);
 
                 sqlConnection.Open();
-                cmd.ExecuteScalar();
+
+                if (cmd.ExecuteScalar() != null)
+                    throw new DataException("Listing already exists");
             }
             catch (Exception ex)
             {
                 MsgText = ex.Message;
                 MsgCaption = ex.GetType().ToString();
+
+                return false;
             }
             finally
             {
@@ -255,7 +273,7 @@ namespace CarLibrary
             return true;
         }
 
-        public bool Delete(object obj, SqlConnection sqlConnection)
+        public bool Delete(Listing obj, SqlConnection sqlConnection)
         {
             return true;
         }

@@ -79,13 +79,14 @@ namespace CarUnitTest
             Assert.IsFalse(userDB.Upload(user, sqlConnection), "Should be false due to null or empty user properties.");
         }
 
+        /*
         [TestMethod]
         public void UserFailedRegistrationBecauseIncorrectArgumentType()
         {
             int[] arr = new int[] { 0, 1, 2, 3, 4, 5};
 
             Assert.IsFalse(userDB.Upload(arr, sqlConnection), "Should be false due to not being of type User.");
-        }
+        }*/
 
         /*******************************************
          ************** USER LOGIN *******************

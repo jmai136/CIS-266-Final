@@ -38,6 +38,13 @@
             System.Windows.Forms.Label commentTextLabel;
             System.Windows.Forms.Label listingIDLabel1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCarsForSale));
+            System.Windows.Forms.Label carVINLabel1;
+            System.Windows.Forms.Label carYearLabel;
+            System.Windows.Forms.Label carModelLabel;
+            System.Windows.Forms.Label carPriceLabel;
+            System.Windows.Forms.Label carColorLabel;
+            System.Windows.Forms.Label carMilesLabel;
+            System.Windows.Forms.Label carMakeLabel;
             this.groupFinal266DataSet = new CarDealership.GroupFinal266DataSet();
             this.carsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.carsTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.CarsTableAdapter();
@@ -79,19 +86,28 @@
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CreationDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.listingBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.editListingGroupBox = new System.Windows.Forms.GroupBox();
             this.listingIDTextBox = new System.Windows.Forms.TextBox();
             this.sellerIDTextBox = new System.Windows.Forms.TextBox();
             this.carVINTextBox = new System.Windows.Forms.TextBox();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.creationDateTimeDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.commentIDTextBox = new System.Windows.Forms.TextBox();
-            this.listingIDTextBox1 = new System.Windows.Forms.TextBox();
+            this.listingIDTextBoxComments = new System.Windows.Forms.TextBox();
             this.tabCommentsInfo = new System.Windows.Forms.TabControl();
             this.commentsGeneralTab = new System.Windows.Forms.TabPage();
             this.commentsInfoTab = new System.Windows.Forms.TabPage();
             this.btnSubmitComment = new System.Windows.Forms.Button();
             this.commentsRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.listingTab = new System.Windows.Forms.TabControl();
+            this.listingInfoTab = new System.Windows.Forms.TabPage();
+            this.carInfoTab = new System.Windows.Forms.TabPage();
+            this.carVINTextBox1 = new System.Windows.Forms.TextBox();
+            this.carYearTextBox = new System.Windows.Forms.TextBox();
+            this.carModelTextBox = new System.Windows.Forms.TextBox();
+            this.carPriceTextBox = new System.Windows.Forms.TextBox();
+            this.carColorTextBox = new System.Windows.Forms.TextBox();
+            this.carMilesTextBox = new System.Windows.Forms.TextBox();
+            this.carMakeComboBox = new System.Windows.Forms.ComboBox();
             listingIDLabel = new System.Windows.Forms.Label();
             sellerIDLabel = new System.Windows.Forms.Label();
             carVINLabel = new System.Windows.Forms.Label();
@@ -100,6 +116,13 @@
             commentIDLabel = new System.Windows.Forms.Label();
             commentTextLabel = new System.Windows.Forms.Label();
             listingIDLabel1 = new System.Windows.Forms.Label();
+            carVINLabel1 = new System.Windows.Forms.Label();
+            carYearLabel = new System.Windows.Forms.Label();
+            carModelLabel = new System.Windows.Forms.Label();
+            carPriceLabel = new System.Windows.Forms.Label();
+            carColorLabel = new System.Windows.Forms.Label();
+            carMilesLabel = new System.Windows.Forms.Label();
+            carMakeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carsBindingNavigator)).BeginInit();
@@ -111,16 +134,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.commentsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.listingDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.listingBindingSource)).BeginInit();
-            this.editListingGroupBox.SuspendLayout();
             this.tabCommentsInfo.SuspendLayout();
             this.commentsGeneralTab.SuspendLayout();
             this.commentsInfoTab.SuspendLayout();
+            this.listingTab.SuspendLayout();
+            this.listingInfoTab.SuspendLayout();
+            this.carInfoTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // listingIDLabel
             // 
             listingIDLabel.AutoSize = true;
-            listingIDLabel.Location = new System.Drawing.Point(6, 22);
+            listingIDLabel.Location = new System.Drawing.Point(7, 19);
             listingIDLabel.Name = "listingIDLabel";
             listingIDLabel.Size = new System.Drawing.Size(54, 13);
             listingIDLabel.TabIndex = 14;
@@ -129,7 +154,7 @@
             // sellerIDLabel
             // 
             sellerIDLabel.AutoSize = true;
-            sellerIDLabel.Location = new System.Drawing.Point(6, 48);
+            sellerIDLabel.Location = new System.Drawing.Point(7, 45);
             sellerIDLabel.Name = "sellerIDLabel";
             sellerIDLabel.Size = new System.Drawing.Size(50, 13);
             sellerIDLabel.TabIndex = 16;
@@ -138,7 +163,7 @@
             // carVINLabel
             // 
             carVINLabel.AutoSize = true;
-            carVINLabel.Location = new System.Drawing.Point(6, 74);
+            carVINLabel.Location = new System.Drawing.Point(7, 71);
             carVINLabel.Name = "carVINLabel";
             carVINLabel.Size = new System.Drawing.Size(47, 13);
             carVINLabel.TabIndex = 18;
@@ -147,7 +172,7 @@
             // descriptionLabel
             // 
             descriptionLabel.AutoSize = true;
-            descriptionLabel.Location = new System.Drawing.Point(6, 100);
+            descriptionLabel.Location = new System.Drawing.Point(7, 97);
             descriptionLabel.Name = "descriptionLabel";
             descriptionLabel.Size = new System.Drawing.Size(63, 13);
             descriptionLabel.TabIndex = 20;
@@ -156,7 +181,7 @@
             // creationDateTimeLabel
             // 
             creationDateTimeLabel.AutoSize = true;
-            creationDateTimeLabel.Location = new System.Drawing.Point(6, 127);
+            creationDateTimeLabel.Location = new System.Drawing.Point(7, 126);
             creationDateTimeLabel.Name = "creationDateTimeLabel";
             creationDateTimeLabel.Size = new System.Drawing.Size(101, 13);
             creationDateTimeLabel.TabIndex = 22;
@@ -369,7 +394,7 @@
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(32, 152);
+            this.btnUpload.Location = new System.Drawing.Point(32, 164);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 30);
             this.btnUpload.TabIndex = 12;
@@ -379,7 +404,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(238, 152);
+            this.btnDelete.Location = new System.Drawing.Point(238, 164);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 13;
@@ -388,7 +413,7 @@
             // 
             // btnComments
             // 
-            this.btnComments.Location = new System.Drawing.Point(131, 152);
+            this.btnComments.Location = new System.Drawing.Point(131, 164);
             this.btnComments.Name = "btnComments";
             this.btnComments.Size = new System.Drawing.Size(75, 30);
             this.btnComments.TabIndex = 14;
@@ -509,32 +534,10 @@
             this.listingBindingSource.DataMember = "FK_Listing_Sellers";
             this.listingBindingSource.DataSource = this.sellersBindingSource;
             // 
-            // editListingGroupBox
-            // 
-            this.editListingGroupBox.Controls.Add(listingIDLabel);
-            this.editListingGroupBox.Controls.Add(this.listingIDTextBox);
-            this.editListingGroupBox.Controls.Add(sellerIDLabel);
-            this.editListingGroupBox.Controls.Add(this.sellerIDTextBox);
-            this.editListingGroupBox.Controls.Add(carVINLabel);
-            this.editListingGroupBox.Controls.Add(this.carVINTextBox);
-            this.editListingGroupBox.Controls.Add(descriptionLabel);
-            this.editListingGroupBox.Controls.Add(this.descriptionTextBox);
-            this.editListingGroupBox.Controls.Add(creationDateTimeLabel);
-            this.editListingGroupBox.Controls.Add(this.creationDateTimeDateTimePicker);
-            this.editListingGroupBox.Controls.Add(this.btnComments);
-            this.editListingGroupBox.Controls.Add(this.btnUpload);
-            this.editListingGroupBox.Controls.Add(this.btnDelete);
-            this.editListingGroupBox.Location = new System.Drawing.Point(12, 62);
-            this.editListingGroupBox.Name = "editListingGroupBox";
-            this.editListingGroupBox.Size = new System.Drawing.Size(338, 188);
-            this.editListingGroupBox.TabIndex = 17;
-            this.editListingGroupBox.TabStop = false;
-            this.editListingGroupBox.Text = "Edit Listing";
-            // 
             // listingIDTextBox
             // 
             this.listingIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "ListingID", true));
-            this.listingIDTextBox.Location = new System.Drawing.Point(113, 19);
+            this.listingIDTextBox.Location = new System.Drawing.Point(114, 16);
             this.listingIDTextBox.Name = "listingIDTextBox";
             this.listingIDTextBox.Size = new System.Drawing.Size(200, 20);
             this.listingIDTextBox.TabIndex = 15;
@@ -542,7 +545,7 @@
             // sellerIDTextBox
             // 
             this.sellerIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "SellerID", true));
-            this.sellerIDTextBox.Location = new System.Drawing.Point(113, 45);
+            this.sellerIDTextBox.Location = new System.Drawing.Point(114, 42);
             this.sellerIDTextBox.Name = "sellerIDTextBox";
             this.sellerIDTextBox.Size = new System.Drawing.Size(200, 20);
             this.sellerIDTextBox.TabIndex = 17;
@@ -550,7 +553,7 @@
             // carVINTextBox
             // 
             this.carVINTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "CarVIN", true));
-            this.carVINTextBox.Location = new System.Drawing.Point(113, 71);
+            this.carVINTextBox.Location = new System.Drawing.Point(114, 68);
             this.carVINTextBox.Name = "carVINTextBox";
             this.carVINTextBox.Size = new System.Drawing.Size(200, 20);
             this.carVINTextBox.TabIndex = 19;
@@ -558,7 +561,7 @@
             // descriptionTextBox
             // 
             this.descriptionTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "Description", true));
-            this.descriptionTextBox.Location = new System.Drawing.Point(113, 97);
+            this.descriptionTextBox.Location = new System.Drawing.Point(114, 94);
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(200, 20);
             this.descriptionTextBox.TabIndex = 21;
@@ -567,7 +570,7 @@
             // 
             this.creationDateTimeDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.listingBindingSource, "CreationDateTime", true));
             this.creationDateTimeDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.creationDateTimeDateTimePicker.Location = new System.Drawing.Point(113, 123);
+            this.creationDateTimeDateTimePicker.Location = new System.Drawing.Point(114, 126);
             this.creationDateTimeDateTimePicker.Name = "creationDateTimeDateTimePicker";
             this.creationDateTimeDateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.creationDateTimeDateTimePicker.TabIndex = 23;
@@ -581,13 +584,13 @@
             this.commentIDTextBox.Size = new System.Drawing.Size(100, 20);
             this.commentIDTextBox.TabIndex = 1;
             // 
-            // listingIDTextBox1
+            // listingIDTextBoxComments
             // 
-            this.listingIDTextBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.commentsBindingSource, "ListingID", true));
-            this.listingIDTextBox1.Location = new System.Drawing.Point(118, 119);
-            this.listingIDTextBox1.Name = "listingIDTextBox1";
-            this.listingIDTextBox1.Size = new System.Drawing.Size(100, 20);
-            this.listingIDTextBox1.TabIndex = 5;
+            this.listingIDTextBoxComments.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.commentsBindingSource, "ListingID", true));
+            this.listingIDTextBoxComments.Location = new System.Drawing.Point(118, 119);
+            this.listingIDTextBoxComments.Name = "listingIDTextBoxComments";
+            this.listingIDTextBoxComments.Size = new System.Drawing.Size(100, 20);
+            this.listingIDTextBoxComments.TabIndex = 5;
             // 
             // tabCommentsInfo
             // 
@@ -603,7 +606,7 @@
             // 
             this.commentsGeneralTab.Controls.Add(commentIDLabel);
             this.commentsGeneralTab.Controls.Add(this.commentIDTextBox);
-            this.commentsGeneralTab.Controls.Add(this.listingIDTextBox1);
+            this.commentsGeneralTab.Controls.Add(this.listingIDTextBoxComments);
             this.commentsGeneralTab.Controls.Add(listingIDLabel1);
             this.commentsGeneralTab.Location = new System.Drawing.Point(4, 22);
             this.commentsGeneralTab.Name = "commentsGeneralTab";
@@ -645,13 +648,192 @@
             this.commentsRichTextBox.TabIndex = 4;
             this.commentsRichTextBox.Text = "";
             // 
+            // listingTab
+            // 
+            this.listingTab.Controls.Add(this.listingInfoTab);
+            this.listingTab.Controls.Add(this.carInfoTab);
+            this.listingTab.Location = new System.Drawing.Point(21, 33);
+            this.listingTab.Name = "listingTab";
+            this.listingTab.SelectedIndex = 0;
+            this.listingTab.Size = new System.Drawing.Size(356, 233);
+            this.listingTab.TabIndex = 24;
+            // 
+            // listingInfoTab
+            // 
+            this.listingInfoTab.Controls.Add(this.listingIDTextBox);
+            this.listingInfoTab.Controls.Add(listingIDLabel);
+            this.listingInfoTab.Controls.Add(sellerIDLabel);
+            this.listingInfoTab.Controls.Add(this.sellerIDTextBox);
+            this.listingInfoTab.Controls.Add(this.descriptionTextBox);
+            this.listingInfoTab.Controls.Add(descriptionLabel);
+            this.listingInfoTab.Controls.Add(carVINLabel);
+            this.listingInfoTab.Controls.Add(this.btnDelete);
+            this.listingInfoTab.Controls.Add(this.btnUpload);
+            this.listingInfoTab.Controls.Add(creationDateTimeLabel);
+            this.listingInfoTab.Controls.Add(this.btnComments);
+            this.listingInfoTab.Controls.Add(this.creationDateTimeDateTimePicker);
+            this.listingInfoTab.Controls.Add(this.carVINTextBox);
+            this.listingInfoTab.Location = new System.Drawing.Point(4, 22);
+            this.listingInfoTab.Name = "listingInfoTab";
+            this.listingInfoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.listingInfoTab.Size = new System.Drawing.Size(348, 207);
+            this.listingInfoTab.TabIndex = 0;
+            this.listingInfoTab.Text = "Listing Information";
+            this.listingInfoTab.UseVisualStyleBackColor = true;
+            // 
+            // carInfoTab
+            // 
+            this.carInfoTab.AutoScroll = true;
+            this.carInfoTab.Controls.Add(carMakeLabel);
+            this.carInfoTab.Controls.Add(this.carMakeComboBox);
+            this.carInfoTab.Controls.Add(carVINLabel1);
+            this.carInfoTab.Controls.Add(this.carVINTextBox1);
+            this.carInfoTab.Controls.Add(carYearLabel);
+            this.carInfoTab.Controls.Add(this.carYearTextBox);
+            this.carInfoTab.Controls.Add(carModelLabel);
+            this.carInfoTab.Controls.Add(this.carModelTextBox);
+            this.carInfoTab.Controls.Add(carPriceLabel);
+            this.carInfoTab.Controls.Add(this.carPriceTextBox);
+            this.carInfoTab.Controls.Add(carColorLabel);
+            this.carInfoTab.Controls.Add(this.carColorTextBox);
+            this.carInfoTab.Controls.Add(carMilesLabel);
+            this.carInfoTab.Controls.Add(this.carMilesTextBox);
+            this.carInfoTab.Location = new System.Drawing.Point(4, 22);
+            this.carInfoTab.Name = "carInfoTab";
+            this.carInfoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.carInfoTab.Size = new System.Drawing.Size(348, 207);
+            this.carInfoTab.TabIndex = 1;
+            this.carInfoTab.Text = "Car Information";
+            this.carInfoTab.UseVisualStyleBackColor = true;
+            // 
+            // carVINLabel1
+            // 
+            carVINLabel1.AutoSize = true;
+            carVINLabel1.Location = new System.Drawing.Point(13, 18);
+            carVINLabel1.Name = "carVINLabel1";
+            carVINLabel1.Size = new System.Drawing.Size(47, 13);
+            carVINLabel1.TabIndex = 0;
+            carVINLabel1.Text = "Car VIN:";
+            // 
+            // carVINTextBox1
+            // 
+            this.carVINTextBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarVIN", true));
+            this.carVINTextBox1.Location = new System.Drawing.Point(77, 15);
+            this.carVINTextBox1.Name = "carVINTextBox1";
+            this.carVINTextBox1.Size = new System.Drawing.Size(252, 20);
+            this.carVINTextBox1.TabIndex = 1;
+            // 
+            // carYearLabel
+            // 
+            carYearLabel.AutoSize = true;
+            carYearLabel.Location = new System.Drawing.Point(13, 44);
+            carYearLabel.Name = "carYearLabel";
+            carYearLabel.Size = new System.Drawing.Size(51, 13);
+            carYearLabel.TabIndex = 2;
+            carYearLabel.Text = "Car Year:";
+            // 
+            // carYearTextBox
+            // 
+            this.carYearTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarYear", true));
+            this.carYearTextBox.Location = new System.Drawing.Point(77, 41);
+            this.carYearTextBox.Name = "carYearTextBox";
+            this.carYearTextBox.Size = new System.Drawing.Size(252, 20);
+            this.carYearTextBox.TabIndex = 3;
+            // 
+            // carModelLabel
+            // 
+            carModelLabel.AutoSize = true;
+            carModelLabel.Location = new System.Drawing.Point(13, 96);
+            carModelLabel.Name = "carModelLabel";
+            carModelLabel.Size = new System.Drawing.Size(58, 13);
+            carModelLabel.TabIndex = 6;
+            carModelLabel.Text = "Car Model:";
+            // 
+            // carModelTextBox
+            // 
+            this.carModelTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarModel", true));
+            this.carModelTextBox.Location = new System.Drawing.Point(77, 93);
+            this.carModelTextBox.Name = "carModelTextBox";
+            this.carModelTextBox.Size = new System.Drawing.Size(252, 20);
+            this.carModelTextBox.TabIndex = 7;
+            // 
+            // carPriceLabel
+            // 
+            carPriceLabel.AutoSize = true;
+            carPriceLabel.Location = new System.Drawing.Point(13, 122);
+            carPriceLabel.Name = "carPriceLabel";
+            carPriceLabel.Size = new System.Drawing.Size(53, 13);
+            carPriceLabel.TabIndex = 8;
+            carPriceLabel.Text = "Car Price:";
+            // 
+            // carPriceTextBox
+            // 
+            this.carPriceTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarPrice", true));
+            this.carPriceTextBox.Location = new System.Drawing.Point(77, 119);
+            this.carPriceTextBox.Name = "carPriceTextBox";
+            this.carPriceTextBox.Size = new System.Drawing.Size(252, 20);
+            this.carPriceTextBox.TabIndex = 9;
+            // 
+            // carColorLabel
+            // 
+            carColorLabel.AutoSize = true;
+            carColorLabel.Location = new System.Drawing.Point(13, 148);
+            carColorLabel.Name = "carColorLabel";
+            carColorLabel.Size = new System.Drawing.Size(53, 13);
+            carColorLabel.TabIndex = 10;
+            carColorLabel.Text = "Car Color:";
+            // 
+            // carColorTextBox
+            // 
+            this.carColorTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarColor", true));
+            this.carColorTextBox.Location = new System.Drawing.Point(77, 145);
+            this.carColorTextBox.Name = "carColorTextBox";
+            this.carColorTextBox.Size = new System.Drawing.Size(252, 20);
+            this.carColorTextBox.TabIndex = 11;
+            // 
+            // carMilesLabel
+            // 
+            carMilesLabel.AutoSize = true;
+            carMilesLabel.Location = new System.Drawing.Point(13, 174);
+            carMilesLabel.Name = "carMilesLabel";
+            carMilesLabel.Size = new System.Drawing.Size(53, 13);
+            carMilesLabel.TabIndex = 12;
+            carMilesLabel.Text = "Car Miles:";
+            // 
+            // carMilesTextBox
+            // 
+            this.carMilesTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarMiles", true));
+            this.carMilesTextBox.Location = new System.Drawing.Point(77, 171);
+            this.carMilesTextBox.Name = "carMilesTextBox";
+            this.carMilesTextBox.Size = new System.Drawing.Size(252, 20);
+            this.carMilesTextBox.TabIndex = 13;
+            // 
+            // carMakeLabel
+            // 
+            carMakeLabel.AutoSize = true;
+            carMakeLabel.Location = new System.Drawing.Point(13, 69);
+            carMakeLabel.Name = "carMakeLabel";
+            carMakeLabel.Size = new System.Drawing.Size(56, 13);
+            carMakeLabel.TabIndex = 13;
+            carMakeLabel.Text = "Car Make:";
+            // 
+            // carMakeComboBox
+            // 
+            this.carMakeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarMake", true));
+            this.carMakeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.carMakeComboBox.FormattingEnabled = true;
+            this.carMakeComboBox.Location = new System.Drawing.Point(77, 66);
+            this.carMakeComboBox.Name = "carMakeComboBox";
+            this.carMakeComboBox.Size = new System.Drawing.Size(252, 21);
+            this.carMakeComboBox.TabIndex = 14;
+            // 
             // frmCarsForSale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1259, 723);
+            this.Controls.Add(this.listingTab);
             this.Controls.Add(this.tabCommentsInfo);
-            this.Controls.Add(this.editListingGroupBox);
             this.Controls.Add(this.listingDataGridView);
             this.Controls.Add(this.btnLogOut);
             this.Controls.Add(this.commentsDataGridView);
@@ -672,13 +854,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.commentsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.listingDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.listingBindingSource)).EndInit();
-            this.editListingGroupBox.ResumeLayout(false);
-            this.editListingGroupBox.PerformLayout();
             this.tabCommentsInfo.ResumeLayout(false);
             this.commentsGeneralTab.ResumeLayout(false);
             this.commentsGeneralTab.PerformLayout();
             this.commentsInfoTab.ResumeLayout(false);
             this.commentsInfoTab.PerformLayout();
+            this.listingTab.ResumeLayout(false);
+            this.listingInfoTab.ResumeLayout(false);
+            this.listingInfoTab.PerformLayout();
+            this.carInfoTab.ResumeLayout(false);
+            this.carInfoTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -724,7 +909,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private System.Windows.Forms.DataGridViewTextBoxColumn CreationDateTime;
-        private System.Windows.Forms.GroupBox editListingGroupBox;
         private System.Windows.Forms.TextBox listingIDTextBox;
         private System.Windows.Forms.TextBox sellerIDTextBox;
         private System.Windows.Forms.TextBox carVINTextBox;
@@ -734,12 +918,22 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn ListingID;
         private System.Windows.Forms.TextBox commentIDTextBox;
-        private System.Windows.Forms.TextBox listingIDTextBox1;
+        private System.Windows.Forms.TextBox listingIDTextBoxComments;
         private System.Windows.Forms.TabControl tabCommentsInfo;
         private System.Windows.Forms.TabPage commentsGeneralTab;
         private System.Windows.Forms.TabPage commentsInfoTab;
         private System.Windows.Forms.RichTextBox commentsRichTextBox;
         private System.Windows.Forms.Button btnSubmitComment;
+        private System.Windows.Forms.TabControl listingTab;
+        private System.Windows.Forms.TabPage listingInfoTab;
+        private System.Windows.Forms.TabPage carInfoTab;
+        private System.Windows.Forms.TextBox carVINTextBox1;
+        private System.Windows.Forms.TextBox carYearTextBox;
+        private System.Windows.Forms.TextBox carModelTextBox;
+        private System.Windows.Forms.TextBox carPriceTextBox;
+        private System.Windows.Forms.TextBox carColorTextBox;
+        private System.Windows.Forms.TextBox carMilesTextBox;
+        private System.Windows.Forms.ComboBox carMakeComboBox;
     }
 }
 

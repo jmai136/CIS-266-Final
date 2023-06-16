@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace CarLibrary
         public Car car { get; set; }
         // should have the properties for Car and the DateTime of the creation of the listing
         // Grab subclass of car?
+        public string description { get; set; }
         public DateTime creationDateTime { get; set; }
     }
 }

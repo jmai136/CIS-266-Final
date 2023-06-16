@@ -23,13 +23,13 @@ namespace CarLibrary
         void UserAuthentication();
     }
 
-    public interface IFilter
+    public interface IFilter<T>
     {
         // Get all listings/all cars/all users, etc.
         void GetAll(object obj);
 
         // Filter by Make, Color, Age, Price
-        void FilterBy(string filterProperty, SqlConnection sqlConnection, out List<string> options);
+        List<T> FilterBy(List<T> dataGridView, string filterProperty);
     }
 
     public interface ICar
@@ -37,13 +37,13 @@ namespace CarLibrary
         dynamic GetFeaturesInfo();
     }
 
-    public interface IDatabase
+    public interface IDatabase<T>
     {
         string MsgText { get; set; }
         string MsgCaption { get; set; }
 
-        bool Upload(object obj, SqlConnection sqlConnection);
+        bool Upload(T obj, SqlConnection sqlConnection);
 
-        bool Delete(object obj, SqlConnection sqlConnection);
+        bool Delete(T obj, SqlConnection sqlConnection);
     }
 }

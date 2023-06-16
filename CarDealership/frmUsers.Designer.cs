@@ -55,13 +55,14 @@
             this.sellersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.sellersTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.SellersTableAdapter();
             this.sellersDataGridView = new System.Windows.Forms.DataGridView();
+            this.lblAccountList = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeleteUserAccount = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.lblAccountList = new System.Windows.Forms.Label();
             lblSellerEmailLogin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).BeginInit();
@@ -300,6 +301,7 @@
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
+            this.Hash,
             this.DeleteUserAccount});
             this.sellersDataGridView.DataSource = this.sellersBindingSource;
             this.sellersDataGridView.Location = new System.Drawing.Point(12, 398);
@@ -308,6 +310,15 @@
             this.sellersDataGridView.Size = new System.Drawing.Size(646, 266);
             this.sellersDataGridView.TabIndex = 10;
             this.sellersDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.sellersDataGridView_CellContentClick);
+            // 
+            // lblAccountList
+            // 
+            this.lblAccountList.AutoSize = true;
+            this.lblAccountList.Location = new System.Drawing.Point(9, 373);
+            this.lblAccountList.Name = "lblAccountList";
+            this.lblAccountList.Size = new System.Drawing.Size(66, 13);
+            this.lblAccountList.TabIndex = 11;
+            this.lblAccountList.Text = "Account List";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -344,6 +355,13 @@
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.ReadOnly = true;
             // 
+            // Hash
+            // 
+            this.Hash.DataPropertyName = "Hash";
+            this.Hash.HeaderText = "Hash";
+            this.Hash.Name = "Hash";
+            this.Hash.ReadOnly = true;
+            // 
             // DeleteUserAccount
             // 
             this.DeleteUserAccount.HeaderText = "";
@@ -351,15 +369,6 @@
             this.DeleteUserAccount.ReadOnly = true;
             this.DeleteUserAccount.Text = "Delete";
             this.DeleteUserAccount.UseColumnTextForButtonValue = true;
-            // 
-            // lblAccountList
-            // 
-            this.lblAccountList.AutoSize = true;
-            this.lblAccountList.Location = new System.Drawing.Point(9, 373);
-            this.lblAccountList.Name = "lblAccountList";
-            this.lblAccountList.Size = new System.Drawing.Size(66, 13);
-            this.lblAccountList.TabIndex = 11;
-            this.lblAccountList.Text = "Account List";
             // 
             // frmUsers
             // 
@@ -413,12 +422,13 @@
         private System.Windows.Forms.BindingSource sellersBindingSource;
         private GroupFinal266DataSetTableAdapters.SellersTableAdapter sellersTableAdapter;
         private System.Windows.Forms.DataGridView sellersDataGridView;
+        private System.Windows.Forms.Label lblAccountList;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Hash;
         private System.Windows.Forms.DataGridViewButtonColumn DeleteUserAccount;
-        private System.Windows.Forms.Label lblAccountList;
     }
 }

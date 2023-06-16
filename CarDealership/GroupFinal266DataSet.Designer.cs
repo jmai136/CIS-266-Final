@@ -1772,6 +1772,8 @@ namespace CarDealership {
             
             private global::System.Data.DataColumn columnPassword;
             
+            private global::System.Data.DataColumn columnHash;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SellersDataTable() {
@@ -1847,6 +1849,14 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn HashColumn {
+                get {
+                    return this.columnHash;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1882,14 +1892,15 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SellersRow AddSellersRow(string FirstName, string LastName, string Email, string Password) {
+            public SellersRow AddSellersRow(string FirstName, string LastName, string Email, string Password, string Hash) {
                 SellersRow rowSellersRow = ((SellersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         FirstName,
                         LastName,
                         Email,
-                        Password};
+                        Password,
+                        Hash};
                 rowSellersRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSellersRow);
                 return rowSellersRow;
@@ -1924,6 +1935,7 @@ namespace CarDealership {
                 this.columnLastName = base.Columns["LastName"];
                 this.columnEmail = base.Columns["Email"];
                 this.columnPassword = base.Columns["Password"];
+                this.columnHash = base.Columns["Hash"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1939,6 +1951,8 @@ namespace CarDealership {
                 base.Columns.Add(this.columnEmail);
                 this.columnPassword = new global::System.Data.DataColumn("Password", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPassword);
+                this.columnHash = new global::System.Data.DataColumn("Hash", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHash);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnSellerID}, true));
                 this.columnSellerID.AutoIncrement = true;
@@ -1955,6 +1969,8 @@ namespace CarDealership {
                 this.columnEmail.MaxLength = 45;
                 this.columnPassword.AllowDBNull = false;
                 this.columnPassword.MaxLength = 2147483647;
+                this.columnHash.AllowDBNull = false;
+                this.columnHash.MaxLength = 2147483647;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2779,6 +2795,17 @@ namespace CarDealership {
                 }
                 set {
                     this[this.tableSellers.PasswordColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Hash {
+                get {
+                    return ((string)(this[this.tableSellers.HashColumn]));
+                }
+                set {
+                    this[this.tableSellers.HashColumn] = value;
                 }
             }
             
@@ -4674,6 +4701,7 @@ SELECT ListingID, SellerID, CarVIN, Description, CreationDateTime FROM Listing W
             tableMapping.ColumnMappings.Add("LastName", "LastName");
             tableMapping.ColumnMappings.Add("Email", "Email");
             tableMapping.ColumnMappings.Add("Password", "Password");
+            tableMapping.ColumnMappings.Add("Hash", "Hash");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -4687,23 +4715,26 @@ SELECT ListingID, SellerID, CarVIN, Description, CreationDateTime FROM Listing W
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Email", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Sellers] ([FirstName], [LastName], [Email], [Password]) VALUES" +
-                " (@FirstName, @LastName, @Email, @Password);\r\nSELECT SellerID, FirstName, LastNa" +
-                "me, Email, Password FROM Sellers WHERE (SellerID = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Sellers] ([FirstName], [LastName], [Email], [Password], [Hash]" +
+                ") VALUES (@FirstName, @LastName, @Email, @Password, @Hash);\r\nSELECT SellerID, Fi" +
+                "rstName, LastName, Email, Password, Hash FROM Sellers WHERE (SellerID = SCOPE_ID" +
+                "ENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FirstName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Hash", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Hash", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Sellers] SET [FirstName] = @FirstName, [LastName] = @LastName, [Email] = @Email, [Password] = @Password WHERE (([SellerID] = @Original_SellerID) AND ([FirstName] = @Original_FirstName) AND ([LastName] = @Original_LastName) AND ([Email] = @Original_Email));
-SELECT SellerID, FirstName, LastName, Email, Password FROM Sellers WHERE (SellerID = @SellerID)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Sellers] SET [FirstName] = @FirstName, [LastName] = @LastName, [Email] = @Email, [Password] = @Password, [Hash] = @Hash WHERE (([SellerID] = @Original_SellerID) AND ([FirstName] = @Original_FirstName) AND ([LastName] = @Original_LastName) AND ([Email] = @Original_Email));
+SELECT SellerID, FirstName, LastName, Email, Password, Hash FROM Sellers WHERE (SellerID = @SellerID)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FirstName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Password", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Password", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Hash", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Hash", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SellerID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SellerID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_FirstName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FirstName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LastName", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -4724,7 +4755,7 @@ SELECT SellerID, FirstName, LastName, Email, Password FROM Sellers WHERE (Seller
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT SellerID, FirstName, LastName, Email, Password FROM dbo.Sellers";
+            this._commandCollection[0].CommandText = "SELECT SellerID, FirstName, LastName, Email, Password, Hash FROM dbo.Sellers";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4825,7 +4856,7 @@ SELECT SellerID, FirstName, LastName, Email, Password FROM Sellers WHERE (Seller
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string FirstName, string LastName, string Email, string Password) {
+        public virtual int Insert(string FirstName, string LastName, string Email, string Password, string Hash) {
             if ((FirstName == null)) {
                 throw new global::System.ArgumentNullException("FirstName");
             }
@@ -4850,6 +4881,12 @@ SELECT SellerID, FirstName, LastName, Email, Password FROM Sellers WHERE (Seller
             else {
                 this.Adapter.InsertCommand.Parameters[3].Value = ((string)(Password));
             }
+            if ((Hash == null)) {
+                throw new global::System.ArgumentNullException("Hash");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Hash));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4870,7 +4907,7 @@ SELECT SellerID, FirstName, LastName, Email, Password FROM Sellers WHERE (Seller
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string FirstName, string LastName, string Email, string Password, int Original_SellerID, string Original_FirstName, string Original_LastName, string Original_Email, int SellerID) {
+        public virtual int Update(string FirstName, string LastName, string Email, string Password, string Hash, int Original_SellerID, string Original_FirstName, string Original_LastName, string Original_Email, int SellerID) {
             if ((FirstName == null)) {
                 throw new global::System.ArgumentNullException("FirstName");
             }
@@ -4895,26 +4932,32 @@ SELECT SellerID, FirstName, LastName, Email, Password FROM Sellers WHERE (Seller
             else {
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Password));
             }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_SellerID));
+            if ((Hash == null)) {
+                throw new global::System.ArgumentNullException("Hash");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Hash));
+            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_SellerID));
             if ((Original_FirstName == null)) {
                 throw new global::System.ArgumentNullException("Original_FirstName");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_FirstName));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_FirstName));
             }
             if ((Original_LastName == null)) {
                 throw new global::System.ArgumentNullException("Original_LastName");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_LastName));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_LastName));
             }
             if ((Original_Email == null)) {
                 throw new global::System.ArgumentNullException("Original_Email");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Email));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Email));
             }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(SellerID));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(SellerID));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4935,8 +4978,8 @@ SELECT SellerID, FirstName, LastName, Email, Password FROM Sellers WHERE (Seller
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string FirstName, string LastName, string Email, string Password, int Original_SellerID, string Original_FirstName, string Original_LastName, string Original_Email) {
-            return this.Update(FirstName, LastName, Email, Password, Original_SellerID, Original_FirstName, Original_LastName, Original_Email, Original_SellerID);
+        public virtual int Update(string FirstName, string LastName, string Email, string Password, string Hash, int Original_SellerID, string Original_FirstName, string Original_LastName, string Original_Email) {
+            return this.Update(FirstName, LastName, Email, Password, Hash, Original_SellerID, Original_FirstName, Original_LastName, Original_Email, Original_SellerID);
         }
     }
     

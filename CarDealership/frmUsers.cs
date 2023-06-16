@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarLibrary;
 
@@ -38,11 +32,11 @@ namespace CarDealership
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
 
-            /*
+            
             txtRegisterEmail.Text = "zzm4h94sr1a@icznn.com";
             txtRegisterPassword.Text = "u3AeOX ^ 686 & h";
-            txtRegisterFirstName.Text = "Hoshi";
-            txtRegisterLastName.Text = "Kask";*/
+            txtRegisterFirstName.Text = "Nanna";
+            txtRegisterLastName.Text = "Maric";
 
             txtSellerEmailLogin.Text = "zzm4h94sr1a@icznn.com";
             txtLoginPassword.Text = "u3AeOX ^ 686 & h";
@@ -88,6 +82,8 @@ namespace CarDealership
                 MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
                 return;
             }
+
+            MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
 
             foreach (TextBox textBox in registerGroupBox.Controls.OfType<TextBox>())
                 textBox.Clear();
@@ -149,7 +145,7 @@ namespace CarDealership
         private void EnterFormCarsForSale()
         {
             // Check if int is null or empty
-            if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID == -1)
+            if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID <= 0)
                 return;
 
             // Probably go to the new form then using the user?

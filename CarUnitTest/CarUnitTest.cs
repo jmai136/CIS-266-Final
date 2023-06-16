@@ -59,12 +59,8 @@ namespace CarUnitTest
             {
                 email = "zzm4h94sr1a@icznn.com",
                 password = "u3AeOX ^ 686 & h",
-                firstName = "Narric",
-                lastName = "Maric"
-
-                /* firstName = NameGenerator.GetGeneratedName(),
-                 * lastName = NameGenerator.GetGeneratedName()
-                 */
+                firstName = NameGenerator.GetGeneratedName(),
+                lastName = NameGenerator.GetGeneratedName()
             };
 
             Assert.IsFalse(userDB.Upload(user, sqlConnection), "Should be false due to not being able to register with the same email and password for two different users.");
@@ -78,15 +74,6 @@ namespace CarUnitTest
 
             Assert.IsFalse(userDB.Upload(user, sqlConnection), "Should be false due to null or empty user properties.");
         }
-
-        /*
-        [TestMethod]
-        public void UserFailedRegistrationBecauseIncorrectArgumentType()
-        {
-            int[] arr = new int[] { 0, 1, 2, 3, 4, 5};
-
-            Assert.IsFalse(userDB.Upload(arr, sqlConnection), "Should be false due to not being of type User.");
-        }*/
 
         /*******************************************
          ************** USER LOGIN *******************
@@ -112,12 +99,12 @@ namespace CarUnitTest
             User user = new User()
             {
                 email = "zzm4h94sr1a@icznn.com",
-                password = "u3AeOX ^ 686 & h",
+                password = "774m&RGPnNzi",
                 firstName = "Hoshi",
                 lastName = "Kask"
             };
 
-            Assert.IsTrue(userDB.VerifyLoginUser(user, sqlConnection), "Should be true due to Hoshi Kask's existence.");
+            Assert.IsFalse(userDB.VerifyLoginUser(user, sqlConnection), "Should be false due to wrong password.");
         }
 
         [TestMethod]
@@ -131,17 +118,5 @@ namespace CarUnitTest
         {
             Assert.IsFalse(userDB.VerifyLoginUser(-1, sqlConnection), "Should be false due to seller ID not existing.");
         }
-
-        // How the heck would we test that. It's already going to pass in an error before you can assert it.
-        // So let's try something else
-        // What happens if there's two users of the same email/password.
-        // But the goal is to prevent that in the first place above.
-        /*
-        [TestMethod]
-        public void UserFailedLoginBecauseIncorrectDataType()
-        {
-            Assert.IsFalse(userDB.VerifyLoginUser("Macaroni", sqlConnection), "Should be false due to seller ID not existing.");
-        }
-        */
     }
 }

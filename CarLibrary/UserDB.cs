@@ -25,6 +25,8 @@ namespace CarLibrary
         {
             bool canUpload = true;
 
+            string msgHash = "";
+
             try
             {
                 if (obj is User == false)
@@ -41,31 +43,48 @@ namespace CarLibrary
                     "IF EXISTS " +
                         "(SELECT TOP 1 SellerID FROM Sellers " +
                             "WHERE Email=@Email " +
-                             "AND Password=HASHBYTES('SHA2_512', @Password)) " + 
+                             "AND Password = @Password " +
+                             "AND Hash = @Hash) " +
                         "BEGIN " +
                             "SELECT SellerID FROM Sellers " +
-                            "WHERE FirstName = @FirstName " +
-                            "AND LastName = @LastName " +
-                            "AND Email=@Email " +
-                            "AND Password =HASHBYTES('SHA2_512', @Password) " +
+                            "WHERE Email=@Email " +
+                            "AND Password =@Password " +
+                            "AND Hash = @Hash " +
                         "END " +
                      "ELSE " +
-                     "INSERT INTO Sellers (FirstName, LastName, Email, Password)  " +
-                     "VALUES (@FirstName, @LastName, @Email, HASHBYTES('SHA2_512', @Password))";
+                     "INSERT INTO Sellers (FirstName, LastName, Email, Password, Hash) " +
+                     "VALUES (@FirstName, @LastName, @Email, @Password, HASHBYTES('SHA2_512', @Password))";
+
+                byte[] hash = SHA512.Create().ComputeHash(Encoding.Unicode.GetBytes(obj.password));
+
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in hash)
+                    sb.Append(b.ToString("X2"));
+
+                msgHash = sb.ToString();
+                MsgText = msgHash;
+
+                // If there's time to salt, typically you'd salt the original password, then hash it
+                /*
+                byte[] salt = new byte[256];
+                RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+                rng.GetNonZeroBytes(salt);
+                */
 
                 cmd.Parameters.AddWithValue("@FirstName", obj.firstName);
                 cmd.Parameters.AddWithValue("@LastName", obj.lastName);
                 cmd.Parameters.AddWithValue("@Email", obj.email);
                 cmd.Parameters.AddWithValue("@Password", obj.password);
+                cmd.Parameters.AddWithValue("@Hash", hash);
 
                 sqlConnection.Open();
                 
-                if (cmd.ExecuteScalar() != null)
+                if (Convert.ToInt32(cmd.ExecuteScalar()) > 0)
                     throw new DataException("User already exists");
             }
             catch (Exception ex)
             {
-                MsgText = ex.Message;
+                MsgText = ex.Message + "\nHash: " + msgHash;
                 MsgCaption = ex.GetType().ToString();
 
                 canUpload = false;
@@ -87,9 +106,9 @@ namespace CarLibrary
                 // Replace with a query or a stored procedure
                 SqlCommand cmd = new SqlCommand(
                   "IF EXISTS " +
-                        "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password)) " +
+                        "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=@Password AND Hash=@Hash) " +
                       "BEGIN " +
-                        "SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=HASHBYTES('SHA2_512', @Password) " +
+                        "SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=@Password AND Hash=@Hash " +
                       "END",
                     sqlConnection);
 
@@ -97,13 +116,14 @@ namespace CarLibrary
                 cmd.Parameters.AddWithValue("@SellerID", user.userID);
                 cmd.Parameters.AddWithValue("@Email", user.email);
                 cmd.Parameters.AddWithValue("@Password", user.password);
+                cmd.Parameters.AddWithValue("@Hash", SHA512.Create().ComputeHash(Encoding.Unicode.GetBytes(user.password)));
 
                 // Hopefully it retusn SellerID?
                 sqlConnection.Open();
 
                 user.userID = Convert.ToInt32(cmd.ExecuteScalar());
 
-                if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID == -1)
+                if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID <= 0)
                     throw new DataException("User doesn't exist");
             }
             catch (Exception ex)

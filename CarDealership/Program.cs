@@ -12,7 +12,6 @@ namespace CarDealership
         public static SqlConnection sqlConnection = new SqlConnection();
         public static string connectionString { get; } = System.Configuration.ConfigurationManager.ConnectionStrings["CarDealership.Properties.Settings.GroupFinal266ConnectionString"].ConnectionString;
 
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

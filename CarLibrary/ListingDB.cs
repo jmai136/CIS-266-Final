@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace CarLibrary
 {
@@ -54,8 +55,7 @@ namespace CarLibrary
         {
             options = new List<string>();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = sqlConnection;
+            // https://www.akadia.com/services/dotnet_find_methods.html
 
             switch (filterProperty)
             {
@@ -68,8 +68,6 @@ namespace CarLibrary
                 default:
                     break;
             }
-
-            throw new NotImplementedException();
         }
 
         public void GetAll(object obj)
@@ -172,11 +170,11 @@ namespace CarLibrary
          * listings' creation times. 
          */
 
-        public static void GetCarPropertyFilteredByComboBoxValues(string filterProperty, SqlConnection sqlConnection, out List<string> options)
+        public static List<string> GetCarPropertyFilteredByDistinctValues(string filterProperty, SqlConnection sqlConnection)
         {
             try
             {
-                options = new List<string>();
+                List<string> options = new List<string>();
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
@@ -191,12 +189,10 @@ namespace CarLibrary
                     // https://stackoverflow.com/questions/24557550/sql-c-sharp-cant-convert-int32-to-string
                     options.Add(reader[0].ToString());
                 }
+
+                return options;
             }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-            catch (DataException ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -213,6 +209,49 @@ namespace CarLibrary
 
         public bool Upload(object obj, SqlConnection sqlConnection)
         {
+            try
+            {
+                if (obj is Listing == false)
+                    throw new ArgumentException("Argument passed in isn't correct type Listing", "object");
+
+                List<object> userProperties = new List<object>();
+
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                    else
+                        userProperties.Add(property.GetValue(obj));
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+
+                cmd.CommandText =
+                    "IF NOT EXISTS " +
+                        "(SELECT TOP 1 ListingID FROM Listing " +
+                            "WHERE CarVIN = @CarVIN) " +
+                        "BEGIN " +
+                            "INSERT INTO Listing (SellerID, CarVIN, Description)  " +
+                            "VALUES (@SellerID, @CarVIN, @Description)" +
+                        "END ";
+
+                // Pass in Listings
+                cmd.Parameters.AddWithValue("@SellerID", 1);
+                cmd.Parameters.AddWithValue("@CarVIN", "4JGBB5GB6BA625034");
+                cmd.Parameters.AddWithValue("@Description", "");
+
+                sqlConnection.Open();
+                cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
             return true;
         }
 

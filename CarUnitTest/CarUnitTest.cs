@@ -11,8 +11,12 @@ namespace CarUnitTest
     public class CarUnitTest
     {
         // https://stackoverflow.com/questions/21853793/how-can-i-access-to-an-internal-static-class-from-another-assembly
-
         UserDB userDB = new UserDB();
+
+        // The terrible way but oh well, if you can figure it out, then optimize it.
+        static SqlConnection sqlConnection = new SqlConnection() { 
+            ConnectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=GroupFinal266;Integrated Security=True"
+        };
 
         /*******************************************
          ************** USER REGISTRATION ************
@@ -27,9 +31,11 @@ namespace CarUnitTest
                 lastName = "Nasato"
             };
 
-            Assert.IsTrue(userDB.Upload(user, Program.sqlConnection), "Should be true due to non-existent user and correct types");
+            Assert.IsTrue(userDB.Upload(user, sqlConnection), "Should be true due to non-existent user and correct types");
         }
 
+        // Why are these failing? According to some Stack Overflow threads,
+        // different encoding can change the hashes even with the same input?
         [TestMethod]
         public void UserFailedRegistrationBecauseOfAlreadyExistingUser()
         {
@@ -42,9 +48,10 @@ namespace CarUnitTest
                 lastName = "Kask"
             };
 
-            Assert.IsFalse(userDB.Upload(user, Program.sqlConnection), "Should be false due to already existing user regardless of user's name");
+            Assert.IsFalse(userDB.Upload(user, sqlConnection), "Should be false due to already existing user regardless of user's name.");
         }
 
+        [TestMethod]
         public void UserFailedRegistrationBecauseShareSameEmailAndPassword()
         {
             // Make sure to already have this in the database.
@@ -54,9 +61,13 @@ namespace CarUnitTest
                 password = "u3AeOX ^ 686 & h",
                 firstName = "Narric",
                 lastName = "Maric"
+
+                /* firstName = NameGenerator.GetGeneratedName(),
+                 * lastName = NameGenerator.GetGeneratedName()
+                 */
             };
 
-            Assert.IsFalse(userDB.Upload(user, Program.sqlConnection), "Should be false due to not being able to register with the same email and password for two different users");
+            Assert.IsFalse(userDB.Upload(user, sqlConnection), "Should be false due to not being able to register with the same email and password for two different users.");
         }
 
         [TestMethod]
@@ -65,7 +76,7 @@ namespace CarUnitTest
             // Make sure to already have this in the database.
             User user = new User();
 
-            Assert.IsFalse(userDB.Upload(user, Program.sqlConnection), "Should be false due to null or empty user properties");
+            Assert.IsFalse(userDB.Upload(user, sqlConnection), "Should be false due to null or empty user properties.");
         }
 
         [TestMethod]
@@ -73,11 +84,63 @@ namespace CarUnitTest
         {
             int[] arr = new int[] { 0, 1, 2, 3, 4, 5};
 
-            Assert.IsFalse(userDB.Upload(arr, Program.sqlConnection), "Should be false due to not being of type User");
+            Assert.IsFalse(userDB.Upload(arr, sqlConnection), "Should be false due to not being of type User.");
         }
 
         /*******************************************
          ************** USER LOGIN *******************
          *******************************************/
+
+        [TestMethod]
+        public void UserSuccessfulLoginWithExistingUserViaBusinessModel()
+        {
+            User user = new User()
+            {
+                email = "zzm4h94sr1a@icznn.com",
+                password = "u3AeOX ^ 686 & h",
+                firstName = "Hoshi",
+                lastName = "Kask"
+            };
+
+            Assert.IsTrue(userDB.VerifyLoginUser(user, sqlConnection), "Should be true due to Hoshi Kask's existence.");
+        }
+
+        [TestMethod]
+        public void UserFailedLoginWrongPassword()
+        {
+            User user = new User()
+            {
+                email = "zzm4h94sr1a@icznn.com",
+                password = "u3AeOX ^ 686 & h",
+                firstName = "Hoshi",
+                lastName = "Kask"
+            };
+
+            Assert.IsTrue(userDB.VerifyLoginUser(user, sqlConnection), "Should be true due to Hoshi Kask's existence.");
+        }
+
+        [TestMethod]
+        public void UserSuccessfulLoginWithExistingUserViaSellerID()
+        {
+            Assert.IsTrue(userDB.VerifyLoginUser(1, sqlConnection), "Should be true due to seller ID existing for Hoshi Kask.");
+        }
+
+        [TestMethod]
+        public void UserFailedLoginBecauseIncorrectSellerID()
+        {
+            Assert.IsFalse(userDB.VerifyLoginUser(-1, sqlConnection), "Should be false due to seller ID not existing.");
+        }
+
+        // How the heck would we test that. It's already going to pass in an error before you can assert it.
+        // So let's try something else
+        // What happens if there's two users of the same email/password.
+        // But the goal is to prevent that in the first place above.
+        /*
+        [TestMethod]
+        public void UserFailedLoginBecauseIncorrectDataType()
+        {
+            Assert.IsFalse(userDB.VerifyLoginUser("Macaroni", sqlConnection), "Should be false due to seller ID not existing.");
+        }
+        */
     }
 }

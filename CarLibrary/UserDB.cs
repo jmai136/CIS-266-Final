@@ -125,6 +125,40 @@ namespace CarLibrary
             return canLogin;
         }
 
+        public bool VerifyLoginUser(int sellerID, SqlConnection sqlConnection)
+        {
+            bool isLoggedIn = true;
+
+            try
+            {
+                // Replace with a query or a stored procedure
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT TOP 1 SellerID FROM Sellers WHERE SellerID=@SellerID",
+                    sqlConnection);
+
+                cmd.Parameters.AddWithValue("@SellerID", sellerID);
+
+                // Hopefully it retusn SellerID?
+                sqlConnection.Open();
+
+                if (Convert.ToInt32(cmd.ExecuteScalar()) != sellerID)
+                    throw new DataException("User doesn't exist");
+            }
+            catch (Exception ex)
+            {
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
+
+                isLoggedIn = false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+            return isLoggedIn;
+        }
+
         public bool Delete(object obj, SqlConnection sqlConnection)
         {
             bool isDeleted = true;

@@ -38,10 +38,14 @@ namespace CarDealership
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
 
+            /*
             txtRegisterEmail.Text = "zzm4h94sr1a@icznn.com";
             txtRegisterPassword.Text = "u3AeOX ^ 686 & h";
             txtRegisterFirstName.Text = "Hoshi";
-            txtRegisterLastName.Text = "Kask";
+            txtRegisterLastName.Text = "Kask";*/
+
+            txtSellerEmailLogin.Text = "zzm4h94sr1a@icznn.com";
+            txtLoginPassword.Text = "u3AeOX ^ 686 & h";
         }
 
         public void AssignBusinessObjectData()
@@ -123,7 +127,8 @@ namespace CarDealership
 
         public void EnableControls(bool enable = true)
         {
-            foreach (GroupBox groupBox in Controls)
+            // Why is it attempting to convert here?
+            foreach (GroupBox groupBox in Controls.OfType<GroupBox>())
                 foreach (Control c in groupBox.Controls)
                 {
                     if (c is Button)
@@ -132,6 +137,13 @@ namespace CarDealership
                     if (c is TextBox)
                         c.Enabled = enable;
                 }
+
+            foreach (DataGridViewRow row in sellersDataGridView.Rows) {
+                DataGridViewCell cell = row.Cells[5];
+                cell.ReadOnly = enable;
+
+                cell.Style.ForeColor = (!cell.ReadOnly) ? Color.DarkGray : cell.OwningColumn.DefaultCellStyle.ForeColor;
+            }
         }
 
         private void EnterFormCarsForSale()
@@ -161,6 +173,13 @@ namespace CarDealership
             {
                 txtRegisterPassword.UseSystemPasswordChar = true;
                 txtLoginPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void sellersDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 5) {
+                sellersDataGridView.Rows.RemoveAt(e.RowIndex);
             }
         }
     }

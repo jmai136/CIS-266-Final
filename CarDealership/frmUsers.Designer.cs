@@ -55,13 +55,13 @@
             this.sellersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.sellersTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.SellersTableAdapter();
             this.sellersDataGridView = new System.Windows.Forms.DataGridView();
-            this.lblAccountList = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeleteUserAccount = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.lblAccountList = new System.Windows.Forms.Label();
             lblSellerEmailLogin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).BeginInit();
@@ -177,7 +177,7 @@
             this.loginGroupBox.Controls.Add(this.txtSellerEmailLogin);
             this.loginGroupBox.Controls.Add(lblSellerEmailLogin);
             this.loginGroupBox.Controls.Add(this.lblPasswordLogin);
-            this.loginGroupBox.Location = new System.Drawing.Point(22, 198);
+            this.loginGroupBox.Location = new System.Drawing.Point(12, 198);
             this.loginGroupBox.Name = "loginGroupBox";
             this.loginGroupBox.Size = new System.Drawing.Size(646, 152);
             this.loginGroupBox.TabIndex = 9;
@@ -195,7 +195,7 @@
             this.registerGroupBox.Controls.Add(this.txtRegisterPassword);
             this.registerGroupBox.Controls.Add(this.txtRegisterEmail);
             this.registerGroupBox.Controls.Add(this.lblRegisterEmail);
-            this.registerGroupBox.Location = new System.Drawing.Point(22, 29);
+            this.registerGroupBox.Location = new System.Drawing.Point(12, 29);
             this.registerGroupBox.Name = "registerGroupBox";
             this.registerGroupBox.Size = new System.Drawing.Size(646, 163);
             this.registerGroupBox.TabIndex = 10;
@@ -302,20 +302,12 @@
             this.dataGridViewTextBoxColumn5,
             this.DeleteUserAccount});
             this.sellersDataGridView.DataSource = this.sellersBindingSource;
-            this.sellersDataGridView.Location = new System.Drawing.Point(22, 398);
+            this.sellersDataGridView.Location = new System.Drawing.Point(12, 398);
             this.sellersDataGridView.Name = "sellersDataGridView";
             this.sellersDataGridView.ReadOnly = true;
             this.sellersDataGridView.Size = new System.Drawing.Size(646, 266);
             this.sellersDataGridView.TabIndex = 10;
-            // 
-            // lblAccountList
-            // 
-            this.lblAccountList.AutoSize = true;
-            this.lblAccountList.Location = new System.Drawing.Point(19, 373);
-            this.lblAccountList.Name = "lblAccountList";
-            this.lblAccountList.Size = new System.Drawing.Size(66, 13);
-            this.lblAccountList.TabIndex = 11;
-            this.lblAccountList.Text = "Account List";
+            this.sellersDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.sellersDataGridView_CellContentClick);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -329,31 +321,45 @@
             this.dataGridViewTextBoxColumn2.DataPropertyName = "FirstName";
             this.dataGridViewTextBoxColumn2.HeaderText = "FirstName";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.DataPropertyName = "LastName";
             this.dataGridViewTextBoxColumn3.HeaderText = "LastName";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.DataPropertyName = "Email";
             this.dataGridViewTextBoxColumn4.HeaderText = "Email";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.DataPropertyName = "Password";
             this.dataGridViewTextBoxColumn5.HeaderText = "Password";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
             // 
             // DeleteUserAccount
             // 
             this.DeleteUserAccount.HeaderText = "";
             this.DeleteUserAccount.Name = "DeleteUserAccount";
+            this.DeleteUserAccount.ReadOnly = true;
             this.DeleteUserAccount.Text = "Delete";
             this.DeleteUserAccount.UseColumnTextForButtonValue = true;
+            // 
+            // lblAccountList
+            // 
+            this.lblAccountList.AutoSize = true;
+            this.lblAccountList.Location = new System.Drawing.Point(9, 373);
+            this.lblAccountList.Name = "lblAccountList";
+            this.lblAccountList.Size = new System.Drawing.Size(66, 13);
+            this.lblAccountList.TabIndex = 11;
+            this.lblAccountList.Text = "Account List";
             // 
             // frmUsers
             // 

@@ -59,6 +59,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GroupFinal266DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="NameGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="frmUsers.cs">

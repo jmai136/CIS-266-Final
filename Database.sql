@@ -122,7 +122,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Comments](
 	[CommentID] [int] IDENTITY(1,1) NOT NULL,
-	[CommentText] [varchar](256) NOT NULL,
+	[CommentText] [varchar](max) NOT NULL,
 	[ListingID] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (

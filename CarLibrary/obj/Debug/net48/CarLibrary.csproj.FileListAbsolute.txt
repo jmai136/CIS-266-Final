@@ -7,3 +7,12 @@ C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\bin\Debug\net48\CarLibrary
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\bin\Debug\net48\CarLibrary.pdb
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.dll
 C:\Users\accol\Desktop\CIS266\CIS266 Final\CarLibrary\obj\Debug\net48\CarLibrary.pdb
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\bin\Debug\net48\CarLibrary.dll
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\bin\Debug\net48\CarLibrary.pdb
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\obj\Debug\net48\CarLibrary.csproj.AssemblyReference.cache
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\obj\Debug\net48\CarLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\obj\Debug\net48\CarLibrary.AssemblyInfoInputs.cache
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\obj\Debug\net48\CarLibrary.AssemblyInfo.cs
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\obj\Debug\net48\CarLibrary.csproj.CoreCompileInputs.cache
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\obj\Debug\net48\CarLibrary.dll
+C:\SPSCC\CIS 266\CIS-266-Final\CarLibrary\obj\Debug\net48\CarLibrary.pdb

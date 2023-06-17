@@ -275,6 +275,24 @@ namespace CarLibrary
 
         public bool Delete(Listing obj, SqlConnection sqlConnection)
         {
+            SqlConnection connection = new SqlConnection();
+
+            string sqlStatement = "DELETE FROM Cars" + "WHERE CarVIN = @CarVIN";
+
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand(sqlStatement, connection);
+                cmd.Parameters.AddWithValue("@CarVIN", obj.car.carVIN);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+
             return true;
         }
 

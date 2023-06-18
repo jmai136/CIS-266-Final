@@ -8,7 +8,8 @@ namespace CarLibrary
 {
     public class Comments
     {
-        public string CommentText;
-        public Listing listing;
+        public int CommentsID { get; set; }
+        public int ListingID { get; set; }
+        public string CommentText { get; set; }
     }
 }

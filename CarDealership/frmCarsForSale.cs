@@ -18,8 +18,21 @@ namespace CarDealership
     {
         int SellerID { get; set; } = -1;
 
-        Listing listing = new Listing();
-        ListingDB listingDB = new ListingDB();
+        private Listing listing = new Listing();
+        private ListingDB listingDB = new ListingDB();
+
+        private Comments comments = new Comments();
+        private CommentsDB commentsDB = new CommentsDB();
+
+        [Flags]
+        public enum ModifyingCarComponents
+        {
+            Listing = 0,
+            Car = 1,
+            Comments = 2
+        }
+
+        ModifyingCarComponents modifyingCarComponents = new ModifyingCarComponents();
 
         struct filterByStruct
         {
@@ -186,12 +199,41 @@ namespace CarDealership
         // This should be for uploading
         public void AssignBusinessObjectData()
         {
+            // Listing
             listing.listingID = Convert.ToInt32(listingIDTextBox.Text);
+            listing.sellerID = Convert.ToInt32(sellerIDTextBox.Text);
+            listing.carVIN = carVINTextBox.Text;
+            listing.description = descriptionTextBox.Text;
+            listing.creationDateTime = Convert.ToDateTime(creationDateTimeDateTimePicker.Text);
+
+            // Car
+
+            // Comments
+            comments.ListingID = Convert.ToInt32(listingIDTextBoxComments.Text);
+            comments.CommentText = commentsRichTextBox.Text;
         }
 
         public bool PutBusinessObjectData()
         {
-            throw new NotImplementedException();
+            try
+            {
+                AssignBusinessObjectData();
+
+                // Loop through all the properties to make sure none of them are empty.
+                //https://www.w3schools.blog/loop-over-object-properties-c
+                // If one is empty then throw an error and return false.
+                foreach (PropertyInfo property in listing.GetType().GetProperties())
+                    if (property.GetValue(listing) == null || string.IsNullOrEmpty(property.GetValue(listing).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+
+            return false;
         }
 
         private void btnUpload_Click(object sender, EventArgs e)
@@ -275,11 +317,13 @@ namespace CarDealership
         {
             try
             {
-                if (string.IsNullOrEmpty(commentIDTextBox.Text))
-                    throw new ArgumentException("Please input a comment id", "Comment id not found");
+                if (string.IsNullOrEmpty(listingIDTextBox.Text))
+                    throw new ArgumentException("Please input a comment id", "Listing id not found");
 
-                if (string.IsNullOrEmpty(commentIDTextBox.Text))
-                    throw new ArgumentException("Please input a listing id", "Listing id not found");
+                if (string.IsNullOrEmpty(commentsRichTextBox.Text))
+                    throw new ArgumentException("Please input a comment", "Comment not found");
+
+
             }
             catch (Exception ex)
             {

@@ -1,24 +1,17 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CarDealership.GroupFinal266DataSetTableAdapters;
 using CarLibrary;
-using PagedList;
 
 namespace CarDealership
 {
-    public partial class frmUsers : Form, IUser, IUtility
+    public partial class frmUsers : Form,  IUser, IUtility
     {
         User user = new User() { userID = -1 };
         UserDB userDB = new UserDB();
-
-        int startRecord = 0;
 
         public frmUsers()
         {
@@ -34,16 +27,12 @@ namespace CarDealership
 
         private void Users_Load(object sender, EventArgs e)
         {
-            PaginationSetUp(Program.sqlConnection);
-
+            // TODO: This line of code loads data into the 'groupFinal266DataSet.Sellers' table. You can move, or remove it, as needed.
+            this.sellersTableAdapter.Fill(this.groupFinal266DataSet.Sellers);
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Buyers' table. You can move, or remove it, as needed.
             this.buyersTableAdapter.Fill(this.groupFinal266DataSet.Buyers);
 
-            LoadSampleUsers();
-        }
-
-        private void LoadSampleUsers()
-        {
+            
             txtRegisterEmail.Text = "zzm4h94sr1a@icznn.com";
             txtRegisterPassword.Text = "u3AeOX ^ 686 & h";
             txtRegisterFirstName.Text = "Nanna";
@@ -51,62 +40,6 @@ namespace CarDealership
 
             txtSellerEmailLogin.Text = "zzm4h94sr1a@icznn.com";
             txtLoginPassword.Text = "u3AeOX ^ 686 & h";
-        }
-
-        private bool PaginationSetUp(SqlConnection sqlConnection)
-        {
-            try
-            {
-                sellersTableAdapter.Adapter.SelectCommand = new SqlCommand("SELECT * FROM Sellers", sqlConnection);
-                sqlConnection.Open();
-
-                sellersTableAdapter.Adapter.Fill(this.groupFinal266DataSet, startRecord, 5, "PaginatedSellersDataTable");
-
-                sellersDataGridView.DataSource = this.groupFinal266DataSet;
-                sellersDataGridView.DataMember = "PaginatedSellersDataTable";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().ToString());
-                return false;
-            }
-            finally
-            {
-                sqlConnection.Close();
-            }
-            return true;
-        }
-
-        private void btnPreviousPage_Click(object sender, EventArgs e)
-        {
-            startRecord -= 5;
-
-            if (startRecord <= 0)
-                startRecord = 0;
-
-            this.groupFinal266DataSet.Clear();
-            sellersTableAdapter.Adapter.Fill(this.groupFinal266DataSet, startRecord, 5, "PaginatedSellersDataTable");
-        }
-
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-            SqlConnection sqlConnection = Program.sqlConnection;
-
-            SqlCommand cmdCount = new SqlCommand("SELECT COUNT(*) FROM [GroupFinal266].[dbo].[Sellers]", sqlConnection);
-            sqlConnection.Open();
-            count = Convert.ToInt32(cmdCount.ExecuteScalar());
-
-            sqlConnection.Close();
-
-            startRecord += 5;
-            
-            if (startRecord > count) {
-                startRecord -= 5;
-            }
-
-            this.groupFinal266DataSet.Clear();
-            sellersTableAdapter.Adapter.Fill(this.groupFinal266DataSet, startRecord, 5, "PaginatedSellersDataTable");
         }
 
         public void AssignBusinessObjectData()
@@ -180,6 +113,7 @@ namespace CarDealership
                     MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
 
                 EnterFormCarsForSale();
+                EnableControls(false);
             }
             catch (Exception ex)
             {
@@ -218,9 +152,6 @@ namespace CarDealership
             // Maybe we do need an argument constructor
             frmCarsForSale carsForSale = new frmCarsForSale(user.userID);
             carsForSale.Show();
-
-            // Make a delegate to enable controls in Program.cs, Program.cs will be our singleton
-            EnableControls(false);
         }
 
         private void btnShowPassword_Click(object sender, EventArgs e)
@@ -243,7 +174,7 @@ namespace CarDealership
 
         private void sellersDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 7) {
+            if (e.ColumnIndex == 5) {
                 sellersDataGridView.Rows.RemoveAt(e.RowIndex);
             }
         }

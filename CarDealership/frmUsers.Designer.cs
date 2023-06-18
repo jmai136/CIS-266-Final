@@ -55,17 +55,14 @@
             this.sellersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.sellersTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.SellersTableAdapter();
             this.sellersDataGridView = new System.Windows.Forms.DataGridView();
+            this.lblAccountList = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hash = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Salt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeleteUserAccount = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.lblAccountList = new System.Windows.Forms.Label();
-            this.btnPreviousPage = new System.Windows.Forms.Button();
-            this.btnNextPage = new System.Windows.Forms.Button();
             lblSellerEmailLogin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.buyersBindingSource)).BeginInit();
@@ -110,6 +107,7 @@
             // 
             // txtSellerEmailLogin
             // 
+            this.txtSellerEmailLogin.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
             this.txtSellerEmailLogin.Location = new System.Drawing.Point(104, 28);
             this.txtSellerEmailLogin.Name = "txtSellerEmailLogin";
             this.txtSellerEmailLogin.Size = new System.Drawing.Size(100, 20);
@@ -216,6 +214,7 @@
             // 
             // txtRegisterLastName
             // 
+            this.txtRegisterLastName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
             this.txtRegisterLastName.Location = new System.Drawing.Point(519, 64);
             this.txtRegisterLastName.Name = "txtRegisterLastName";
             this.txtRegisterLastName.Size = new System.Drawing.Size(100, 20);
@@ -223,6 +222,7 @@
             // 
             // txtRegisterFirstName
             // 
+            this.txtRegisterFirstName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
             this.txtRegisterFirstName.Location = new System.Drawing.Point(519, 26);
             this.txtRegisterFirstName.Name = "txtRegisterFirstName";
             this.txtRegisterFirstName.Size = new System.Drawing.Size(100, 20);
@@ -258,6 +258,7 @@
             // 
             // txtRegisterPassword
             // 
+            this.txtRegisterPassword.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
             this.txtRegisterPassword.Location = new System.Drawing.Point(104, 68);
             this.txtRegisterPassword.Name = "txtRegisterPassword";
             this.txtRegisterPassword.Size = new System.Drawing.Size(100, 20);
@@ -265,6 +266,7 @@
             // 
             // txtRegisterEmail
             // 
+            this.txtRegisterEmail.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.buyersBindingSource, "BuyerUserName", true));
             this.txtRegisterEmail.Location = new System.Drawing.Point(104, 30);
             this.txtRegisterEmail.Name = "txtRegisterEmail";
             this.txtRegisterEmail.Size = new System.Drawing.Size(100, 20);
@@ -300,7 +302,6 @@
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
             this.Hash,
-            this.Salt,
             this.DeleteUserAccount});
             this.sellersDataGridView.DataSource = this.sellersBindingSource;
             this.sellersDataGridView.Location = new System.Drawing.Point(12, 398);
@@ -308,6 +309,16 @@
             this.sellersDataGridView.ReadOnly = true;
             this.sellersDataGridView.Size = new System.Drawing.Size(646, 266);
             this.sellersDataGridView.TabIndex = 10;
+            this.sellersDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.sellersDataGridView_CellContentClick);
+            // 
+            // lblAccountList
+            // 
+            this.lblAccountList.AutoSize = true;
+            this.lblAccountList.Location = new System.Drawing.Point(9, 373);
+            this.lblAccountList.Name = "lblAccountList";
+            this.lblAccountList.Size = new System.Drawing.Size(66, 13);
+            this.lblAccountList.TabIndex = 11;
+            this.lblAccountList.Text = "Account List";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -351,13 +362,6 @@
             this.Hash.Name = "Hash";
             this.Hash.ReadOnly = true;
             // 
-            // Salt
-            // 
-            this.Salt.DataPropertyName = "Salt";
-            this.Salt.HeaderText = "Salt";
-            this.Salt.Name = "Salt";
-            this.Salt.ReadOnly = true;
-            // 
             // DeleteUserAccount
             // 
             this.DeleteUserAccount.HeaderText = "";
@@ -366,42 +370,11 @@
             this.DeleteUserAccount.Text = "Delete";
             this.DeleteUserAccount.UseColumnTextForButtonValue = true;
             // 
-            // lblAccountList
-            // 
-            this.lblAccountList.AutoSize = true;
-            this.lblAccountList.Location = new System.Drawing.Point(9, 373);
-            this.lblAccountList.Name = "lblAccountList";
-            this.lblAccountList.Size = new System.Drawing.Size(66, 13);
-            this.lblAccountList.TabIndex = 11;
-            this.lblAccountList.Text = "Account List";
-            // 
-            // btnPreviousPage
-            // 
-            this.btnPreviousPage.Location = new System.Drawing.Point(247, 368);
-            this.btnPreviousPage.Name = "btnPreviousPage";
-            this.btnPreviousPage.Size = new System.Drawing.Size(75, 23);
-            this.btnPreviousPage.TabIndex = 12;
-            this.btnPreviousPage.Text = "-5";
-            this.btnPreviousPage.UseVisualStyleBackColor = true;
-            this.btnPreviousPage.Click += new System.EventHandler(this.btnPreviousPage_Click);
-            // 
-            // btnNextPage
-            // 
-            this.btnNextPage.Location = new System.Drawing.Point(340, 368);
-            this.btnNextPage.Name = "btnNextPage";
-            this.btnNextPage.Size = new System.Drawing.Size(75, 23);
-            this.btnNextPage.TabIndex = 13;
-            this.btnNextPage.Text = "+5";
-            this.btnNextPage.UseVisualStyleBackColor = true;
-            this.btnNextPage.Click += new System.EventHandler(this.btnNext_Click);
-            // 
             // frmUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 676);
-            this.Controls.Add(this.btnNextPage);
-            this.Controls.Add(this.btnPreviousPage);
             this.Controls.Add(this.lblAccountList);
             this.Controls.Add(this.sellersDataGridView);
             this.Controls.Add(this.registerGroupBox);
@@ -456,9 +429,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hash;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Salt;
         private System.Windows.Forms.DataGridViewButtonColumn DeleteUserAccount;
-        private System.Windows.Forms.Button btnPreviousPage;
-        private System.Windows.Forms.Button btnNextPage;
     }
 }

@@ -236,10 +236,6 @@ namespace CarLibrary
                 if (obj is Listing == false)
                     throw new ArgumentException("Argument passed in isn't correct type Listing", "object");
 
-                foreach(PropertyInfo property in obj.GetType().GetProperties())
-                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
-                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
-
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
 
@@ -259,7 +255,7 @@ namespace CarLibrary
 
                 sqlConnection.Open();
 
-                if (Convert.ToInt32(cmd.ExecuteScalar()) > 0)
+                if (cmd.ExecuteScalar() != null)
                     throw new DataException("Listing already exists");
             }
             catch (Exception ex)
@@ -281,30 +277,16 @@ namespace CarLibrary
         {
             SqlConnection connection = new SqlConnection();
 
-            string sqlStatement = "DELETE FROM Listings WHERE ListingID = @ListingID AND SellerID = @SellerID AND CarVIN = @CarVIN";
+            string sqlStatement = "DELETE FROM Cars" + "WHERE CarVIN = @CarVIN";
 
             try
             {
                 connection.Open();
-
                 SqlCommand cmd = new SqlCommand(sqlStatement, connection);
                 cmd.Parameters.AddWithValue("@CarVIN", obj.car.carVIN);
                 cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
 
-                int recordsAmount = cmd.ExecuteNonQuery();
-
-                if (recordsAmount > 1)
-                    throw new DataException("Too many records for the same listing.");
-
-                if (recordsAmount != 1)
-                    throw new DataException("No listing to delete.");
-            }
-            catch (Exception ex)
-            {
-                MsgText = ex.Message;
-                MsgCaption = ex.GetType().ToString();
-
-                return false;
             }
             finally
             {

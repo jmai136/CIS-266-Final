@@ -25,6 +25,8 @@ namespace CarLibrary
         {
             bool canUpload = true;
 
+            string msgHash = "";
+
             try
             {
                 if (obj is User == false)
@@ -34,31 +36,55 @@ namespace CarLibrary
                     if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
                         throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
                 
-                SqlCommand cmd = new SqlCommand("spRegisterUser", sqlConnection);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+
+                cmd.CommandText =
+                    "IF EXISTS " +
+                        "(SELECT TOP 1 SellerID FROM Sellers " +
+                            "WHERE Email=@Email " +
+                             "AND Password = @Password " +
+                             "AND Hash = @Hash) " +
+                        "BEGIN " +
+                            "SELECT SellerID FROM Sellers " +
+                            "WHERE Email=@Email " +
+                            "AND Password =@Password " +
+                            "AND Hash = @Hash " +
+                        "END " +
+                     "ELSE " +
+                     "INSERT INTO Sellers (FirstName, LastName, Email, Password, Hash) " +
+                     "VALUES (@FirstName, @LastName, @Email, @Password, HASHBYTES('SHA2_512', @Password))";
+
+                byte[] hash = SHA512.Create().ComputeHash(Encoding.Unicode.GetBytes(obj.password));
+
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in hash)
+                    sb.Append(b.ToString("X2"));
+
+                msgHash = sb.ToString();
+                MsgText = msgHash;
 
                 // If there's time to salt, typically you'd salt the original password, then hash it
+                /*
                 byte[] salt = new byte[256];
                 RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
                 rng.GetNonZeroBytes(salt);
+                */
 
                 cmd.Parameters.AddWithValue("@FirstName", obj.firstName);
                 cmd.Parameters.AddWithValue("@LastName", obj.lastName);
                 cmd.Parameters.AddWithValue("@Email", obj.email);
                 cmd.Parameters.AddWithValue("@Password", obj.password);
-                cmd.Parameters.AddWithValue("@Salt", salt);
+                cmd.Parameters.AddWithValue("@Hash", hash);
 
                 sqlConnection.Open();
-
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                while (reader.Read())
-                    if (reader.GetInt32(reader.GetOrdinal("SellerID")) > 0)
-                        throw new DataException("User already exists");
-
+                
+                if (Convert.ToInt32(cmd.ExecuteScalar()) > 0)
+                    throw new DataException("User already exists");
             }
             catch (Exception ex)
             {
-                MsgText = ex.Message;
+                MsgText = ex.Message + "\nHash: " + msgHash;
                 MsgCaption = ex.GetType().ToString();
 
                 canUpload = false;
@@ -80,9 +106,9 @@ namespace CarLibrary
                 // Replace with a query or a stored procedure
                 SqlCommand cmd = new SqlCommand(
                   "IF EXISTS " +
-                        "(SELECT TOP 1 SellerID FROM Sellers WHERE Hash = HASHBYTES('SHA2_512', CONCAT(@Password, (SELECT [Salt] FROM [GroupFinal266].[dbo].[Sellers] WHERE Email=@Email)))) " +
+                        "(SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=@Password AND Hash=@Hash) " +
                       "BEGIN " +
-                        "SELECT TOP 1 SellerID FROM Sellers WHERE Hash = HASHBYTES('SHA2_512', CONCAT(@Password, (SELECT [Salt] FROM [GroupFinal266].[dbo].[Sellers] WHERE Email=@Email))) " +
+                        "SELECT TOP 1 SellerID FROM Sellers WHERE Email=@Email AND Password=@Password AND Hash=@Hash " +
                       "END",
                     sqlConnection);
 
@@ -90,6 +116,7 @@ namespace CarLibrary
                 cmd.Parameters.AddWithValue("@SellerID", user.userID);
                 cmd.Parameters.AddWithValue("@Email", user.email);
                 cmd.Parameters.AddWithValue("@Password", user.password);
+                cmd.Parameters.AddWithValue("@Hash", SHA512.Create().ComputeHash(Encoding.Unicode.GetBytes(user.password)));
 
                 // Hopefully it retusn SellerID?
                 sqlConnection.Open();
@@ -127,6 +154,7 @@ namespace CarLibrary
 
                 cmd.Parameters.AddWithValue("@SellerID", sellerID);
 
+                // Hopefully it retusn SellerID?
                 sqlConnection.Open();
 
                 if (Convert.ToInt32(cmd.ExecuteScalar()) != sellerID)
@@ -147,7 +175,6 @@ namespace CarLibrary
             return isLoggedIn;
         }
 
-        // There's no need to delete users, only listing according to instructions
         public bool Delete(User obj, SqlConnection sqlConnection)
         {
             bool isDeleted = true;
@@ -157,15 +184,21 @@ namespace CarLibrary
                 if (obj is User == false)
                     throw new ArgumentException("Argument passed in isn't correct type User", "object");
 
-                if (string.IsNullOrEmpty(obj.email))
-                    throw new DataException("No email to look up correct user to delete.");
+                List<object> userProperties = new List<object>();
+
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                    else
+                        userProperties.Add(property.GetValue(obj));
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
 
-                cmd.CommandText = "DELETE FROM Sellers WHERE Hash = HASHBYTES('SHA2_512', CONCAT(@Password, (SELECT [Salt] FROM [GroupFinal266].[dbo].[Sellers] WHERE Email=@Email))";
+                cmd.CommandText = "DELETE FROM Sellers WHERE Email=@Email AND Password=@Password";
 
-                cmd.Parameters.AddWithValue("@Email", obj.email);
+                cmd.Parameters.AddWithValue("@Email", userProperties[3]);
+                cmd.Parameters.AddWithValue("@Password", userProperties[4]);
 
                 sqlConnection.Open();
 

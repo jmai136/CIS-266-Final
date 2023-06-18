@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarLibrary;
@@ -180,20 +181,35 @@ namespace CarDealership
             // Make a query, pass that in, use ANY in SQL, that should accept arrays
             // https://stackoverflow.com/questions/58217068/pass-unknown-number-of-parameters-to-in-clause-using-jdbc-and-postgres
 
-            // Or not
-            this.groupFinal266DataSet.Listing.Rows.Clear();
-
-            // Grab all listings based on carVIN?
-            // this.groupFinal266DataSet.Listing.Rows.Add(cars.Select(x => x.carVIN));
-
-            string carVINs = String.Join(",", cars.Select(x => x.carVIN).ToArray());
-
-            carVINs = carVINs.Trim(new Char[] { ',' });
 
             // IN ('', '') - I guess it's time to make a stored procedure for IN, then convert the array to a joined string then pass that in as the parameter
             // Like SELECT * FROM [GroupFinal266].[dbo].[Listing] WHERE CarVIN IN(@carVINS), unfortunately it's not correct
             // the problem is the string's being concatenated when it reality you should be passing in ('CARVIN', 'CARVIN') not ('CARVIN, CARVIN')
-            this.listingTableAdapter.FillByCarVIN(this.groupFinal266DataSet.Listing, carVINs);
+
+            // Ok, we're using regex
+            // this.listingTableAdapter.FillByCarVIN(this.groupFinal266DataSet.Listing, carVINs);
+
+            // No we're just gonna grab the list of listings then remove them based on the cars
+            // If CarVIN does not match anything in carVINs, remove the list
+
+            // Or not
+            this.groupFinal266DataSet.Listing.Rows.Clear();
+
+            // Grab all listings based on carVIN?
+
+            if (cars.Count < 1)
+                return;
+
+            List<Listing> listings = ListingDB.GetAllListings(Program.sqlConnection);
+
+            string carVINs = String.Join("|", cars.Select(x => x.carVIN).ToArray());
+            carVINs = carVINs.Trim(new Char[] { '|' });
+
+            listings.RemoveAll(l => l.carVIN.Any(c => !Regex.IsMatch(l.carVIN, carVINs)));
+
+            // GOT IT
+            foreach (Listing listing in listings)
+                this.groupFinal266DataSet.Listing.Rows.Add(listing.listingID, listing.sellerID, listing.carVIN, listing.description, listing.creationDateTime);
         }
 
         // This should be for uploading

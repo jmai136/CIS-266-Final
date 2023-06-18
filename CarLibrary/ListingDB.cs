@@ -223,26 +223,35 @@ namespace CarLibrary
         // Select statements here or grab the query created in the designer
         // Should have all three methods somewhere: creating query through designer, execute scalar, and stored procedures
 
-        public static void GetAllListings(SqlConnection sqlConnection)
+        public static List<Listing> GetAllListings(SqlConnection sqlConnection)
         {
+            List<Listing> listings = new List<Listing>();
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection;
-               
+                SqlCommand cmd = new SqlCommand()
+                {
+                    Connection = sqlConnection,
+                    CommandText = "SELECT * FROM [GroupFinal266].[dbo].[Listing]"
+                };
+
                 sqlConnection.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (reader.Read())
                 {
+                    Listing listing = new Listing()
+                    {
+                        listingID = reader.GetInt32(reader.GetOrdinal("ListingID")),
+                        sellerID = reader.GetInt32(reader.GetOrdinal("SellerID")),
+                        carVIN = reader.GetString(reader.GetOrdinal("CarVIN")),
+                        description = reader.GetString(reader.GetOrdinal("Description")),
+                        creationDateTime = reader.GetDateTime(reader.GetOrdinal("CreationDateTime"))
+                    };
 
+                    listings.Add(listing);
                 }
             }
             catch (SqlException ex)
-            {
-                throw ex;
-            }
-            catch (DataException ex)
             {
                 throw ex;
             }
@@ -250,6 +259,8 @@ namespace CarLibrary
             {
                 sqlConnection.Close();
             }
+
+            return listings;
         }
         
         // Put GetAll in a separate CarsDB in order to use interfaces
@@ -377,7 +388,7 @@ namespace CarLibrary
 
                 // Pass in Listings
                 cmd.Parameters.AddWithValue("@SellerID", obj.sellerID);
-                cmd.Parameters.AddWithValue("@CarVIN", obj.car.carVIN);
+                cmd.Parameters.AddWithValue("@CarVIN", obj.carVIN);
                 cmd.Parameters.AddWithValue("@Description", obj.description);
 
                 sqlConnection.Open();
@@ -411,7 +422,7 @@ namespace CarLibrary
                 connection.Open();
 
                 SqlCommand cmd = new SqlCommand(sqlStatement, connection);
-                cmd.Parameters.AddWithValue("@CarVIN", obj.car.carVIN);
+                cmd.Parameters.AddWithValue("@CarVIN", obj.carVIN);
                 cmd.CommandType = CommandType.Text;
 
                 int recordsAmount = cmd.ExecuteNonQuery();

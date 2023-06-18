@@ -164,10 +164,10 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'1HGCG1650Y1081994', 2000, N'Honda', N'2000 Honda Accord', 169.4000, N'Black', 6843)
-INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'4JGBB5GB6BA625034', 2011, N'Mercedes', N'2011 Mercedes Benz ML', 849.3000, N'Black', 7583)
-INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'5TBDT44155S779931', 2005, N'Toyota', N'2005 Toyota Tundra', 438.6000, N'Black', 1974)
-INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'WB10419AX4ZM61551', 2004, N'BMW', N'2004 BMW R1150', 293.1040, N'Black', 3405)
+INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'1HGCG1650Y1081994', 2000, N'Honda', N'Accord', 169.4000, N'Black', 6843)
+INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'4JGBB5GB6BA625034', 2011, N'Mercedes', N'ML', 849.3000, N'Black', 7583)
+INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'5TBDT44155S779931', 2005, N'Toyota', N'Tundra', 438.6000, N'Black', 1974)
+INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (N'WB10419AX4ZM61551', 2004, N'BMW', N'R1150', 293.1040, N'Black', 3405)
 GO
 SET IDENTITY_INSERT [dbo].[Sellers] ON 
 

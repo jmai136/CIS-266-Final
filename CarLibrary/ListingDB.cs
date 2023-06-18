@@ -1,25 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 
 namespace CarLibrary
-{ 
+{
     public class ListingDB : IDatabase<Listing>
     {
         public string MsgText { get; set; } = "";
         public string MsgCaption { get; set; } = "";
 
+        private static Dictionary<string, Func<Car>> carsCreationDictionary = new Dictionary<string, Func<Car>>()
+        {
+            { "Mercedes", () => new Mercedes<string>() },
+            { "BMW", () => new BMW<string>() },
+            { "Toyota", () => new Toyota<int>() },
+            { "Honda", () => new BMW<int>() }
+        };
+
         public struct FilterByMake : IFilter<Car>
         {
-            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty, SqlConnection sqlConnection)
             {
-                throw new NotImplementedException();
+                List<Car> cars = new List<Car>();
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("spSelectCarByMake", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@CarMake", filterProperty);
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    while (reader.Read())
+                    {
+                        Car car = carsCreationDictionary[reader.GetString(reader.GetOrdinal("CarMake"))].Invoke();
+                        car.carVIN = reader.GetString(reader.GetOrdinal("CarVIN"));
+                        car.age = reader.GetInt32(reader.GetOrdinal("CarYear"));
+                        car.make = reader.GetString(reader.GetOrdinal("CarMake"));
+                        car.model = reader.GetString(reader.GetOrdinal("CarModel"));
+                        car.price = reader.GetDecimal(reader.GetOrdinal("CarPrice"));
+                        car.color = reader.GetString(reader.GetOrdinal("CarColor"));
+                        car.miles = reader.GetInt32(reader.GetOrdinal("CarMiles"));
+
+                        cars.Add(car);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+
+                return cars;
             }
 
             public void GetAll(object obj)
@@ -30,9 +69,44 @@ namespace CarLibrary
 
         public struct FilterByColor : IFilter<Car>
         {
-            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty, SqlConnection sqlConnection)
             {
-                throw new NotImplementedException();
+                List<Car> cars = new List<Car>();
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("spSelectCarByColor", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@CarColor", filterProperty);
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    while (reader.Read())
+                    {
+                        Car car = carsCreationDictionary[reader.GetString(reader.GetOrdinal("CarMake"))].Invoke();
+                        car.carVIN = reader.GetString(reader.GetOrdinal("CarVIN"));
+                        car.age = reader.GetInt32(reader.GetOrdinal("CarYear"));
+                        car.make = reader.GetString(reader.GetOrdinal("CarMake"));
+                        car.model = reader.GetString(reader.GetOrdinal("CarModel"));
+                        car.price = reader.GetDecimal(reader.GetOrdinal("CarPrice"));
+                        car.color = reader.GetString(reader.GetOrdinal("CarColor"));
+                        car.miles = reader.GetInt32(reader.GetOrdinal("CarMiles"));
+
+                        cars.Add(car);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+
+                return cars;
             }
 
             public void GetAll(object obj)
@@ -43,9 +117,44 @@ namespace CarLibrary
 
         public struct FilterByAge : IFilter<Car>
         {
-            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty, SqlConnection sqlConnection)
             {
-                throw new NotImplementedException();
+                List<Car> cars = new List<Car>();
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("spSelectCarByYear", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@CarYear", filterProperty);
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    while (reader.Read())
+                    {
+                        Car car = carsCreationDictionary[reader.GetString(reader.GetOrdinal("CarMake"))].Invoke();
+                        car.carVIN = reader.GetString(reader.GetOrdinal("CarVIN"));
+                        car.age = reader.GetInt32(reader.GetOrdinal("CarYear"));
+                        car.make = reader.GetString(reader.GetOrdinal("CarMake"));
+                        car.model = reader.GetString(reader.GetOrdinal("CarModel"));
+                        car.price = reader.GetDecimal(reader.GetOrdinal("CarPrice"));
+                        car.color = reader.GetString(reader.GetOrdinal("CarColor"));
+                        car.miles = reader.GetInt32(reader.GetOrdinal("CarMiles"));
+
+                        cars.Add(car);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+
+                return cars;
             }
 
             public void GetAll(object obj)
@@ -56,23 +165,46 @@ namespace CarLibrary
 
         public struct FilterByPrice : IFilter<Car>
         {
-            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty)
+            public List<Car> FilterBy(List<Car> dataGridView, string filterProperty, SqlConnection sqlConnection)
             {
                 // https://www.akadia.com/services/dotnet_find_methods.html
 
-                switch (filterProperty)
+                List<Car> cars = new List<Car>();
+
+                try
                 {
-                    case "$5000-":
-                        break;
-                    case "$5000 - 9,999":
-                        break;
-                    case "$10,000+":
-                        break;
-                    default:
-                        break;
+                    SqlCommand cmd = new SqlCommand("spSelectCarByPrice", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@CarPrice", filterProperty);
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    while (reader.Read())
+                    {
+                        Car car = carsCreationDictionary[reader.GetString(reader.GetOrdinal("CarMake"))].Invoke();
+                        car.carVIN = reader.GetString(reader.GetOrdinal("CarVIN"));
+                        car.age = reader.GetInt32(reader.GetOrdinal("CarYear"));
+                        car.make = reader.GetString(reader.GetOrdinal("CarMake"));
+                        car.model = reader.GetString(reader.GetOrdinal("CarModel"));
+                        car.price = reader.GetDecimal(reader.GetOrdinal("CarPrice"));
+                        car.color = reader.GetString(reader.GetOrdinal("CarColor"));
+                        car.miles = reader.GetInt32(reader.GetOrdinal("CarMiles"));
+
+                        cars.Add(car);
+                     }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlConnection.Close();
                 }
 
-                return new List<Car>();
+                return cars;
             }
 
             public void GetAll(object obj)
@@ -80,15 +212,6 @@ namespace CarLibrary
                 throw new NotImplementedException();
             }
         }
-
-
-        private static Dictionary<string, Func<Car>> carsCreationDictionary = new Dictionary<string, Func<Car>>()
-        {
-            { "Mercedes", () => new Mercedes<string>() },
-            { "BMW", () => new BMW<string>() },
-            { "Toyota", () => new Toyota<int>() },
-            { "Honda", () => new BMW<int>() }
-        };
 
         /*
          * Change the code so you use Interfaces instead.
@@ -150,7 +273,7 @@ namespace CarLibrary
                 SqlCommand cmd = new SqlCommand()
                 {
                     Connection = sqlConnection,
-                    CommandText = "SELECT FROM Cars"
+                    CommandText = "SELECT * FROM [GroupFinal266].[dbo].[Cars]"
                  };
 
                 sqlConnection.Open();
@@ -159,13 +282,13 @@ namespace CarLibrary
                 while (reader.Read())
                 {
                     Car car = carsCreationDictionary[reader.GetString(reader.GetOrdinal("CarMake"))].Invoke();
-                    car.carVIN = reader.GetOrdinal("CarVIN").ToString();
-                    car.age = reader.GetOrdinal("CarYear");
-                    car.make = reader.GetOrdinal("CarMake").ToString();
-                    car.model = reader.GetOrdinal("CarModel").ToString();
-                    car.price= reader.GetOrdinal("CarPrice");
-                    car.color = reader.GetOrdinal("CarColor").ToString();
-                    car.miles = reader.GetOrdinal("CarMiles");
+                    car.carVIN = reader.GetString(reader.GetOrdinal("CarVIN"));
+                    car.age = reader.GetInt32(reader.GetOrdinal("CarYear"));
+                    car.make = reader.GetString(reader.GetOrdinal("CarMake"));
+                    car.model = reader.GetString(reader.GetOrdinal("CarModel"));
+                    car.price = reader.GetDecimal(reader.GetOrdinal("CarPrice"));
+                    car.color = reader.GetString(reader.GetOrdinal("CarColor"));
+                    car.miles = reader.GetInt32(reader.GetOrdinal("CarMiles"));
 
                     cars.Add(car);
                 }
@@ -242,6 +365,10 @@ namespace CarLibrary
                 if (obj is Listing == false)
                     throw new ArgumentException("Argument passed in isn't correct type Listing", "object");
 
+                foreach(PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
 
@@ -261,7 +388,7 @@ namespace CarLibrary
 
                 sqlConnection.Open();
 
-                if (cmd.ExecuteScalar() != null)
+                if (Convert.ToInt32(cmd.ExecuteScalar()) > 0)
                     throw new DataException("Listing already exists");
             }
             catch (Exception ex)
@@ -283,16 +410,30 @@ namespace CarLibrary
         {
             SqlConnection connection = new SqlConnection();
 
-            string sqlStatement = "DELETE FROM Cars" + "WHERE CarVIN = @CarVIN";
+            string sqlStatement = "DELETE FROM Listings WHERE ListingID = @ListingID AND SellerID = @SellerID AND CarVIN = @CarVIN";
 
             try
             {
                 connection.Open();
+
                 SqlCommand cmd = new SqlCommand(sqlStatement, connection);
                 cmd.Parameters.AddWithValue("@CarVIN", obj.carVIN);
                 cmd.CommandType = CommandType.Text;
-                cmd.ExecuteNonQuery();
 
+                int recordsAmount = cmd.ExecuteNonQuery();
+
+                if (recordsAmount > 1)
+                    throw new DataException("Too many records for the same listing.");
+
+                if (recordsAmount != 1)
+                    throw new DataException("No listing to delete.");
+            }
+            catch (Exception ex)
+            {
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
+
+                return false;
             }
             finally
             {
@@ -306,7 +447,7 @@ namespace CarLibrary
         // Save in text file?
         public static void GetComment()
         {
-            
+
         }
     }
 }

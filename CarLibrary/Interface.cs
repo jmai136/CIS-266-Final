@@ -29,7 +29,7 @@ namespace CarLibrary
         void GetAll(object obj);
 
         // Filter by Make, Color, Age, Price
-        List<T> FilterBy(List<T> dataGridView, string filterProperty);
+        List<T> FilterBy(List<T> dataGridView, string filterProperty, SqlConnection sqlConnection);
     }
 
     public interface ICar

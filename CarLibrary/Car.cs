@@ -28,12 +28,12 @@ namespace CarLibrary
          */
 
         public string carVIN { get; set; }
-        public int userId { get; set; }
+        public float age { get; set; }
+        // public int userId { get; set; }
         public string make { get; set; }
         public string model {get; set;}
+        public decimal price { get; set; }
         public string color {get; set; }
-        public float age { get; set;}
-        public decimal price { get; set;}
         public float miles { get; set; }
 
         /*

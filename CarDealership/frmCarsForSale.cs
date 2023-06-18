@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarLibrary;
@@ -52,9 +53,9 @@ namespace CarDealership
 
             static private List<string> carPriceRanges = new List<string>
             {
-                "$5000-",
-                "$5000 - 9,999",
-                "$10,000"
+                "$5,000-",
+                "$5,000 - $9,999",
+                "$10,000+"
             };
 
             static public Dictionary<string, List<string>> filterByDictionary = new Dictionary<string, List<string>>
@@ -100,7 +101,6 @@ namespace CarDealership
             UserAuthentication();
 
             SetUpFilterByComboBox();
-            SetUpCarMakeOptions();
         }
 
         // Authenticate first, if the authentication fails, then closes the form.
@@ -131,16 +131,9 @@ namespace CarDealership
             filterByToolStripComboBox.ComboBox.Items.Add("Price");
         }
 
-        private void SetUpCarMakeOptions()
-        {
-            carMakeComboBox.Items.Add("Mercedes");
-            carMakeComboBox.Items.Add("BMW");
-            carMakeComboBox.Items.Add("Honda");
-            carMakeComboBox.Items.Add("Toyota");
-        }
-
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            carPropertyStripComboBox.ComboBox.Text = "";
             carPropertyStripComboBox.ComboBox.SelectedItem = "";
             carPropertyStripComboBox.ComboBox.Items.Clear();
 
@@ -153,38 +146,54 @@ namespace CarDealership
 
         private void viewAllToolStripButton_Click(object sender, EventArgs e)
         {
+            SqlConnection sqlConnection = Program.sqlConnection;
             // Get every car in database then remove it from there
-            List<Car> cars = listingDB.GetAllCars(SellerID, Program.sqlConnection);
+            // List<Car> cars = listingDB.GetAllCars(SellerID, sqlConnection);
+
+            List<Car> cars = new List<Car>();
 
             switch (filterByToolStripComboBox.ComboBox.SelectedItem)
             {
                 case "Make":
                     ListingDB.FilterByMake filterByMake = new ListingDB.FilterByMake();
-                    cars = filterByMake.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByMake.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text.ToString(),sqlConnection);
                     break;
                 case "Color":
                     ListingDB.FilterByColor filterByColor = new ListingDB.FilterByColor();
-                    cars = filterByColor.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByColor.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text.ToString(),sqlConnection);
                     break;
                 case "Age":
                     ListingDB.FilterByAge filterByAge = new ListingDB.FilterByAge();
-                    cars = filterByAge.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByAge.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text.ToString(),sqlConnection);
                     break;
                 case "Price":
                     ListingDB.FilterByPrice filterByPrice = new ListingDB.FilterByPrice();
-                    cars = filterByPrice.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByPrice.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text,sqlConnection);
                     break;
                 default:
                     break;
             }
 
-            while (carsDataGridView.Rows.Count > 0)
-                carsDataGridView.Rows.Remove(carsDataGridView.Rows[0]);
+            this.groupFinal266DataSet.Cars.Clear();
+
 
             foreach (Car car in cars)
-                carsDataGridView.Rows.Add(car.carVIN, car.age, car.make, car.model, car.price, car.color, car.miles);
+                this.groupFinal266DataSet.Cars.Rows.Add(car.carVIN, car.age, car.make, car.model, car.price, car.color, car.miles);
 
-            // Each of those CarVIN, look up those listings, select listings with those carVINs, put them in listing grid
+            this.groupFinal266DataSet.Listing.Rows.Clear();
+
+            if (cars.Count < 1)
+                return;
+
+            List<Listing> listings = ListingDB.GetAllListings(Program.sqlConnection);
+
+            string carVINs = String.Join("|", cars.Select(x => x.carVIN).ToArray());
+            carVINs = carVINs.Trim(new Char[] { '|' });
+
+            listings.RemoveAll(l => l.carVIN.Any(c => !Regex.IsMatch(l.carVIN, carVINs)));
+
+            foreach (Listing listing in listings)
+                this.groupFinal266DataSet.Listing.Rows.Add(listing.listingID, listing.sellerID, listing.carVIN, listing.description, listing.creationDateTime);
         }
 
         // This should be for uploading

@@ -101,6 +101,7 @@ namespace CarDealership
             UserAuthentication();
 
             SetUpFilterByComboBox();
+            SetUpCarMakeComboBox();
         }
 
         // Authenticate first, if the authentication fails, then closes the form.
@@ -129,6 +130,13 @@ namespace CarDealership
             filterByToolStripComboBox.ComboBox.Items.Add("Color");
             filterByToolStripComboBox.ComboBox.Items.Add("Age");
             filterByToolStripComboBox.ComboBox.Items.Add("Price");
+        }
+
+        private void SetUpCarMakeComboBox()
+        {
+            List<string> carMakes = ListingDB.GetCarPropertyFilteredByDistinctValues("CarMake", Program.sqlConnection);
+            foreach (string carMake in carMakes)
+                carMakeComboBox.Items.Add(carMake);
         }
 
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)

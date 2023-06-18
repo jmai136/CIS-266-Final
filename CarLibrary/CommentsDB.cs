@@ -37,7 +37,7 @@ namespace CarLibrary
                 cmd.Parameters.AddWithValue("@ListingID", obj.CommentText);
 
                 sqlConnection.Open();
-                if (cmd.ExecuteScalar() != null)
+                if (Convert.ToInt32(cmd.ExecuteScalar()) > 0)
                     throw new DataException("Comments already exists");
             }
             catch (Exception ex)

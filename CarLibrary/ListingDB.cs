@@ -358,11 +358,6 @@ namespace CarLibrary
             }
         }
 
-        public static void GetCarFilteredBy()
-        {
-            // Use IComparable by age, etc
-        }
-
         public bool Upload(Listing obj, SqlConnection sqlConnection)
         {
             try

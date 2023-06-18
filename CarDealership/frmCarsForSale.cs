@@ -88,7 +88,6 @@ namespace CarDealership
             UserAuthentication();
 
             SetUpFilterByComboBox();
-            SetUpCarMakeOptions();
         }
 
         // Authenticate first, if the authentication fails, then closes the form.
@@ -117,14 +116,6 @@ namespace CarDealership
             filterByToolStripComboBox.ComboBox.Items.Add("Color");
             filterByToolStripComboBox.ComboBox.Items.Add("Age");
             filterByToolStripComboBox.ComboBox.Items.Add("Price");
-        }
-
-        private void SetUpCarMakeOptions()
-        {
-            carMakeComboBox.Items.Add("Mercedes");
-            carMakeComboBox.Items.Add("BMW");
-            carMakeComboBox.Items.Add("Honda");
-            carMakeComboBox.Items.Add("Toyota");
         }
 
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -176,26 +167,7 @@ namespace CarDealership
             foreach (Car car in cars)
                 this.groupFinal266DataSet.Cars.Rows.Add(car.carVIN, car.age, car.make, car.model, car.price, car.color, car.miles);
 
-            // this.carsTableAdapter.Fill(this.groupFinal266DataSet.Cars);
-            // Each of those CarVIN, look up those listings, select listings with those carVINs, put them in listing grid
-            // Make a query, pass that in, use ANY in SQL, that should accept arrays
-            // https://stackoverflow.com/questions/58217068/pass-unknown-number-of-parameters-to-in-clause-using-jdbc-and-postgres
-
-
-            // IN ('', '') - I guess it's time to make a stored procedure for IN, then convert the array to a joined string then pass that in as the parameter
-            // Like SELECT * FROM [GroupFinal266].[dbo].[Listing] WHERE CarVIN IN(@carVINS), unfortunately it's not correct
-            // the problem is the string's being concatenated when it reality you should be passing in ('CARVIN', 'CARVIN') not ('CARVIN, CARVIN')
-
-            // Ok, we're using regex
-            // this.listingTableAdapter.FillByCarVIN(this.groupFinal266DataSet.Listing, carVINs);
-
-            // No we're just gonna grab the list of listings then remove them based on the cars
-            // If CarVIN does not match anything in carVINs, remove the list
-
-            // Or not
             this.groupFinal266DataSet.Listing.Rows.Clear();
-
-            // Grab all listings based on carVIN?
 
             if (cars.Count < 1)
                 return;
@@ -207,7 +179,6 @@ namespace CarDealership
 
             listings.RemoveAll(l => l.carVIN.Any(c => !Regex.IsMatch(l.carVIN, carVINs)));
 
-            // GOT IT
             foreach (Listing listing in listings)
                 this.groupFinal266DataSet.Listing.Rows.Add(listing.listingID, listing.sellerID, listing.carVIN, listing.description, listing.creationDateTime);
         }

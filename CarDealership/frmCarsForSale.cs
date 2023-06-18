@@ -41,7 +41,7 @@ namespace CarDealership
             {
                 "$5000-",
                 "$5000 - 9,999",
-                "$10,000"
+                "$10,000+"
             };
 
             static public Dictionary<string, List<string>> filterByDictionary = new Dictionary<string, List<string>>
@@ -140,37 +140,40 @@ namespace CarDealership
 
         private void viewAllToolStripButton_Click(object sender, EventArgs e)
         {
+            SqlConnection sqlConnection = Program.sqlConnection;
             // Get every car in database then remove it from there
-            List<Car> cars = listingDB.GetAllCars(SellerID, Program.sqlConnection);
+            // List<Car> cars = listingDB.GetAllCars(SellerID, sqlConnection);
+
+            List<Car> cars = new List<Car>();
 
             switch (filterByToolStripComboBox.ComboBox.SelectedItem)
             {
                 case "Make":
                     ListingDB.FilterByMake filterByMake = new ListingDB.FilterByMake();
-                    cars = filterByMake.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByMake.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
                     break;
                 case "Color":
                     ListingDB.FilterByColor filterByColor = new ListingDB.FilterByColor();
-                    cars = filterByColor.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByColor.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
                     break;
                 case "Age":
                     ListingDB.FilterByAge filterByAge = new ListingDB.FilterByAge();
-                    cars = filterByAge.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByAge.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
                     break;
                 case "Price":
                     ListingDB.FilterByPrice filterByPrice = new ListingDB.FilterByPrice();
-                    cars = filterByPrice.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString());
+                    cars = filterByPrice.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
                     break;
                 default:
                     break;
             }
 
-            while (carsDataGridView.Rows.Count > 0)
-                carsDataGridView.Rows.Remove(carsDataGridView.Rows[0]);
+            this.groupFinal266DataSet.Cars.Clear();
 
             foreach (Car car in cars)
-                carsDataGridView.Rows.Add(car.carVIN, car.age, car.make, car.model, car.price, car.color, car.miles);
+                this.groupFinal266DataSet.Cars.Rows.Add(car.carVIN, car.age, car.make, car.model, car.price, car.color, car.miles);
 
+            // this.carsTableAdapter.Fill(this.groupFinal266DataSet.Cars);
             // Each of those CarVIN, look up those listings, select listings with those carVINs, put them in listing grid
         }
 

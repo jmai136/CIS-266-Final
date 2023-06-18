@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,42 @@ namespace CarLibrary
 
         public bool Upload(Comments obj, SqlConnection sqlConnection)
         {
+            try
+            {
+                if (obj is Comments == false)
+                    throw new ArgumentException("Argument passed in isn't correct type Comments",
+                        "object");
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+                cmd.CommandText =
+                   "IF NOT EXISTS " +
+                       "(SELECT TOP 1 CommentID FROM Comments " +
+                           "WHERE Comments = @Comments) " +
+                       "BEGIN " +
+                           "INSERT INTO Comments (CommentID, CommentText, ListingID)  " +
+                           "VALUES (@CommentID, @CommentText, @ListingID)" +
+                       "END ";
+
+                cmd.Parameters.AddWithValue("@CommentText", obj.CommentText);
+                cmd.Parameters.AddWithValue("@CommentID", obj.CommentText);
+                cmd.Parameters.AddWithValue("@ListingID", obj.CommentText);
+
+                sqlConnection.Open();
+                if (cmd.ExecuteScalar() != null)
+                    throw new DataException("Comments already exists");
+            }
+            catch (Exception ex)
+            {
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
+
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
             return true;
         }
 

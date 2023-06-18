@@ -183,6 +183,12 @@ namespace CarUnitTest
         /**********************************************/
         /******************** CAR **********************/
         /**********************************************/
+        [TestMethod]
+        public void GetAllCarsSucceeded()
+        {
+            // Check to make sure that the count of cars is correct
+        }
+
 
         [TestMethod]
         public void CarSucceededUploadDueToUniqueProperties()
@@ -190,7 +196,7 @@ namespace CarUnitTest
             Car car = new BMW<string>()
             {
                 carVIN = "WBABS53403EV90123",
-                userId = 1,
+                // userId = 1,
                 make = "BMW",
                 model = "2024 BMW M3",
                 color = "Black",
@@ -207,7 +213,7 @@ namespace CarUnitTest
             Car car = new BMW<string>()
             {
                 carVIN = "WBABS53403EV90123",
-                userId = 1,
+                // userId = 1,
                 make = "BMW",
                 model = "2023 BMW M5",
                 color = "Red",

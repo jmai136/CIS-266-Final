@@ -181,15 +181,19 @@ namespace CarDealership
             // https://stackoverflow.com/questions/58217068/pass-unknown-number-of-parameters-to-in-clause-using-jdbc-and-postgres
 
             // Or not
-            // this.groupFinal266DataSet.Listing.Rows.Clear();
+            this.groupFinal266DataSet.Listing.Rows.Clear();
 
             // Grab all listings based on carVIN?
             // this.groupFinal266DataSet.Listing.Rows.Add(cars.Select(x => x.carVIN));
 
             string carVINs = String.Join(",", cars.Select(x => x.carVIN).ToArray());
 
+            carVINs = carVINs.Trim(new Char[] { ',' });
+
             // IN ('', '') - I guess it's time to make a stored procedure for IN, then convert the array to a joined string then pass that in as the parameter
-            // Like SELECT * FROM dbo.Listings WHERE CarVIN = IN(@carVINS)
+            // Like SELECT * FROM [GroupFinal266].[dbo].[Listing] WHERE CarVIN IN(@carVINS), unfortunately it's not correct
+            // the problem is the string's being concatenated when it reality you should be passing in ('CARVIN', 'CARVIN') not ('CARVIN, CARVIN')
+            this.listingTableAdapter.FillByCarVIN(this.groupFinal266DataSet.Listing, carVINs);
         }
 
         // This should be for uploading

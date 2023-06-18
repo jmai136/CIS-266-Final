@@ -53,10 +53,45 @@ namespace CarLibrary
             }
             return true;
         }
-
         public bool Delete(Comments obj, SqlConnection sqlConnection)
         {
+            try
+            {
+                if (obj is Comments == false)
+                    throw new ArgumentException("Argument passed in isn't correct type Comments",
+                        "object");
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = sqlConnection;
+                cmd.CommandText = "DELETE FROM Comments WHERE CommentID = @CommentID AND ListingID = @ListingID AND CommentText = @CommentText";
+
+                cmd.Parameters.AddWithValue("@CommentText", obj.CommentText);
+                cmd.Parameters.AddWithValue("@CommentID", obj.CommentText);
+                cmd.Parameters.AddWithValue("@ListingID", obj.CommentText);
+
+                sqlConnection.Open();
+
+                int recordsAmount = cmd.ExecuteNonQuery();
+
+                if (recordsAmount > 1)
+                    throw new DataException("Too many records for the same comment.");
+
+                if (recordsAmount != 1)
+                    throw new DataException("No comment to delete.");
+            }
+            catch (Exception ex)
+            {
+                MsgText = ex.Message;
+                MsgCaption = ex.GetType().ToString();
+
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
             return true;
         }
+
     }
 }

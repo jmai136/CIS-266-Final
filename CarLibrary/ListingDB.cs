@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
-using System.Security.Cryptography;
 
 namespace CarLibrary
-{ 
+{
     public class ListingDB : IDatabase<Listing>
     {
         public string MsgText { get; set; } = "";
@@ -124,7 +119,42 @@ namespace CarLibrary
         {
             public List<Car> FilterBy(List<Car> dataGridView, string filterProperty, SqlConnection sqlConnection)
             {
-                throw new NotImplementedException();
+                List<Car> cars = new List<Car>();
+
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("spSelectCarByYear", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@CarYear", filterProperty);
+
+                    sqlConnection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                    while (reader.Read())
+                    {
+                        Car car = carsCreationDictionary[reader.GetString(reader.GetOrdinal("CarMake"))].Invoke();
+                        car.carVIN = reader.GetString(reader.GetOrdinal("CarVIN"));
+                        car.age = reader.GetInt32(reader.GetOrdinal("CarYear"));
+                        car.make = reader.GetString(reader.GetOrdinal("CarMake"));
+                        car.model = reader.GetString(reader.GetOrdinal("CarModel"));
+                        car.price = reader.GetDecimal(reader.GetOrdinal("CarPrice"));
+                        car.color = reader.GetString(reader.GetOrdinal("CarColor"));
+                        car.miles = reader.GetInt32(reader.GetOrdinal("CarMiles"));
+
+                        cars.Add(car);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+
+                return cars;
             }
 
             public void GetAll(object obj)
@@ -143,24 +173,11 @@ namespace CarLibrary
 
                 try
                 {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = sqlConnection;
+                    SqlCommand cmd = new SqlCommand("spSelectCarByPrice", sqlConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    switch (filterProperty)
-                    {
-                        case "$5000-":
-                            cmd.CommandText = "spSelectCarByPriceLessThan5000";                      
-                            break;
-                        case "$5000 - 9,999":
-                            cmd.CommandText = "spSelectCarByPriceBetween5000To9999";
-                            break;
-                        case "$10,000+":
-                            cmd.CommandText = "spSelectCarByPriceGreaterOrEqualTo10000";
-                            break;
-                        default:
-                            break;
-                    }
-             
+                    cmd.Parameters.AddWithValue("@CarPrice", filterProperty);
+
                     sqlConnection.Open();
 
                     SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);

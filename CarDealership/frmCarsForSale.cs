@@ -39,8 +39,8 @@ namespace CarDealership
 
             static private List<string> carPriceRanges = new List<string>
             {
-                "$5000-",
-                "$5000 - 9,999",
+                "$5,000-",
+                "$5,000 - $9,999",
                 "$10,000+"
             };
 
@@ -128,6 +128,7 @@ namespace CarDealership
 
         private void filterByToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            carPropertyStripComboBox.ComboBox.Text = "";
             carPropertyStripComboBox.ComboBox.SelectedItem = "";
             carPropertyStripComboBox.ComboBox.Items.Clear();
 
@@ -150,19 +151,19 @@ namespace CarDealership
             {
                 case "Make":
                     ListingDB.FilterByMake filterByMake = new ListingDB.FilterByMake();
-                    cars = filterByMake.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
+                    cars = filterByMake.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text.ToString(),sqlConnection);
                     break;
                 case "Color":
                     ListingDB.FilterByColor filterByColor = new ListingDB.FilterByColor();
-                    cars = filterByColor.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
+                    cars = filterByColor.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text.ToString(),sqlConnection);
                     break;
                 case "Age":
                     ListingDB.FilterByAge filterByAge = new ListingDB.FilterByAge();
-                    cars = filterByAge.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
+                    cars = filterByAge.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text.ToString(),sqlConnection);
                     break;
                 case "Price":
                     ListingDB.FilterByPrice filterByPrice = new ListingDB.FilterByPrice();
-                    cars = filterByPrice.FilterBy(cars, carPropertyStripComboBox.ComboBox.SelectedItem.ToString(),sqlConnection);
+                    cars = filterByPrice.FilterBy(cars, carPropertyStripComboBox.ComboBox.Text,sqlConnection);
                     break;
                 default:
                     break;
@@ -170,11 +171,25 @@ namespace CarDealership
 
             this.groupFinal266DataSet.Cars.Clear();
 
+
             foreach (Car car in cars)
                 this.groupFinal266DataSet.Cars.Rows.Add(car.carVIN, car.age, car.make, car.model, car.price, car.color, car.miles);
 
             // this.carsTableAdapter.Fill(this.groupFinal266DataSet.Cars);
             // Each of those CarVIN, look up those listings, select listings with those carVINs, put them in listing grid
+            // Make a query, pass that in, use ANY in SQL, that should accept arrays
+            // https://stackoverflow.com/questions/58217068/pass-unknown-number-of-parameters-to-in-clause-using-jdbc-and-postgres
+
+            // Or not
+            // this.groupFinal266DataSet.Listing.Rows.Clear();
+
+            // Grab all listings based on carVIN?
+            // this.groupFinal266DataSet.Listing.Rows.Add(cars.Select(x => x.carVIN));
+
+            string carVINs = String.Join(",", cars.Select(x => x.carVIN).ToArray());
+
+            // IN ('', '') - I guess it's time to make a stored procedure for IN, then convert the array to a joined string then pass that in as the parameter
+            // Like SELECT * FROM dbo.Listings WHERE CarVIN = IN(@carVINS)
         }
 
         // This should be for uploading

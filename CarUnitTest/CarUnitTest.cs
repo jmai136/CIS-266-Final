@@ -26,10 +26,10 @@ namespace CarUnitTest
         public void UserSuccessfulRegistrationWithUniqueProperties()
         {
             User user = new User() {
-                email = "gatocaceujeu-6803@yopmail.com",
-                password = "UTqNC*5kF@12",
-                firstName = "Ezekiel",
-                lastName = "Byllaid"
+                email = "opnriop@totallogamsolusi.com",
+                password = "!8Q3TO*liz1j",
+                firstName = "Eli",
+                lastName = "Mattanyahu"
             };
 
             Assert.IsTrue(userDB.Upload(user, sqlConnection), "Should be true due to non-existent user and correct types");
@@ -128,7 +128,8 @@ namespace CarUnitTest
         {
             Listing listing = new Listing()
             {
-                car = new BMW<string>()
+                /*
+                Car car = new BMW<string>()
                 {
                     carVIN = "N/A",
                     userId = 1,
@@ -139,7 +140,8 @@ namespace CarUnitTest
                     price = 394.45M,
                     miles = 5034,
                     engine = "N/A"
-                },
+                },*/
+                carVIN = "N/A",
                 creationDateTime = DateTime.Now
             };
 
@@ -152,10 +154,11 @@ namespace CarUnitTest
             Listing listing = new Listing()
             {
                 sellerID = 1,
-                car = new BMW<string>()
+                /*car = new BMW<string>()
                 {
                     carVIN = "4JGBB5GB6BA625034"
-                },
+                },*/
+                carVIN = "4JGBB5GB6BA625034",
                 description = "BMW car listing for Hoshi Kask.",
                 creationDateTime = DateTime.Now
             };
@@ -168,11 +171,12 @@ namespace CarUnitTest
         {
             Listing listing = new Listing()
             {
-                sellerID = 1,
+                sellerID = 1,/*
                 car = new BMW<string>()
                 {
                     carVIN = "N/A"
-                },
+                },*/
+                carVIN = "N/A",
                 description = "BMW car listing for Hoshi Kask",
                 creationDateTime = DateTime.Now
             };
@@ -218,7 +222,7 @@ namespace CarUnitTest
                 model = "2023 BMW M5",
                 color = "Red",
                 age = 2023,
-                price = 5630.45M,
+                price = 56000.45M,
                 miles = 2895,
                 engine = "BMW OHV V8 Engine"
             };

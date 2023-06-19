@@ -150,12 +150,11 @@ namespace CarDealership
                 return;
             }
 
-            MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
-
             foreach (TextBox textBox in registerGroupBox.Controls.OfType<TextBox>())
                 textBox.Clear();
 
             sellersDataGridView.Update();
+            sellersDataGridView.Refresh();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -214,12 +213,9 @@ namespace CarDealership
             if (string.IsNullOrEmpty(user.userID.ToString()) || user.userID <= 0)
                 return;
 
-            // Probably go to the new form then using the user?
-            // Maybe we do need an argument constructor
             frmCarsForSale carsForSale = new frmCarsForSale(user.userID, this);
             carsForSale.Show();
 
-            // Make a delegate to enable controls in Program.cs, Program.cs will be our singleton
             EnableControls(false);
         }
 
@@ -259,7 +255,10 @@ namespace CarDealership
                 if (!ValidateBusinessObjectData())
                     return;
 
-                userDB.Delete(user, Program.sqlConnection);
+                if (!userDB.Delete(user, Program.sqlConnection)) {
+                    MessageBox.Show(userDB.MsgText, userDB.MsgCaption);
+                    return;
+                }
 
                 sellersDataGridView.Rows.RemoveAt(e.RowIndex);
             }

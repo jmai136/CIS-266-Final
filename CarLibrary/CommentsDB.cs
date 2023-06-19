@@ -66,8 +66,8 @@ namespace CarLibrary
                 cmd.CommandText = "DELETE FROM Comments WHERE CommentID = @CommentID AND ListingID = @ListingID AND CommentText = @CommentText";
 
                 cmd.Parameters.AddWithValue("@CommentText", obj.CommentText);
-                cmd.Parameters.AddWithValue("@CommentID", obj.CommentText);
-                cmd.Parameters.AddWithValue("@ListingID", obj.CommentText);
+                cmd.Parameters.AddWithValue("@CommentID", obj.CommentsID);
+                cmd.Parameters.AddWithValue("@ListingID", obj.ListingID);
 
                 sqlConnection.Open();
 

@@ -23,15 +23,18 @@ namespace CarDealership
         private Listing listing = new Listing();
         private ListingDB listingDB = new ListingDB();
 
+        private Car car;
+
         private Comments comments = new Comments();
         private CommentsDB commentsDB = new CommentsDB();
 
         [Flags]
         public enum ModifyingCarComponents
         {
-            Listing = 0,
-            Car = 1,
-            Comments = 2
+            NONE = 0,
+            IS_MODIFYING_LISTING = 1,
+            IS_MODIFYING_CAR = 2,
+            IS_MODIFYING_COMMENTS = 3
         }
 
         ModifyingCarComponents modifyingCarComponents = new ModifyingCarComponents();
@@ -106,6 +109,17 @@ namespace CarDealership
 
             SetUpFilterByComboBox();
             SetUpCarMakeComboBox();
+
+            // It really doesn't make sense for a seller to be able to delete another seller's listing?
+            sellerIDTextBox.Text = SellerID.ToString();
+
+            LoadSampleCarComponents();
+        }
+
+        private void LoadSampleCarComponents()
+        {
+            carVINTextBoxListingInfo.Text = "1HGCG1650Y1081994";
+            descriptionTextBox.Text = "Seller: Hoshi Kask; Car: 2000 Honda Accord marked at $2500";
         }
 
         // Authenticate first, if the authentication fails, then closes the form.
@@ -212,29 +226,46 @@ namespace CarDealership
         public void AssignBusinessObjectDataToUpload()
         {
             // Listing
-            listing.listingID = Convert.ToInt32(listingIDTextBox.Text);
-            listing.sellerID = Convert.ToInt32(sellerIDTextBox.Text);
-            listing.carVIN = carVINTextBox.Text;
-            listing.description = descriptionTextBox.Text;
-            listing.creationDateTime = Convert.ToDateTime(creationDateTimeDateTimePicker.Text);
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
+            {
+                // Assigning auto incrementing values are just for validation checks to not throw error
+                listing.listingID = 0;
+                listing.sellerID = Convert.ToInt32(sellerIDTextBox.Text);
+                listing.carVIN = carVINTextBoxListingInfo.Text;
+                listing.description = descriptionTextBox.Text;
+                listing.creationDateTime = Convert.ToDateTime(creationDateTimeDateTimePicker.Text);
+            }
 
             // Car
 
             // Comments
-            comments.ListingID = Convert.ToInt32(listingIDComboBox.Text);
-            comments.CommentText = commentsRichTextBox.Text;
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
+            {
+                comments.CommentsID = 0;
+                comments.ListingID = Convert.ToInt32(listingIDComboBox.Text);
+                comments.CommentText = commentsRichTextBox.Text;
+            }
+
+            modifyingCarComponents = ModifyingCarComponents.NONE;
         }
 
         public bool ValidateBusinessObjectData()
         {
             try
             {
-                // Loop through all the properties to make sure none of them are empty.
-                //https://www.w3schools.blog/loop-over-object-properties-c
-                // If one is empty then throw an error and return false.
-                foreach (PropertyInfo property in listing.GetType().GetProperties())
-                    if (property.GetValue(listing) == null || string.IsNullOrEmpty(property.GetValue(listing).ToString()))
-                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
+                {
+                    foreach (PropertyInfo property in listing.GetType().GetProperties())
+                        if (property.GetValue(listing) == null || string.IsNullOrEmpty(property.GetValue(listing).ToString()))
+                            throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                }
+
+                if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
+                {
+                    foreach (PropertyInfo property in comments.GetType().GetProperties())
+                        if (property.GetValue(comments) == null || string.IsNullOrEmpty(property.GetValue(comments).ToString()))
+                            throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                }
 
                 return true;
             }
@@ -248,102 +279,70 @@ namespace CarDealership
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
+            modifyingCarComponents |= ModifyingCarComponents.IS_MODIFYING_LISTING;
+
             AssignBusinessObjectDataToUpload();
 
             if (!ValidateBusinessObjectData())
                 return;
 
-            // Works fine
-            /*
-            try
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = Program.sqlConnection;
-
-                cmd.CommandText =
-                    "IF NOT EXISTS " +
-                        "(SELECT TOP 1 CarVIN FROM Cars " +
-                            "WHERE CarVIN = @CarVIN) " +
-                        "BEGIN " +
-                            "INSERT INTO Cars (CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles)  " +
-                            "VALUES (@CarVIN, @CarYear, @CarMake, @CarModel, @CarPrice, @CarColor, @CarMiles)" +
-                        "END ";
-
-                cmd.Parameters.AddWithValue("@CarVIN", "1HGCG1650Y1081994");
-                cmd.Parameters.AddWithValue("@CarYear", 2000);
-                cmd.Parameters.AddWithValue("@CarMake", "Honda");
-                cmd.Parameters.AddWithValue("@CarModel", "2000 Honda Accord");
-                cmd.Parameters.AddWithValue("@CarPrice", 169.40);
-                cmd.Parameters.AddWithValue("@CarColor", "Black");
-                cmd.Parameters.AddWithValue("@CarMiles", 6843.50);
-
-                Program.sqlConnection.Open();
-
-                MessageBox.Show(cmd.ExecuteScalar().ToString(), "Execute scalar");
+            if (!listingDB.Upload(listing, Program.sqlConnection)) { 
+                MessageBox.Show(listingDB.MsgText, listingDB.MsgCaption);
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().ToString());
-            }
-            finally
-            {
-                Program.sqlConnection.Close();
-            }*/
 
-            // Does not work due to Seller constraint
-            /*try
-            {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = Program.sqlConnection;
-
-                cmd.CommandText =
-                    "IF NOT EXISTS " +
-                        "(SELECT TOP 1 ListingID FROM Listing " +
-                            "WHERE CarVIN = @CarVIN) " +
-                        "BEGIN " +
-                            "INSERT INTO Listing (SellerID, CarVIN)  " +
-                            "VALUES (@SellerID, @CarVIN)" +
-                        "END ";
-
-                cmd.Parameters.AddWithValue("@SellerID", 1);
-                cmd.Parameters.AddWithValue("@CarVIN", "4JGBB5GB6BA625034");
-
-                Program.sqlConnection.Open();
-                MessageBox.Show(cmd.ExecuteScalar().ToString(), "Execute scalar");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().ToString());
-            }
-            finally
-            {
-                Program.sqlConnection.Close();
-            }*/
-
-
+            listingDataGridView.Update();
+            listingDataGridView.Refresh();
         }
 
 
         public void AssignBusinessObjectDataToDelete(int rowIndex)
         {
-            listing.listingID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[0].Value);
-            listing.sellerID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[1].Value);
-            listing.carVIN = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[2].Value);
-            listing.description = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[3].Value);
-            listing.creationDateTime = Convert.ToDateTime(listingDataGridView.Rows[rowIndex].Cells[4].Value);
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
+            {
+                listing.listingID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[0].Value);
+                // Don't allow for seller to delete other seller's listing or comments
+                listing.sellerID = (Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[1].Value) == SellerID) ? Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[1].Value) : -1;
+                listing.carVIN = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[2].Value);
+                listing.description = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[3].Value);
+                listing.creationDateTime = Convert.ToDateTime(listingDataGridView.Rows[rowIndex].Cells[4].Value);
+            }
 
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_CAR)
+            {
+                car = ListingDB.carsCreationDictionary[carMakeComboBox.Text].Invoke();
+            }
+
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
+            {
+                comments.CommentsID = Convert.ToInt32(commentsDataGridView.Rows[rowIndex].Cells[0].Value);
+                comments.CommentText = Convert.ToString(commentsDataGridView.Rows[rowIndex].Cells[1].Value);
+                comments.ListingID = Convert.ToInt32(commentsDataGridView.Rows[rowIndex].Cells[2].Value);
+            }
+
+            modifyingCarComponents = ModifyingCarComponents.NONE;
         }
 
         private void listingDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 5)
             {
+                modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_LISTING;
+
                 AssignBusinessObjectDataToDelete(e.RowIndex);
 
                 if (!ValidateBusinessObjectData())
                     return;
 
-                listingDB.Delete(listing, Program.sqlConnection);
+                if (listing.sellerID == -1) {
+                    MessageBox.Show("Can't delete other user's listing");
+                    return;
+                }
+
+                if (!listingDB.Delete(listing, Program.sqlConnection)) {
+                    MessageBox.Show(listingDB.MsgText, listingDB.MsgCaption);
+                    return;
+                }
 
                 listingDataGridView.Rows.RemoveAt(e.RowIndex);
             }
@@ -359,8 +358,9 @@ namespace CarDealership
                 if (string.IsNullOrEmpty(commentsRichTextBox.Text))
                     throw new ArgumentException("Please input a comment", "Comment not found");
 
-                comments.CommentText += commentsRichTextBox.Text;
-                comments.ListingID += Convert.ToInt32(listingIDComboBox.SelectedValue);
+                modifyingCarComponents |= ModifyingCarComponents.IS_MODIFYING_COMMENTS;
+
+                AssignBusinessObjectDataToUpload();
 
                 commentsDB.Upload(comments, Program.sqlConnection);
             }

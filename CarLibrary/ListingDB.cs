@@ -11,7 +11,7 @@ namespace CarLibrary
         public string MsgText { get; set; } = "";
         public string MsgCaption { get; set; } = "";
 
-        private static Dictionary<string, Func<Car>> carsCreationDictionary = new Dictionary<string, Func<Car>>()
+        public static Dictionary<string, Func<Car>> carsCreationDictionary = new Dictionary<string, Func<Car>>()
         {
             { "Mercedes", () => new Mercedes<string>() },
             { "BMW", () => new BMW<string>() },
@@ -377,9 +377,12 @@ namespace CarLibrary
                         "(SELECT TOP 1 ListingID FROM Listing " +
                             "WHERE CarVIN = @CarVIN) " +
                         "BEGIN " +
-                            "INSERT INTO Listing (SellerID, CarVIN, Description)  " +
+                            "INSERT INTO Listing (SellerID, CarVIN, Description) " +
                             "VALUES (@SellerID, @CarVIN, @Description)" +
-                        "END ";
+                        "END " +
+                        "ELSE " +
+                        "SELECT TOP 1 ListingID FROM Listing " +
+                            "WHERE CarVIN = @CarVIN";
 
                 // Pass in Listings
                 cmd.Parameters.AddWithValue("@SellerID", obj.sellerID);
@@ -388,8 +391,10 @@ namespace CarLibrary
 
                 sqlConnection.Open();
 
-                if (Convert.ToInt32(cmd.ExecuteScalar()) > 0)
-                    throw new DataException("Listing already exists");
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                    if (reader.GetInt32(reader.GetOrdinal("ListingID")) > 0)
+                        throw new DataException("Listing already exists");
             }
             catch (Exception ex)
             {
@@ -417,7 +422,14 @@ namespace CarLibrary
                     if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
                         throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
 
-                SqlCommand cmd = new SqlCommand("DELETE FROM [Listing] WHERE ListingID = @ListingID AND SellerID = @SellerID AND CarVIN = @CarVIN", sqlConnection);
+                // https://www.sqlservercentral.com/articles/the-output-clause-for-insert-and-delete-statements
+                // Gotta try this, even though it's deleting ExecuteScalar and ExecuteNonQuery don't work
+                // for grabbing deleted
+                // Notice the syntax, WHERE is at the end.
+                SqlCommand cmd = new SqlCommand(
+                    "DELETE FROM [GroupFinal266].[dbo].[Listing] " +
+                    "OUTPUT DELETED.[ListingID] " +
+                    "WHERE ListingID = @ListingID AND SellerID = @SellerID AND CarVIN = @CarVIN", sqlConnection);
 
                 cmd.Parameters.AddWithValue("@ListingID", obj.listingID);
                 cmd.Parameters.AddWithValue("@SellerID", obj.sellerID);
@@ -425,13 +437,14 @@ namespace CarLibrary
 
                 sqlConnection.Open();
 
-                int recordsAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+                    int listingID = reader.GetInt32(reader.GetOrdinal("ListingID"));
 
-                if (recordsAmount > 1)
-                    throw new DataException("Too many records for the same listing.");
-
-                if (recordsAmount != 1)
-                    throw new DataException("No listing to delete.");
+                    if (listingID <= 0)
+                        throw new DataException("Listing doesn't exist.");
+                }
             }
             catch (Exception ex)
             {

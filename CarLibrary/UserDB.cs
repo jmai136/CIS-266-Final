@@ -163,19 +163,22 @@ namespace CarLibrary
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
 
-                cmd.CommandText = "DELETE FROM [GroupFinal266].[dbo].[Sellers] WHERE Email=@Email";
+                cmd.CommandText = "DELETE FROM [GroupFinal266].[dbo].[Sellers] " +
+                    "OUTPUT DELETED.[SellerID] " +
+                    "WHERE Email=@Email";
 
                 cmd.Parameters.AddWithValue("@Email", obj.email);
 
                 sqlConnection.Open();
 
-                int recordsAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+                    int userID = reader.GetInt32(reader.GetOrdinal("SellerID"));
 
-                if (recordsAmount > 1)
-                    throw new DataException("Too many records for the same user");
-
-                if (recordsAmount != 1)
-                    throw new DataException("No user to delete");
+                    if (userID <= 0)
+                        throw new DataException("Seller doesn't exist.");
+                }
             }
             catch (Exception ex)
             {

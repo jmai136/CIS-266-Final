@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label listingIDLabel;
-            System.Windows.Forms.Label sellerIDLabel;
             System.Windows.Forms.Label carVINLabel;
             System.Windows.Forms.Label descriptionLabel;
             System.Windows.Forms.Label creationDateTimeLabel;
@@ -43,8 +42,9 @@
             System.Windows.Forms.Label carColorLabel;
             System.Windows.Forms.Label carMilesLabel;
             System.Windows.Forms.Label carMakeLabel;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCarsForSale));
             System.Windows.Forms.Label listingIDLabel2;
+            System.Windows.Forms.Label sellerIDLabel;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCarsForSale));
             this.groupFinal266DataSet = new CarDealership.GroupFinal266DataSet();
             this.carsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.carsTableAdapter = new CarDealership.GroupFinal266DataSetTableAdapters.CarsTableAdapter();
@@ -76,17 +76,24 @@
             this.CommentID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ListingID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeleteComment = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.listingDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CreationDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeleteListing = new System.Windows.Forms.DataGridViewButtonColumn();
             this.listingBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.listingIDTextBox = new System.Windows.Forms.TextBox();
-            this.sellerIDTextBox = new System.Windows.Forms.TextBox();
-            this.carVINTextBox = new System.Windows.Forms.TextBox();
+            this.carVINTextBoxListingInfo = new System.Windows.Forms.TextBox();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.creationDateTimeDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.commentIDTextBox = new System.Windows.Forms.TextBox();
             this.tabCommentsInfo = new System.Windows.Forms.TabControl();
             this.commentsGeneralTab = new System.Windows.Forms.TabPage();
+            this.listingIDComboBox = new System.Windows.Forms.ComboBox();
             this.commentsInfoTab = new System.Windows.Forms.TabPage();
             this.btnSubmitComment = new System.Windows.Forms.Button();
             this.commentsRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -94,21 +101,14 @@
             this.listingInfoTab = new System.Windows.Forms.TabPage();
             this.carInfoTab = new System.Windows.Forms.TabPage();
             this.carMakeComboBox = new System.Windows.Forms.ComboBox();
-            this.carVINTextBox1 = new System.Windows.Forms.TextBox();
+            this.carVINTextBoxCarInfo = new System.Windows.Forms.TextBox();
             this.carYearTextBox = new System.Windows.Forms.TextBox();
             this.carModelTextBox = new System.Windows.Forms.TextBox();
             this.carPriceTextBox = new System.Windows.Forms.TextBox();
             this.carColorTextBox = new System.Windows.Forms.TextBox();
             this.carMilesTextBox = new System.Windows.Forms.TextBox();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CreationDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeleteListing = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.listingIDComboBox = new System.Windows.Forms.ComboBox();
+            this.sellerIDTextBox = new System.Windows.Forms.TextBox();
             listingIDLabel = new System.Windows.Forms.Label();
-            sellerIDLabel = new System.Windows.Forms.Label();
             carVINLabel = new System.Windows.Forms.Label();
             descriptionLabel = new System.Windows.Forms.Label();
             creationDateTimeLabel = new System.Windows.Forms.Label();
@@ -122,6 +122,7 @@
             carMilesLabel = new System.Windows.Forms.Label();
             carMakeLabel = new System.Windows.Forms.Label();
             listingIDLabel2 = new System.Windows.Forms.Label();
+            sellerIDLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carsBindingNavigator)).BeginInit();
@@ -149,15 +150,6 @@
             listingIDLabel.Size = new System.Drawing.Size(54, 13);
             listingIDLabel.TabIndex = 14;
             listingIDLabel.Text = "Listing ID:";
-            // 
-            // sellerIDLabel
-            // 
-            sellerIDLabel.AutoSize = true;
-            sellerIDLabel.Location = new System.Drawing.Point(7, 45);
-            sellerIDLabel.Name = "sellerIDLabel";
-            sellerIDLabel.Size = new System.Drawing.Size(50, 13);
-            sellerIDLabel.TabIndex = 16;
-            sellerIDLabel.Text = "Seller ID:";
             // 
             // carVINLabel
             // 
@@ -266,6 +258,24 @@
             carMakeLabel.Size = new System.Drawing.Size(56, 13);
             carMakeLabel.TabIndex = 13;
             carMakeLabel.Text = "Car Make:";
+            // 
+            // listingIDLabel2
+            // 
+            listingIDLabel2.AutoSize = true;
+            listingIDLabel2.Location = new System.Drawing.Point(48, 119);
+            listingIDLabel2.Name = "listingIDLabel2";
+            listingIDLabel2.Size = new System.Drawing.Size(54, 13);
+            listingIDLabel2.TabIndex = 5;
+            listingIDLabel2.Text = "Listing ID:";
+            // 
+            // sellerIDLabel
+            // 
+            sellerIDLabel.AutoSize = true;
+            sellerIDLabel.Location = new System.Drawing.Point(7, 45);
+            sellerIDLabel.Name = "sellerIDLabel";
+            sellerIDLabel.Size = new System.Drawing.Size(50, 13);
+            sellerIDLabel.TabIndex = 16;
+            sellerIDLabel.Text = "Seller ID:";
             // 
             // groupFinal266DataSet
             // 
@@ -447,7 +457,7 @@
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(32, 164);
+            this.btnUpload.Location = new System.Drawing.Point(239, 165);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 30);
             this.btnUpload.TabIndex = 12;
@@ -472,7 +482,8 @@
             this.commentsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.CommentID,
             this.dataGridViewTextBoxColumn8,
-            this.ListingID});
+            this.ListingID,
+            this.DeleteComment});
             this.commentsDataGridView.DataSource = this.commentsBindingSource;
             this.commentsDataGridView.Location = new System.Drawing.Point(446, 447);
             this.commentsDataGridView.Name = "commentsDataGridView";
@@ -500,6 +511,12 @@
             this.ListingID.HeaderText = "ListingID";
             this.ListingID.Name = "ListingID";
             this.ListingID.ReadOnly = true;
+            // 
+            // DeleteComment
+            // 
+            this.DeleteComment.HeaderText = "";
+            this.DeleteComment.Name = "DeleteComment";
+            this.DeleteComment.ReadOnly = true;
             // 
             // btnLogOut
             // 
@@ -531,6 +548,49 @@
             this.listingDataGridView.TabIndex = 16;
             this.listingDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listingDataGridView_CellContentClick);
             // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "ListingID";
+            this.dataGridViewTextBoxColumn9.HeaderText = "ListingID";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "SellerID";
+            this.dataGridViewTextBoxColumn10.HeaderText = "SellerID";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "CarVIN";
+            this.dataGridViewTextBoxColumn11.HeaderText = "CarVIN";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "Description";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Description";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
+            // 
+            // CreationDateTime
+            // 
+            this.CreationDateTime.DataPropertyName = "CreationDateTime";
+            this.CreationDateTime.HeaderText = "CreationDateTime";
+            this.CreationDateTime.Name = "CreationDateTime";
+            this.CreationDateTime.ReadOnly = true;
+            // 
+            // DeleteListing
+            // 
+            this.DeleteListing.HeaderText = "";
+            this.DeleteListing.Name = "DeleteListing";
+            this.DeleteListing.ReadOnly = true;
+            this.DeleteListing.Text = "Delete";
+            this.DeleteListing.UseColumnTextForButtonValue = true;
+            // 
             // listingBindingSource
             // 
             this.listingBindingSource.DataMember = "FK_Listing_Sellers";
@@ -538,32 +598,21 @@
             // 
             // listingIDTextBox
             // 
-            this.listingIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "ListingID", true));
             this.listingIDTextBox.Location = new System.Drawing.Point(114, 16);
             this.listingIDTextBox.Name = "listingIDTextBox";
             this.listingIDTextBox.ReadOnly = true;
             this.listingIDTextBox.Size = new System.Drawing.Size(200, 20);
             this.listingIDTextBox.TabIndex = 15;
             // 
-            // sellerIDTextBox
+            // carVINTextBoxListingInfo
             // 
-            this.sellerIDTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "SellerID", true));
-            this.sellerIDTextBox.Location = new System.Drawing.Point(114, 42);
-            this.sellerIDTextBox.Name = "sellerIDTextBox";
-            this.sellerIDTextBox.Size = new System.Drawing.Size(200, 20);
-            this.sellerIDTextBox.TabIndex = 17;
-            // 
-            // carVINTextBox
-            // 
-            this.carVINTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "CarVIN", true));
-            this.carVINTextBox.Location = new System.Drawing.Point(114, 68);
-            this.carVINTextBox.Name = "carVINTextBox";
-            this.carVINTextBox.Size = new System.Drawing.Size(200, 20);
-            this.carVINTextBox.TabIndex = 19;
+            this.carVINTextBoxListingInfo.Location = new System.Drawing.Point(114, 68);
+            this.carVINTextBoxListingInfo.Name = "carVINTextBoxListingInfo";
+            this.carVINTextBoxListingInfo.Size = new System.Drawing.Size(200, 20);
+            this.carVINTextBoxListingInfo.TabIndex = 19;
             // 
             // descriptionTextBox
             // 
-            this.descriptionTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "Description", true));
             this.descriptionTextBox.Location = new System.Drawing.Point(114, 94);
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(200, 20);
@@ -612,6 +661,19 @@
             this.commentsGeneralTab.Text = "Comments General";
             this.commentsGeneralTab.UseVisualStyleBackColor = true;
             // 
+            // listingIDComboBox
+            // 
+            this.listingIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.listingBindingSource, "ListingID", true));
+            this.listingIDComboBox.DataSource = this.listingBindingSource;
+            this.listingIDComboBox.DisplayMember = "ListingID";
+            this.listingIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.listingIDComboBox.FormattingEnabled = true;
+            this.listingIDComboBox.Location = new System.Drawing.Point(118, 119);
+            this.listingIDComboBox.Name = "listingIDComboBox";
+            this.listingIDComboBox.Size = new System.Drawing.Size(100, 21);
+            this.listingIDComboBox.TabIndex = 6;
+            this.listingIDComboBox.ValueMember = "ListingID";
+            // 
             // commentsInfoTab
             // 
             this.commentsInfoTab.Controls.Add(this.btnSubmitComment);
@@ -656,17 +718,18 @@
             // 
             // listingInfoTab
             // 
+            this.listingInfoTab.AutoScroll = true;
+            this.listingInfoTab.Controls.Add(this.sellerIDTextBox);
             this.listingInfoTab.Controls.Add(this.listingIDTextBox);
             this.listingInfoTab.Controls.Add(listingIDLabel);
             this.listingInfoTab.Controls.Add(sellerIDLabel);
-            this.listingInfoTab.Controls.Add(this.sellerIDTextBox);
             this.listingInfoTab.Controls.Add(this.descriptionTextBox);
             this.listingInfoTab.Controls.Add(descriptionLabel);
             this.listingInfoTab.Controls.Add(carVINLabel);
             this.listingInfoTab.Controls.Add(this.btnUpload);
             this.listingInfoTab.Controls.Add(creationDateTimeLabel);
             this.listingInfoTab.Controls.Add(this.creationDateTimeDateTimePicker);
-            this.listingInfoTab.Controls.Add(this.carVINTextBox);
+            this.listingInfoTab.Controls.Add(this.carVINTextBoxListingInfo);
             this.listingInfoTab.Location = new System.Drawing.Point(4, 22);
             this.listingInfoTab.Name = "listingInfoTab";
             this.listingInfoTab.Padding = new System.Windows.Forms.Padding(3);
@@ -681,7 +744,7 @@
             this.carInfoTab.Controls.Add(carMakeLabel);
             this.carInfoTab.Controls.Add(this.carMakeComboBox);
             this.carInfoTab.Controls.Add(carVINLabel1);
-            this.carInfoTab.Controls.Add(this.carVINTextBox1);
+            this.carInfoTab.Controls.Add(this.carVINTextBoxCarInfo);
             this.carInfoTab.Controls.Add(carYearLabel);
             this.carInfoTab.Controls.Add(this.carYearTextBox);
             this.carInfoTab.Controls.Add(carModelLabel);
@@ -710,13 +773,13 @@
             this.carMakeComboBox.Size = new System.Drawing.Size(252, 21);
             this.carMakeComboBox.TabIndex = 14;
             // 
-            // carVINTextBox1
+            // carVINTextBoxCarInfo
             // 
-            this.carVINTextBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarVIN", true));
-            this.carVINTextBox1.Location = new System.Drawing.Point(77, 15);
-            this.carVINTextBox1.Name = "carVINTextBox1";
-            this.carVINTextBox1.Size = new System.Drawing.Size(252, 20);
-            this.carVINTextBox1.TabIndex = 1;
+            this.carVINTextBoxCarInfo.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.carsBindingSource, "CarVIN", true));
+            this.carVINTextBoxCarInfo.Location = new System.Drawing.Point(77, 15);
+            this.carVINTextBoxCarInfo.Name = "carVINTextBoxCarInfo";
+            this.carVINTextBoxCarInfo.Size = new System.Drawing.Size(252, 20);
+            this.carVINTextBoxCarInfo.TabIndex = 1;
             // 
             // carYearTextBox
             // 
@@ -758,70 +821,13 @@
             this.carMilesTextBox.Size = new System.Drawing.Size(252, 20);
             this.carMilesTextBox.TabIndex = 13;
             // 
-            // dataGridViewTextBoxColumn9
+            // sellerIDTextBox
             // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "ListingID";
-            this.dataGridViewTextBoxColumn9.HeaderText = "ListingID";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "SellerID";
-            this.dataGridViewTextBoxColumn10.HeaderText = "SellerID";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "CarVIN";
-            this.dataGridViewTextBoxColumn11.HeaderText = "CarVIN";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "Description";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Description";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            // 
-            // CreationDateTime
-            // 
-            this.CreationDateTime.DataPropertyName = "CreationDateTime";
-            this.CreationDateTime.HeaderText = "CreationDateTime";
-            this.CreationDateTime.Name = "CreationDateTime";
-            this.CreationDateTime.ReadOnly = true;
-            // 
-            // DeleteListing
-            // 
-            this.DeleteListing.HeaderText = "";
-            this.DeleteListing.Name = "DeleteListing";
-            this.DeleteListing.ReadOnly = true;
-            this.DeleteListing.Text = "Delete";
-            this.DeleteListing.UseColumnTextForButtonValue = true;
-            // 
-            // listingIDLabel2
-            // 
-            listingIDLabel2.AutoSize = true;
-            listingIDLabel2.Location = new System.Drawing.Point(48, 119);
-            listingIDLabel2.Name = "listingIDLabel2";
-            listingIDLabel2.Size = new System.Drawing.Size(54, 13);
-            listingIDLabel2.TabIndex = 5;
-            listingIDLabel2.Text = "Listing ID:";
-            // 
-            // listingIDComboBox
-            // 
-            this.listingIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.listingBindingSource, "ListingID", true));
-            this.listingIDComboBox.DataSource = this.listingBindingSource;
-            this.listingIDComboBox.DisplayMember = "ListingID";
-            this.listingIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.listingIDComboBox.FormattingEnabled = true;
-            this.listingIDComboBox.Location = new System.Drawing.Point(118, 119);
-            this.listingIDComboBox.Name = "listingIDComboBox";
-            this.listingIDComboBox.Size = new System.Drawing.Size(100, 21);
-            this.listingIDComboBox.TabIndex = 6;
-            this.listingIDComboBox.ValueMember = "ListingID";
+            this.sellerIDTextBox.Location = new System.Drawing.Point(114, 42);
+            this.sellerIDTextBox.Name = "sellerIDTextBox";
+            this.sellerIDTextBox.ReadOnly = true;
+            this.sellerIDTextBox.Size = new System.Drawing.Size(199, 20);
+            this.sellerIDTextBox.TabIndex = 25;
             // 
             // frmCarsForSale
             // 
@@ -899,8 +905,7 @@
         private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.DataGridView listingDataGridView;
         private System.Windows.Forms.TextBox listingIDTextBox;
-        private System.Windows.Forms.TextBox sellerIDTextBox;
-        private System.Windows.Forms.TextBox carVINTextBox;
+        private System.Windows.Forms.TextBox carVINTextBoxListingInfo;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private System.Windows.Forms.DateTimePicker creationDateTimeDateTimePicker;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommentID;
@@ -915,7 +920,7 @@
         private System.Windows.Forms.TabControl listingTab;
         private System.Windows.Forms.TabPage listingInfoTab;
         private System.Windows.Forms.TabPage carInfoTab;
-        private System.Windows.Forms.TextBox carVINTextBox1;
+        private System.Windows.Forms.TextBox carVINTextBoxCarInfo;
         private System.Windows.Forms.TextBox carYearTextBox;
         private System.Windows.Forms.TextBox carModelTextBox;
         private System.Windows.Forms.TextBox carPriceTextBox;
@@ -929,6 +934,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CreationDateTime;
         private System.Windows.Forms.DataGridViewButtonColumn DeleteListing;
         private System.Windows.Forms.ComboBox listingIDComboBox;
+        private System.Windows.Forms.DataGridViewButtonColumn DeleteComment;
+        private System.Windows.Forms.TextBox sellerIDTextBox;
     }
 }
 

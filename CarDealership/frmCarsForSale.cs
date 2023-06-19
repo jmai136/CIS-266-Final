@@ -302,9 +302,7 @@ namespace CarDealership
             if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
             {
                 listing.listingID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[0].Value);
-                // Don't allow for seller to delete other seller's listing or comments
                 listing.sellerID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[1].Value);
-                // listing.sellerID = (Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[1].Value) == SellerID) ? Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[1].Value) : -1;
                 listing.carVIN = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[2].Value);
                 listing.description = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[3].Value);
                 listing.creationDateTime = Convert.ToDateTime(listingDataGridView.Rows[rowIndex].Cells[4].Value);
@@ -320,22 +318,6 @@ namespace CarDealership
                 comments.CommentsID = Convert.ToInt32(commentsDataGridView.Rows[rowIndex].Cells[0].Value);
                 comments.CommentText = Convert.ToString(commentsDataGridView.Rows[rowIndex].Cells[1].Value);
                 comments.ListingID = Convert.ToInt32(commentsDataGridView.Rows[rowIndex].Cells[2].Value);
-
-                /*
-                // Make sure that the listing you select is for the seller you currently are
-                List<Listing> listings = ListingDB.GetAllListings(Program.sqlConnection);
-                // Grab based on what the listing's seller ID is, if it matches the one that's logged in
-                // Return all the listings IDs based on that
-                // Make sure it matches at least one of them
-                List<int> listingIDs = (List<int>)listings.Where(listing => listing.sellerID == SellerID).Select(listing => listing.listingID);
-
-                foreach (int listingID in listingIDs)
-                {
-                    if (comments.ListingID == listingID)
-                        break;
-                    else
-                        comments.ListingID = -1;
-                }*/
             }
 
             modifyingCarComponents = ModifyingCarComponents.NONE;
@@ -351,11 +333,6 @@ namespace CarDealership
 
                 if (!ValidateBusinessObjectData())
                     return;
-
-                if (listing.sellerID == -1) {
-                    MessageBox.Show("Can't delete other user's listing");
-                    return;
-                }
 
                 if (!listingDB.Delete(listing, Program.sqlConnection)) {
                     MessageBox.Show(listingDB.MsgText, listingDB.MsgCaption);
@@ -398,11 +375,6 @@ namespace CarDealership
 
                 if (!ValidateBusinessObjectData())
                     return;
-
-                if (comments.ListingID == -1) {
-                    MessageBox.Show("Can't delete other users' comments");
-                    return;
-                }
 
                 if (!commentsDB.Delete(comments, Program.sqlConnection)) {
                     MessageBox.Show(commentsDB.MsgText, commentsDB.MsgCaption);

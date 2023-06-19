@@ -71,7 +71,7 @@ namespace CarLibrary
 
                 sqlConnection.Open();
 
-                int recordsAmount = cmd.ExecuteNonQuery();
+                int recordsAmount = Convert.ToInt32(cmd.ExecuteScalar());
 
                 if (recordsAmount > 1)
                     throw new DataException("Too many records for the same comment.");

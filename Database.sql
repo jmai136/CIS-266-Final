@@ -258,7 +258,8 @@ INSERT [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [Ca
 GO
 SET IDENTITY_INSERT [dbo].[Listing] ON 
 
-INSERT [dbo].[Listing] ([ListingID], [SellerID], [CarVIN], [Description], [CreationDateTime]) VALUES (1, 1, N'4JGBB5GB6BA625034', N'BMW car listing for Hoshi Kask.', CAST(N'2023-06-17T16:11:00' AS SmallDateTime))
+INSERT [dbo].[Listing] ([ListingID], [SellerID], [CarVIN], [Description], [CreationDateTime]) VALUES (1, 1, N'1HGCG1650Y1081994', N'Seller: Hoshi Kask; Car: 2000 Honda Accord marked at $2500', CAST(N'2023-06-17T16:11:00' AS SmallDateTime))
+INSERT [dbo].[Listing] ([ListingID], [SellerID], [CarVIN], [Description], [CreationDateTime]) VALUES (2, 3, N'BK1JE72B3U9284701', N'Seller: Énna Bashkim; Car: 2000 BMW M3 marked at $30000', CAST(N'2023-06-19T11:57:00' AS SmallDateTime))
 SET IDENTITY_INSERT [dbo].[Listing] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Sellers] ON 

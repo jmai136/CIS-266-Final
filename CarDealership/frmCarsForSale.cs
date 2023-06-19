@@ -239,6 +239,7 @@ namespace CarDealership
             // Car? Are we supposed to add cars? It doesn't seem so.
 
             // Comments
+            // Probably should only be able to add comments for the seller that you're adding to
             if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
             {
                 comments.CommentsID = 0;
@@ -368,7 +369,7 @@ namespace CarDealership
         {
             try
             {
-                if (string.IsNullOrEmpty(listingIDTextBox.Text))
+                if (string.IsNullOrEmpty(listingIDComboBox.Text))
                     throw new ArgumentException("Please input a comment id", "Listing id not found");
 
                 if (string.IsNullOrEmpty(commentsRichTextBox.Text))

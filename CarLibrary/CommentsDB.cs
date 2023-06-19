@@ -21,6 +21,7 @@ namespace CarLibrary
                     throw new ArgumentException("Argument passed in isn't correct type Comments",
                         "object");
 
+                // Just for validation's sake, we don't actually need the else statement but check validation
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
                 cmd.CommandText =
@@ -30,8 +31,12 @@ namespace CarLibrary
                            "AND ListingID = @ListingID) " +
                        "BEGIN " +
                            "INSERT INTO Comments (CommentText, ListingID)  " +
-                           "VALUES (@CommentText, @ListingID)" +
-                       "END ";
+                           "VALUES (@CommentText, @ListingID) " +
+                       "END " +
+                        "ELSE " +
+                            "SELECT TOP 1 CommentID FROM Comments " +
+                            "WHERE CommentText = @CommentText " +
+                            "AND ListingID = @ListingID ";
 
                 cmd.Parameters.AddWithValue("@CommentText", obj.CommentText);
                 cmd.Parameters.AddWithValue("@ListingID", obj.ListingID);

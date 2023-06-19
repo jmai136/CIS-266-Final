@@ -202,12 +202,7 @@ namespace CarDealership
                         c.Enabled = enable;
                 }
 
-            foreach (DataGridViewRow row in sellersDataGridView.Rows) {
-                DataGridViewCell cell = row.Cells[5];
-                cell.ReadOnly = enable;
-
-                cell.Style.ForeColor = (!cell.ReadOnly) ? Color.DarkGray : cell.OwningColumn.DefaultCellStyle.ForeColor;
-            }
+            this.sellersDataGridView.Columns["DeleteUserAccount"].Visible = enable;
         }
 
         private void EnterFormCarsForSale()
@@ -218,7 +213,7 @@ namespace CarDealership
 
             // Probably go to the new form then using the user?
             // Maybe we do need an argument constructor
-            frmCarsForSale carsForSale = new frmCarsForSale(user.userID);
+            frmCarsForSale carsForSale = new frmCarsForSale(user.userID, this);
             carsForSale.Show();
 
             // Make a delegate to enable controls in Program.cs, Program.cs will be our singleton

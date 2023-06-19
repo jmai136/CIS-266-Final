@@ -18,6 +18,8 @@ namespace CarDealership
     {
         int SellerID { get; set; } = -1;
 
+        frmUsers m_frmUsers;
+
         private Listing listing = new Listing();
         private ListingDB listingDB = new ListingDB();
 
@@ -72,9 +74,11 @@ namespace CarDealership
             InitializeComponent();
         }
 
-        public frmCarsForSale(int sellerID)
+        public frmCarsForSale(int sellerID, frmUsers frmUsers)
         {
             SellerID = sellerID;
+            m_frmUsers = frmUsers;
+
             InitializeComponent();
         }
 
@@ -345,6 +349,7 @@ namespace CarDealership
 
             if (MessageBox.Show("Y' sure?", "Log out", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
+                m_frmUsers.EnableControls();
                 Close();
             }
             else

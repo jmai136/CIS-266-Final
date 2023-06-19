@@ -154,6 +154,8 @@ namespace CarDealership
 
             foreach (TextBox textBox in registerGroupBox.Controls.OfType<TextBox>())
                 textBox.Clear();
+
+            sellersDataGridView.Update();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

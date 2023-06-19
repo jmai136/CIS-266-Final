@@ -372,8 +372,8 @@
             this.viewAllToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("viewAllToolStripButton.Image")));
             this.viewAllToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.viewAllToolStripButton.Name = "viewAllToolStripButton";
-            this.viewAllToolStripButton.Size = new System.Drawing.Size(53, 22);
-            this.viewAllToolStripButton.Text = "View All";
+            this.viewAllToolStripButton.Size = new System.Drawing.Size(32, 22);
+            this.viewAllToolStripButton.Text = "Sort";
             this.viewAllToolStripButton.Click += new System.EventHandler(this.viewAllToolStripButton_Click);
             // 
             // carsDataGridView

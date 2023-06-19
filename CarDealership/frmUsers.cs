@@ -191,6 +191,9 @@ namespace CarDealership
 
         public void EnableControls(bool enable = true)
         {
+            btnPreviousPage.Enabled = enable;
+            btnNextPage.Enabled = enable;
+
             // Why is it attempting to convert here?
             foreach (GroupBox groupBox in Controls.OfType<GroupBox>())
                 foreach (Control c in groupBox.Controls)

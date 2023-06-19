@@ -424,7 +424,7 @@ namespace CarLibrary
 
                 // https://www.sqlservercentral.com/articles/the-output-clause-for-insert-and-delete-statements
                 // Gotta try this, even though it's deleting ExecuteScalar and ExecuteNonQuery don't work
-                // for grabbing deleted
+                // for grabbing deleted rows or the first column's value
                 // Notice the syntax, WHERE is at the end.
                 SqlCommand cmd = new SqlCommand(
                     "DELETE FROM [GroupFinal266].[dbo].[Listing] " +
@@ -459,13 +459,6 @@ namespace CarLibrary
             }
 
             return true;
-        }
-
-        // Comment section where a potential buyer can ask questions to the seller.
-        // Save in text file?
-        public static void GetComment()
-        {
-
         }
     }
 }

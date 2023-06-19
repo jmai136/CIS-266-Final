@@ -19,7 +19,7 @@ namespace CarLibrary
         public string MsgCaption { get; set; } = "";
 
         // https://stackoverflow.com/questions/18114458/fastest-way-to-determine-if-record-exists
-        // If exists for SQL query
+        // If exists for SQL query, if not exist is an option too
 
         public bool Upload(User obj, SqlConnection sqlConnection)
         {

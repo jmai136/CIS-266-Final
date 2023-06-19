@@ -236,7 +236,7 @@ namespace CarDealership
                 listing.creationDateTime = Convert.ToDateTime(creationDateTimeDateTimePicker.Text);
             }
 
-            // Car
+            // Car? Are we supposed to add cars? It doesn't seem so.
 
             // Comments
             if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
@@ -317,7 +317,23 @@ namespace CarDealership
             {
                 comments.CommentsID = Convert.ToInt32(commentsDataGridView.Rows[rowIndex].Cells[0].Value);
                 comments.CommentText = Convert.ToString(commentsDataGridView.Rows[rowIndex].Cells[1].Value);
+
                 comments.ListingID = Convert.ToInt32(commentsDataGridView.Rows[rowIndex].Cells[2].Value);
+
+                // Make sure that the listing you select is for the seller you currently are
+                List<Listing> listings = ListingDB.GetAllListings(Program.sqlConnection);
+                // Grab based on what the listing's seller ID is, if it matches the one that's logged in
+                // Return all the listings IDs based on that
+                // Make sure it matches at least one of them
+                List<int> listingIDs = (List<int>)listings.Where(listing => listing.sellerID == SellerID).Select(listing => listing.listingID);
+
+                foreach (int listingID in listingIDs)
+                {
+                    if (comments.ListingID == listingID)
+                        break;
+                    else
+                        comments.ListingID = -1;
+                }
             }
 
             modifyingCarComponents = ModifyingCarComponents.NONE;
@@ -367,6 +383,31 @@ namespace CarDealership
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+        private void commentsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 3)
+            {
+                modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_COMMENTS;
+
+                AssignBusinessObjectDataToDelete(e.RowIndex);
+
+                if (!ValidateBusinessObjectData())
+                    return;
+
+                if (comments.ListingID == -1) {
+                    MessageBox.Show("Can't delete other users' comments");
+                    return;
+                }
+
+                if (!listingDB.Delete(listing, Program.sqlConnection)) {
+                    MessageBox.Show(listingDB.MsgText, listingDB.MsgCaption);
+                    return;
+                }
+
+                listingDataGridView.Rows.RemoveAt(e.RowIndex);
             }
         }
 

@@ -490,6 +490,7 @@
             this.commentsDataGridView.ReadOnly = true;
             this.commentsDataGridView.Size = new System.Drawing.Size(779, 202);
             this.commentsDataGridView.TabIndex = 15;
+            this.commentsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.commentsDataGridView_CellContentClick);
             // 
             // CommentID
             // 

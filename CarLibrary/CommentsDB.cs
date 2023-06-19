@@ -61,9 +61,12 @@ namespace CarLibrary
                     throw new ArgumentException("Argument passed in isn't correct type Comments",
                         "object");
 
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = sqlConnection;
-                cmd.CommandText = "DELETE FROM Comments WHERE CommentID = @CommentID AND ListingID = @ListingID AND CommentText = @CommentText";
+                // Yea, you really should only be able to delete the comment if the seller id matches the one you're currently as
+                SqlCommand cmd = new SqlCommand(
+                    "DELETE FROM [GroupFinal266].[dbo].[Comments] " +
+                    "OUTPUT DELETED.[CommentID] " +
+                    "WHERE CommentID = @CommentID AND ListingID = @ListingID AND CommentText = @CommentText",
+                    sqlConnection);
 
                 cmd.Parameters.AddWithValue("@CommentText", obj.CommentText);
                 cmd.Parameters.AddWithValue("@CommentID", obj.CommentsID);
@@ -71,13 +74,14 @@ namespace CarLibrary
 
                 sqlConnection.Open();
 
-                int recordsAmount = Convert.ToInt32(cmd.ExecuteScalar());
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+                    int commentID = reader.GetInt32(reader.GetOrdinal("CommentID"));
 
-                if (recordsAmount > 1)
-                    throw new DataException("Too many records for the same comment.");
-
-                if (recordsAmount != 1)
-                    throw new DataException("No comment to delete.");
+                    if (commentID <= 0)
+                        throw new DataException("Comment doesn't exist.");
+                }
             }
             catch (Exception ex)
             {

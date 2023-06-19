@@ -243,7 +243,16 @@ namespace CarDealership
 
         private void sellersDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 7) {
+            if (e.ColumnIndex == 7)
+            {
+                user.userID = Convert.ToInt32(sellersDataGridView.Rows[e.RowIndex].Cells[0].Value);
+                user.firstName = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[1].Value);
+                user.lastName = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[2].Value);
+                user.email = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[3].Value);
+                user.password = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[4].Value);
+
+                userDB.Delete(user, Program.sqlConnection);
+
                 sellersDataGridView.Rows.RemoveAt(e.RowIndex);
             }
         }

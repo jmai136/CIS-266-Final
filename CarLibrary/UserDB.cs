@@ -163,13 +163,13 @@ namespace CarLibrary
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConnection;
 
-                cmd.CommandText = "DELETE FROM Sellers WHERE Hash = HASHBYTES('SHA2_512', CONCAT(@Password, (SELECT [Salt] FROM [GroupFinal266].[dbo].[Sellers] WHERE Email=@Email))";
+                cmd.CommandText = "DELETE FROM [GroupFinal266].[dbo].[Sellers] WHERE Email=@Email";
 
                 cmd.Parameters.AddWithValue("@Email", obj.email);
 
                 sqlConnection.Open();
 
-                int recordsAmount = cmd.ExecuteNonQuery();
+                int recordsAmount = Convert.ToInt32(cmd.ExecuteScalar());
 
                 if (recordsAmount > 1)
                     throw new DataException("Too many records for the same user");

@@ -26,15 +26,15 @@ namespace CarLibrary
                 cmd.CommandText =
                    "IF NOT EXISTS " +
                        "(SELECT TOP 1 CommentID FROM Comments " +
-                           "WHERE Comments = @Comments) " +
+                           "WHERE CommentText = @CommentText " +
+                           "AND ListingID = @ListingID) " +
                        "BEGIN " +
-                           "INSERT INTO Comments (CommentID, CommentText, ListingID)  " +
-                           "VALUES (@CommentID, @CommentText, @ListingID)" +
+                           "INSERT INTO Comments (CommentText, ListingID)  " +
+                           "VALUES (@CommentText, @ListingID)" +
                        "END ";
 
                 cmd.Parameters.AddWithValue("@CommentText", obj.CommentText);
-                cmd.Parameters.AddWithValue("@CommentID", obj.CommentText);
-                cmd.Parameters.AddWithValue("@ListingID", obj.CommentText);
+                cmd.Parameters.AddWithValue("@ListingID", obj.ListingID);
 
                 sqlConnection.Open();
                 if (Convert.ToInt32(cmd.ExecuteScalar()) > 0)

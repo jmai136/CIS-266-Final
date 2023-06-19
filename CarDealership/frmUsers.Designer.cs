@@ -308,6 +308,7 @@
             this.sellersDataGridView.ReadOnly = true;
             this.sellersDataGridView.Size = new System.Drawing.Size(646, 266);
             this.sellersDataGridView.TabIndex = 10;
+            this.sellersDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.sellersDataGridView_CellContentClick);
             // 
             // dataGridViewTextBoxColumn1
             // 

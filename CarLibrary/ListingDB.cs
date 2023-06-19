@@ -408,19 +408,24 @@ namespace CarLibrary
 
         public bool Delete(Listing obj, SqlConnection sqlConnection)
         {
-            SqlConnection connection = new SqlConnection();
-
-            string sqlStatement = "DELETE FROM Listings WHERE ListingID = @ListingID AND SellerID = @SellerID AND CarVIN = @CarVIN";
-
             try
             {
-                connection.Open();
+                if (obj is Listing == false)
+                    throw new ArgumentException("Argument passed in isn't correct type Listing", "object");
 
-                SqlCommand cmd = new SqlCommand(sqlStatement, connection);
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+
+                SqlCommand cmd = new SqlCommand("DELETE FROM [Listing] WHERE ListingID = @ListingID AND SellerID = @SellerID AND CarVIN = @CarVIN", sqlConnection);
+
+                cmd.Parameters.AddWithValue("@ListingID", obj.listingID);
+                cmd.Parameters.AddWithValue("@SellerID", obj.sellerID);
                 cmd.Parameters.AddWithValue("@CarVIN", obj.carVIN);
-                cmd.CommandType = CommandType.Text;
 
-                int recordsAmount = cmd.ExecuteNonQuery();
+                sqlConnection.Open();
+
+                int recordsAmount = Convert.ToInt32(cmd.ExecuteScalar());
 
                 if (recordsAmount > 1)
                     throw new DataException("Too many records for the same listing.");
@@ -437,7 +442,7 @@ namespace CarLibrary
             }
             finally
             {
-                connection.Close();
+                sqlConnection.Close();
             }
 
             return true;

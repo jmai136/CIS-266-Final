@@ -209,7 +209,7 @@ namespace CarDealership
         }
 
         // This should be for uploading
-        public void AssignBusinessObjectData()
+        public void AssignBusinessObjectDataToUpload()
         {
             // Listing
             listing.listingID = Convert.ToInt32(listingIDTextBox.Text);
@@ -221,16 +221,14 @@ namespace CarDealership
             // Car
 
             // Comments
-            comments.ListingID = Convert.ToInt32(listingIDTextBoxComments.Text);
+            comments.ListingID = Convert.ToInt32(listingIDComboBox.Text);
             comments.CommentText = commentsRichTextBox.Text;
         }
 
-        public bool PutBusinessObjectData()
+        public bool ValidateBusinessObjectData()
         {
             try
             {
-                AssignBusinessObjectData();
-
                 // Loop through all the properties to make sure none of them are empty.
                 //https://www.w3schools.blog/loop-over-object-properties-c
                 // If one is empty then throw an error and return false.
@@ -250,10 +248,10 @@ namespace CarDealership
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            /*
-            AssignBusinessObjectData();
+            AssignBusinessObjectDataToUpload();
 
-            PutBusinessObjectData();*/
+            if (!ValidateBusinessObjectData())
+                return;
 
             // Works fine
             /*
@@ -325,6 +323,32 @@ namespace CarDealership
 
         }
 
+
+        public void AssignBusinessObjectDataToDelete(int rowIndex)
+        {
+            listing.listingID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[0].Value);
+            listing.sellerID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[1].Value);
+            listing.carVIN = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[2].Value);
+            listing.description = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[3].Value);
+            listing.creationDateTime = Convert.ToDateTime(listingDataGridView.Rows[rowIndex].Cells[4].Value);
+
+        }
+
+        private void listingDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 5)
+            {
+                AssignBusinessObjectDataToDelete(e.RowIndex);
+
+                if (!ValidateBusinessObjectData())
+                    return;
+
+                listingDB.Delete(listing, Program.sqlConnection);
+
+                listingDataGridView.Rows.RemoveAt(e.RowIndex);
+            }
+        }
+
         private void btnSubmitComment_Click(object sender, EventArgs e)
         {
             try
@@ -335,7 +359,10 @@ namespace CarDealership
                 if (string.IsNullOrEmpty(commentsRichTextBox.Text))
                     throw new ArgumentException("Please input a comment", "Comment not found");
 
+                comments.CommentText += commentsRichTextBox.Text;
+                comments.ListingID += Convert.ToInt32(listingIDComboBox.SelectedValue);
 
+                commentsDB.Upload(comments, Program.sqlConnection);
             }
             catch (Exception ex)
             {
@@ -343,7 +370,7 @@ namespace CarDealership
             }
         }
 
-        private void btnLogOut_Click(object sender, EventArgs e)
+        private void LogoutVerification()
         {
             EnableControls(false);
 
@@ -356,6 +383,11 @@ namespace CarDealership
             {
                 EnableControls();
             }
+        }
+
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            LogoutVerification();
         }
     }
 }

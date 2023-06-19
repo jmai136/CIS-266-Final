@@ -109,7 +109,7 @@ namespace CarDealership
             sellersTableAdapter.Adapter.Fill(this.groupFinal266DataSet, startRecord, 5, "PaginatedSellersDataTable");
         }
 
-        public void AssignBusinessObjectData()
+        public void AssignBusinessObjectDataToUpload()
         {
             user.email = txtRegisterEmail.Text;
             user.password = txtRegisterPassword.Text;
@@ -117,12 +117,10 @@ namespace CarDealership
             user.lastName = txtRegisterLastName.Text;
         }
 
-        public bool PutBusinessObjectData()
+        public bool ValidateBusinessObjectData()
         {
             try
             {
-                AssignBusinessObjectData();
-
                 // Loop through all the properties to make sure none of them are empty.
                 //https://www.w3schools.blog/loop-over-object-properties-c
                 // If one is empty then throw an error and return false.
@@ -142,7 +140,9 @@ namespace CarDealership
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            if (!PutBusinessObjectData())
+            AssignBusinessObjectDataToUpload();
+
+            if (!ValidateBusinessObjectData())
                 return;
 
             if (!userDB.Upload(user, Program.sqlConnection)) {
@@ -241,15 +241,23 @@ namespace CarDealership
             }
         }
 
+        public void AssignBusinessObjectDataToDelete(int rowIndex)
+        {
+            user.userID = Convert.ToInt32(sellersDataGridView.Rows[rowIndex].Cells[0].Value);
+            user.firstName = Convert.ToString(sellersDataGridView.Rows[rowIndex].Cells[1].Value);
+            user.lastName = Convert.ToString(sellersDataGridView.Rows[rowIndex].Cells[2].Value);
+            user.email = Convert.ToString(sellersDataGridView.Rows[rowIndex].Cells[3].Value);
+            user.password = Convert.ToString(sellersDataGridView.Rows[rowIndex].Cells[4].Value);
+        }
+
         private void sellersDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 7)
             {
-                user.userID = Convert.ToInt32(sellersDataGridView.Rows[e.RowIndex].Cells[0].Value);
-                user.firstName = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[1].Value);
-                user.lastName = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[2].Value);
-                user.email = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[3].Value);
-                user.password = Convert.ToString(sellersDataGridView.Rows[e.RowIndex].Cells[4].Value);
+                AssignBusinessObjectDataToDelete(e.RowIndex);
+
+                if (!ValidateBusinessObjectData())
+                    return;
 
                 userDB.Delete(user, Program.sqlConnection);
 

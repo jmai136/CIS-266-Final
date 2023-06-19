@@ -9,9 +9,11 @@ namespace CarLibrary
 {
     public interface IUtility
     {
-        void AssignBusinessObjectData();
+        void AssignBusinessObjectDataToUpload();
 
-        bool PutBusinessObjectData();
+        bool ValidateBusinessObjectData();
+
+        void AssignBusinessObjectDataToDelete(int rowIndex);
 
         void EnableControls(bool enable = true);
     }

@@ -1079,6 +1079,8 @@ namespace CarDealership {
             
             private global::System.Data.DataColumn columnCarMiles;
             
+            private global::System.Data.DataColumn columnCarFeatures;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public CarsDataTable() {
@@ -1170,6 +1172,14 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn CarFeaturesColumn {
+                get {
+                    return this.columnCarFeatures;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1205,7 +1215,7 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public CarsRow AddCarsRow(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles) {
+            public CarsRow AddCarsRow(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles, string CarFeatures) {
                 CarsRow rowCarsRow = ((CarsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CarVIN,
@@ -1214,7 +1224,8 @@ namespace CarDealership {
                         CarModel,
                         CarPrice,
                         CarColor,
-                        CarMiles};
+                        CarMiles,
+                        CarFeatures};
                 rowCarsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCarsRow);
                 return rowCarsRow;
@@ -1251,6 +1262,7 @@ namespace CarDealership {
                 this.columnCarPrice = base.Columns["CarPrice"];
                 this.columnCarColor = base.Columns["CarColor"];
                 this.columnCarMiles = base.Columns["CarMiles"];
+                this.columnCarFeatures = base.Columns["CarFeatures"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1270,6 +1282,8 @@ namespace CarDealership {
                 base.Columns.Add(this.columnCarColor);
                 this.columnCarMiles = new global::System.Data.DataColumn("CarMiles", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCarMiles);
+                this.columnCarFeatures = new global::System.Data.DataColumn("CarFeatures", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCarFeatures);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnCarVIN}, true));
                 this.columnCarVIN.AllowDBNull = false;
@@ -1284,6 +1298,7 @@ namespace CarDealership {
                 this.columnCarColor.AllowDBNull = false;
                 this.columnCarColor.MaxLength = 30;
                 this.columnCarMiles.AllowDBNull = false;
+                this.columnCarFeatures.MaxLength = 2147483647;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4693,6 +4708,8 @@ namespace CarDealership {
             
             private global::System.Data.DataColumn columnCarMiles;
             
+            private global::System.Data.DataColumn columnCarFeatures;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public spSelectCarByPriceDataTable() {
@@ -4784,6 +4801,14 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn CarFeaturesColumn {
+                get {
+                    return this.columnCarFeatures;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4819,7 +4844,7 @@ namespace CarDealership {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public spSelectCarByPriceRow AddspSelectCarByPriceRow(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles) {
+            public spSelectCarByPriceRow AddspSelectCarByPriceRow(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles, string CarFeatures) {
                 spSelectCarByPriceRow rowspSelectCarByPriceRow = ((spSelectCarByPriceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CarVIN,
@@ -4828,7 +4853,8 @@ namespace CarDealership {
                         CarModel,
                         CarPrice,
                         CarColor,
-                        CarMiles};
+                        CarMiles,
+                        CarFeatures};
                 rowspSelectCarByPriceRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowspSelectCarByPriceRow);
                 return rowspSelectCarByPriceRow;
@@ -4865,6 +4891,7 @@ namespace CarDealership {
                 this.columnCarPrice = base.Columns["CarPrice"];
                 this.columnCarColor = base.Columns["CarColor"];
                 this.columnCarMiles = base.Columns["CarMiles"];
+                this.columnCarFeatures = base.Columns["CarFeatures"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4884,6 +4911,8 @@ namespace CarDealership {
                 base.Columns.Add(this.columnCarColor);
                 this.columnCarMiles = new global::System.Data.DataColumn("CarMiles", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCarMiles);
+                this.columnCarFeatures = new global::System.Data.DataColumn("CarFeatures", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCarFeatures);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnCarVIN}, true));
                 this.columnCarVIN.AllowDBNull = false;
@@ -4898,6 +4927,7 @@ namespace CarDealership {
                 this.columnCarColor.AllowDBNull = false;
                 this.columnCarColor.MaxLength = 30;
                 this.columnCarMiles.AllowDBNull = false;
+                this.columnCarFeatures.MaxLength = 2147483647;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5524,6 +5554,34 @@ namespace CarDealership {
                 set {
                     this[this.tableCars.CarMilesColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string CarFeatures {
+                get {
+                    try {
+                        return ((string)(this[this.tableCars.CarFeaturesColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CarFeatures\' in table \'Cars\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCars.CarFeaturesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsCarFeaturesNull() {
+                return this.IsNull(this.tableCars.CarFeaturesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetCarFeaturesNull() {
+                this[this.tableCars.CarFeaturesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6455,6 +6513,34 @@ namespace CarDealership {
                 set {
                     this[this.tablespSelectCarByPrice.CarMilesColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string CarFeatures {
+                get {
+                    try {
+                        return ((string)(this[this.tablespSelectCarByPrice.CarFeaturesColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CarFeatures\' in table \'spSelectCarByPrice\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablespSelectCarByPrice.CarFeaturesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsCarFeaturesNull() {
+                return this.IsNull(this.tablespSelectCarByPrice.CarFeaturesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetCarFeaturesNull() {
+                this[this.tablespSelectCarByPrice.CarFeaturesColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -7535,10 +7621,11 @@ SELECT BuyerID, BuyerFName, BuyerLName, BuyerUserName FROM Buyers WHERE (BuyerID
             tableMapping.ColumnMappings.Add("CarPrice", "CarPrice");
             tableMapping.ColumnMappings.Add("CarColor", "CarColor");
             tableMapping.ColumnMappings.Add("CarMiles", "CarMiles");
+            tableMapping.ColumnMappings.Add("CarFeatures", "CarFeatures");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Cars] WHERE (([CarVIN] = @Original_CarVIN) AND ([CarYear] = @Original_CarYear) AND ([CarMake] = @Original_CarMake) AND ([CarModel] = @Original_CarModel) AND ([CarPrice] = @Original_CarPrice) AND ([CarColor] = @Original_CarColor) AND ([CarMiles] = @Original_CarMiles))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Cars] WHERE (([CarVIN] = @Original_CarVIN) AND ([CarYear] = @Original_CarYear) AND ([CarMake] = @Original_CarMake) AND ([CarModel] = @Original_CarModel) AND ([CarPrice] = @Original_CarPrice) AND ([CarColor] = @Original_CarColor) AND ([CarMiles] = @Original_CarMiles))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarYear", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarYear", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -7549,8 +7636,8 @@ SELECT BuyerID, BuyerFName, BuyerLName, BuyerUserName FROM Buyers WHERE (BuyerID
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarMiles", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarMiles", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles]) VALUES (@CarVIN, @CarYear, @CarMake, @CarModel, @CarPrice, @CarColor, @CarMiles);
-SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Cars WHERE (CarVIN = @CarVIN)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Cars] ([CarVIN], [CarYear], [CarMake], [CarModel], [CarPrice], [CarColor], [CarMiles], [CarFeatures]) VALUES (@CarVIN, @CarYear, @CarMake, @CarModel, @CarPrice, @CarColor, @CarMiles, @CarFeatures);
+SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles, CarFeatures FROM Cars WHERE (CarVIN = @CarVIN)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarYear", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarYear", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -7559,10 +7646,11 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarPrice", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarPrice", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarColor", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarColor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarMiles", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarMiles", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarFeatures", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarFeatures", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Cars] SET [CarVIN] = @CarVIN, [CarYear] = @CarYear, [CarMake] = @CarMake, [CarModel] = @CarModel, [CarPrice] = @CarPrice, [CarColor] = @CarColor, [CarMiles] = @CarMiles WHERE (([CarVIN] = @Original_CarVIN) AND ([CarYear] = @Original_CarYear) AND ([CarMake] = @Original_CarMake) AND ([CarModel] = @Original_CarModel) AND ([CarPrice] = @Original_CarPrice) AND ([CarColor] = @Original_CarColor) AND ([CarMiles] = @Original_CarMiles));
-SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Cars WHERE (CarVIN = @CarVIN)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Cars] SET [CarVIN] = @CarVIN, [CarYear] = @CarYear, [CarMake] = @CarMake, [CarModel] = @CarModel, [CarPrice] = @CarPrice, [CarColor] = @CarColor, [CarMiles] = @CarMiles, [CarFeatures] = @CarFeatures WHERE (([CarVIN] = @Original_CarVIN) AND ([CarYear] = @Original_CarYear) AND ([CarMake] = @Original_CarMake) AND ([CarModel] = @Original_CarModel) AND ([CarPrice] = @Original_CarPrice) AND ([CarColor] = @Original_CarColor) AND ([CarMiles] = @Original_CarMiles));
+SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles, CarFeatures FROM Cars WHERE (CarVIN = @CarVIN)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarYear", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarYear", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -7571,6 +7659,7 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarPrice", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarPrice", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarColor", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarColor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarMiles", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarMiles", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CarFeatures", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarFeatures", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarVIN", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarVIN", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarYear", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarYear", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_CarMake", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CarMake", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -7593,8 +7682,8 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM dbo." +
-                "Cars";
+            this._commandCollection[0].CommandText = "SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles, CarFeatu" +
+                "res FROM Cars";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -7703,7 +7792,7 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles) {
+        public virtual int Insert(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles, string CarFeatures) {
             if ((CarVIN == null)) {
                 throw new global::System.ArgumentNullException("CarVIN");
             }
@@ -7731,6 +7820,12 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
                 this.Adapter.InsertCommand.Parameters[5].Value = ((string)(CarColor));
             }
             this.Adapter.InsertCommand.Parameters[6].Value = ((int)(CarMiles));
+            if ((CarFeatures == null)) {
+                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(CarFeatures));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -7751,7 +7846,7 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles, string Original_CarVIN, int Original_CarYear, string Original_CarMake, string Original_CarModel, decimal Original_CarPrice, string Original_CarColor, int Original_CarMiles) {
+        public virtual int Update(string CarVIN, int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles, string CarFeatures, string Original_CarVIN, int Original_CarYear, string Original_CarMake, string Original_CarModel, decimal Original_CarPrice, string Original_CarColor, int Original_CarMiles) {
             if ((CarVIN == null)) {
                 throw new global::System.ArgumentNullException("CarVIN");
             }
@@ -7779,33 +7874,39 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
                 this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(CarColor));
             }
             this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(CarMiles));
+            if ((CarFeatures == null)) {
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(CarFeatures));
+            }
             if ((Original_CarVIN == null)) {
                 throw new global::System.ArgumentNullException("Original_CarVIN");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_CarVIN));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_CarVIN));
             }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_CarYear));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_CarYear));
             if ((Original_CarMake == null)) {
                 throw new global::System.ArgumentNullException("Original_CarMake");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_CarMake));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_CarMake));
             }
             if ((Original_CarModel == null)) {
                 throw new global::System.ArgumentNullException("Original_CarModel");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_CarModel));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_CarModel));
             }
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((decimal)(Original_CarPrice));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((decimal)(Original_CarPrice));
             if ((Original_CarColor == null)) {
                 throw new global::System.ArgumentNullException("Original_CarColor");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(Original_CarColor));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_CarColor));
             }
-            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_CarMiles));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(Original_CarMiles));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -7826,8 +7927,8 @@ SELECT CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles FROM Car
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles, string Original_CarVIN, int Original_CarYear, string Original_CarMake, string Original_CarModel, decimal Original_CarPrice, string Original_CarColor, int Original_CarMiles) {
-            return this.Update(Original_CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles, Original_CarVIN, Original_CarYear, Original_CarMake, Original_CarModel, Original_CarPrice, Original_CarColor, Original_CarMiles);
+        public virtual int Update(int CarYear, string CarMake, string CarModel, decimal CarPrice, string CarColor, int CarMiles, string CarFeatures, string Original_CarVIN, int Original_CarYear, string Original_CarMake, string Original_CarModel, decimal Original_CarPrice, string Original_CarColor, int Original_CarMiles) {
+            return this.Update(Original_CarVIN, CarYear, CarMake, CarModel, CarPrice, CarColor, CarMiles, CarFeatures, Original_CarVIN, Original_CarYear, Original_CarMake, Original_CarModel, Original_CarPrice, Original_CarColor, Original_CarMiles);
         }
     }
     
@@ -10427,6 +10528,7 @@ SELECT SellerID, FirstName, LastName, Email, Password, Hash, Salt FROM Sellers W
             tableMapping.ColumnMappings.Add("CarPrice", "CarPrice");
             tableMapping.ColumnMappings.Add("CarColor", "CarColor");
             tableMapping.ColumnMappings.Add("CarMiles", "CarMiles");
+            tableMapping.ColumnMappings.Add("CarFeatures", "CarFeatures");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

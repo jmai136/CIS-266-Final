@@ -23,7 +23,14 @@ namespace CarDealership
         private Listing listing = new Listing();
         private ListingDB listingDB = new ListingDB();
 
-        private Car car;
+        private Mercedes<string> mercedes = new Mercedes<string>();
+        private BMW<string> bmw = new BMW<string>();
+        private Honda<int> honda = new Honda<int>();
+        private Toyota<int> toyota = new Toyota<int>();
+
+        private string carType;
+
+        private CarDB carDB = new CarDB();
 
         private Comments comments = new Comments();
         private CommentsDB commentsDB = new CommentsDB();
@@ -32,8 +39,8 @@ namespace CarDealership
         public enum ModifyingCarComponents
         {
             NONE = 0,
-            IS_MODIFYING_LISTING = 1,
-            IS_MODIFYING_CAR = 2,
+            IS_MODIFYING_CAR = 1,
+            IS_MODIFYING_LISTING = 2,
             IS_MODIFYING_COMMENTS = 3
         }
 
@@ -112,6 +119,14 @@ namespace CarDealership
         {
             carVINComboBox.SelectedValue = "WID28374910YU1293";
             descriptionTextBox.Text = "Seller: Hoshi Kask; Car: 2004 Toyota GT86";
+
+            carVINTextBoxCarInfo.Text = "X";
+            carYearTextBox.Text = "2001";
+            carModelTextBox.Text = "";
+            carColorTextBox.Text = "blue";
+            carPriceTextBox.Text = "0";
+            carMilesTextBox.Text = "5000";
+            carFeaturesTextBox.Text = "0";
 
             commentsRichTextBox.Text = "Seller: Hoshi Kask; Car: 2004 Toyota GT86WID28374910YU1293";
         }
@@ -229,7 +244,67 @@ namespace CarDealership
                 listing.creationDateTime = Convert.ToDateTime(creationDateTimeDateTimePicker.Text);
             }
 
-            // Car? Are we supposed to add cars? It doesn't seem so.
+            // Car? Are we supposed to add cars? Tutor thinks so so we're gonna do that in case.
+            if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_CAR) != 0)
+            {
+                var car = ListingDB.carsCreationDictionary[carMakeComboBox.Text].Invoke();
+
+                if (car is Mercedes<string>)
+                {
+                    mercedes.carVIN = carVINTextBoxCarInfo.Text;
+                    mercedes.age = Convert.ToInt32(carYearTextBox.Text);
+                    mercedes.make = carMakeComboBox.Text;
+                    mercedes.model = carModelTextBox.Text;
+                    mercedes.color = carColorTextBox.Text;
+                    mercedes.price = Convert.ToDecimal(carPriceTextBox.Text);
+                    mercedes.miles = Convert.ToInt32(carMilesTextBox.Text);
+                    mercedes.engine = carFeaturesTextBox.Text;
+
+                    carType = "Mercedes";
+                }
+
+                if (car is BMW<string>)
+                {
+                    bmw.carVIN = carVINTextBoxCarInfo.Text;
+                    bmw.age = Convert.ToInt32(carYearTextBox.Text);
+                    bmw.make = carMakeComboBox.Text;
+                    bmw.model = carModelTextBox.Text;
+                    bmw.color = carColorTextBox.Text;
+                    bmw.price = Convert.ToDecimal(carPriceTextBox.Text);
+                    bmw.miles = Convert.ToInt32(carMilesTextBox.Text);
+                    bmw.engine = carFeaturesTextBox.Text;
+
+                    carType = "BMW";
+                }
+
+                if (car is Honda<int>)
+                {
+                    honda.carVIN = carVINTextBoxCarInfo.Text;
+                    honda.age = Convert.ToInt32(carYearTextBox.Text);
+                    honda.make = carMakeComboBox.Text;
+                    honda.model = carModelTextBox.Text;
+                    honda.color = carColorTextBox.Text;
+                    honda.price = Convert.ToDecimal(carPriceTextBox.Text);
+                    honda.miles = Convert.ToInt32(carMilesTextBox.Text);
+                    honda.mileage = Convert.ToInt32(carFeaturesTextBox.Text);
+
+                    carType = "Honda";
+                }
+
+                if (car is Toyota<int>)
+                {
+                    toyota.carVIN = carVINTextBoxCarInfo.Text;
+                    toyota.age = Convert.ToInt32(carYearTextBox.Text);
+                    toyota.make = carMakeComboBox.Text;
+                    toyota.model = carModelTextBox.Text;
+                    toyota.color = carColorTextBox.Text;
+                    toyota.price = Convert.ToDecimal(carPriceTextBox.Text);
+                    toyota.miles = Convert.ToInt32(carMilesTextBox.Text);
+                    toyota.mileage = Convert.ToInt32(carFeaturesTextBox.Text);
+
+                    carType = "Toyota";
+                }
+            }
 
             // Comments
             // Probably should only be able to add comments for the seller that you're adding to
@@ -247,14 +322,41 @@ namespace CarDealership
         {
             try
             {
-                if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
+                if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_LISTING) != 0)
                 {
                     foreach (PropertyInfo property in listing.GetType().GetProperties())
                         if (property.GetValue(listing) == null || string.IsNullOrEmpty(property.GetValue(listing).ToString()))
                             throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
                 }
 
-                if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
+                if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_CAR) != 0)
+                {
+                    switch (carType)
+                    {
+                        case "Mercedes":
+                            foreach (PropertyInfo property in mercedes.GetType().GetProperties())
+                                if (property.GetValue(mercedes) == null || string.IsNullOrEmpty(property.GetValue(mercedes).ToString()))
+                                    throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                            break;
+                        case "BMW":
+                            foreach (PropertyInfo property in bmw.GetType().GetProperties())
+                                if (property.GetValue(bmw) == null || string.IsNullOrEmpty(property.GetValue(bmw).ToString()))
+                                    throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                            break;
+                        case "Toyota":
+                            foreach (PropertyInfo property in toyota.GetType().GetProperties())
+                                if (property.GetValue(toyota) == null || string.IsNullOrEmpty(property.GetValue(toyota).ToString()))
+                                    throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                            break;
+                        case "Honda":
+                            foreach (PropertyInfo property in honda.GetType().GetProperties())
+                                if (property.GetValue(honda) == null || string.IsNullOrEmpty(property.GetValue(honda).ToString()))
+                                    throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+                            break;
+                    }
+                }
+
+                if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_COMMENTS) != 0)
                 {
                     foreach (PropertyInfo property in comments.GetType().GetProperties())
                         if (property.GetValue(comments) == null || string.IsNullOrEmpty(property.GetValue(comments).ToString()))
@@ -292,6 +394,35 @@ namespace CarDealership
             listingDataGridView.Refresh();
         }
 
+        private void btnAddCar_Click(object sender, EventArgs e)
+        {
+            modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_CAR;
+
+            AssignBusinessObjectDataToUpload();
+
+            if (!ValidateBusinessObjectData())
+                return;
+
+            switch (carType)
+            {
+                case "Mercedes":
+                    if (!carDB.Upload(mercedes, Program.sqlConnection))
+                        MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                    break;
+                case "BMW":
+                    if (!carDB.Upload(bmw, Program.sqlConnection))
+                        MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                    break;
+                case "Toyota":
+                    if (!carDB.Upload(toyota, Program.sqlConnection))
+                        MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                    break;
+                case "Honda":
+                    if (!carDB.Upload(honda, Program.sqlConnection))
+                        MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                    break;
+            }
+        }
 
         public void AssignBusinessObjectDataToDelete(int rowIndex)
         {
@@ -304,10 +435,30 @@ namespace CarDealership
                 listing.creationDateTime = Convert.ToDateTime(listingDataGridView.Rows[rowIndex].Cells[4].Value);
             }
 
+            /*
             if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_CAR)
             {
                 car = ListingDB.carsCreationDictionary[carMakeComboBox.Text].Invoke();
-            }
+                car.carVIN = carVINTextBoxCarInfo.Text;
+                car.age = Convert.ToInt32(carYearTextBox.Text);
+                car.make = carMakeComboBox.Text;
+                car.model = carModelTextBox.Text;
+                car.color = carColorTextBox.Text;
+                car.price = Convert.ToDecimal(carPriceTextBox.Text);
+                car.miles = Convert.ToInt32(carMilesTextBox.Text);
+
+                if (car is Mercedes<string>)
+                    car.engine = carFeaturesTextBox.Text;
+
+                if (car is BMW<string>)
+                    car.engine = carFeaturesTextBox.Text;
+
+                if (car is Honda<int>)
+                    car.mileage = Convert.ToInt32(carFeaturesTextBox.Text);
+
+                if (car is Toyota<int>)
+                    car.mileage = Convert.ToInt32(carFeaturesTextBox.Text);
+            }*/
 
             if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
             {
@@ -317,6 +468,14 @@ namespace CarDealership
             }
 
             modifyingCarComponents = ModifyingCarComponents.NONE;
+        }
+
+        private void carsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 8)
+            {
+
+            }
         }
 
         private void listingDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -407,7 +566,7 @@ namespace CarDealership
 
         private void btnUploadAll_Click(object sender, EventArgs e)
         {
-            modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_LISTING | ModifyingCarComponents.IS_MODIFYING_COMMENTS;
+            modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_CAR | ModifyingCarComponents.IS_MODIFYING_LISTING | ModifyingCarComponents.IS_MODIFYING_COMMENTS;
 
             AssignBusinessObjectDataToUpload();
 

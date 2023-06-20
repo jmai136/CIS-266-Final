@@ -181,7 +181,7 @@ namespace CarUnitTest
                 creationDateTime = new DateTime(2023, 06, 20, 07, 11, 00)
             };
 
-            Assert.IsTrue(listingDB.Upload(listing, sqlConnection), "Should be true due to existing CarVIN.");
+            Assert.IsFalse(listingDB.Upload(listing, sqlConnection), "Should be false due to existing listing.");
         }
 
         [TestMethod]

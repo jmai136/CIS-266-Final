@@ -13,8 +13,10 @@ namespace CarUnitTest
         // https://stackoverflow.com/questions/21853793/how-can-i-access-to-an-internal-static-class-from-another-assembly
         UserDB userDB = new UserDB();
         ListingDB listingDB = new ListingDB();
+        CommentsDB commentsDB = new CommentsDB();
 
         // The terrible way but oh well, if you can figure it out, then optimize it.
+        // Just to fullfil chapter 9, make a Connection class then call get connection
         static SqlConnection sqlConnection = new SqlConnection() { 
             ConnectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=GroupFinal266;Integrated Security=True"
         };
@@ -128,20 +130,7 @@ namespace CarUnitTest
         {
             Listing listing = new Listing()
             {
-                /*
-                Car car = new BMW<string>()
-                {
-                    carVIN = "N/A",
-                    userId = 1,
-                    make = "BMW",
-                    model = "BMW 2001",
-                    color = "Black",
-                    age = 2003,
-                    price = 394.45M,
-                    miles = 5034,
-                    engine = "N/A"
-                },*/
-                carVIN = "N/A",
+                carVIN = "4JGBB5GB6BA625034",
                 creationDateTime = DateTime.Now
             };
 
@@ -153,13 +142,10 @@ namespace CarUnitTest
         {
             Listing listing = new Listing()
             {
-                sellerID = 1,
-                /*car = new BMW<string>()
-                {
-                    carVIN = "4JGBB5GB6BA625034"
-                },*/
-                carVIN = "4JGBB5GB6BA625034",
-                description = "BMW car listing for Hoshi Kask.",
+                listingID = 10,
+                sellerID = 9,
+                carVIN = "OW78493VG27483928",
+                description = "Seller: Ezekiel Byllaid; Car: 2001 BMW Z3",
                 creationDateTime = DateTime.Now
             };
 
@@ -171,29 +157,49 @@ namespace CarUnitTest
         {
             Listing listing = new Listing()
             {
-                sellerID = 1,/*
-                car = new BMW<string>()
-                {
-                    carVIN = "N/A"
-                },*/
+                listingID = 11,
+                sellerID = 9,
                 carVIN = "N/A",
-                description = "BMW car listing for Hoshi Kask",
+                description = "Seller: Ezekiel Byllaid; Car: Invalid car",
                 creationDateTime = DateTime.Now
             };
 
             Assert.IsFalse(listingDB.Upload(listing, sqlConnection), "Should be false due to inexistent CarVIN.");
         }
 
+        [TestMethod]
+        public void ListingFailedUploadBecauseExistingListing()
+        {
+            Listing listing = new Listing()
+            {
+                listingID = 8,
+                sellerID = 1,
+                carVIN = "WID28374910YU1293",
+                description = "Seller: Hoshi Kask; Car: 2004 Toyota GT86",
+                creationDateTime = new DateTime(2023, 06, 20, 07, 11, 00)
+            };
+
+            Assert.IsTrue(listingDB.Upload(listing, sqlConnection), "Should be true due to existing CarVIN.");
+        }
+
+        [TestMethod]
+        public void ListingFailedDeleteBecauseNonexistingListing()
+        {
+            Listing listing = new Listing()
+            {
+                listingID = 12,
+                sellerID = 1,
+                carVIN = "N/A",
+                description = "",
+                creationDateTime = DateTime.Now
+            };
+
+            Assert.IsFalse(listingDB.Delete(listing, sqlConnection), "Should be false due to inexistent listing.");
+        }
+
         /**********************************************/
         /******************** CAR **********************/
         /**********************************************/
-        [TestMethod]
-        public void GetAllCarsSucceeded()
-        {
-            // Check to make sure that the count of cars is correct
-        }
-
-
         [TestMethod]
         public void CarSucceededUploadDueToUniqueProperties()
         {
@@ -226,6 +232,22 @@ namespace CarUnitTest
                 miles = 2895,
                 engine = "BMW OHV V8 Engine"
             };
+        }
+
+        /**********************************************/
+        /******************** COMMENTS ***************/
+        /**********************************************/
+        [TestMethod]
+        public void CommentFailedDeleteDueToNonexistentComment()
+        {
+            Comments comment = new Comments()
+            {
+                CommentsID = 3,
+                ListingID = 2,
+                CommentText = ""
+            };
+
+            Assert.IsFalse(commentsDB.Delete(comment, sqlConnection), "Should be false due to nonexistent comment.");
         }
     }
 }

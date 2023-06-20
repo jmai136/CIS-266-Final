@@ -365,7 +365,7 @@ namespace CarLibrary
                 if (obj is Listing == false)
                     throw new ArgumentException("Argument passed in isn't correct type Listing", "object");
 
-                foreach(PropertyInfo property in obj.GetType().GetProperties())
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
                     if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
                         throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
 

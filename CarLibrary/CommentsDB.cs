@@ -71,7 +71,10 @@ namespace CarLibrary
                     throw new ArgumentException("Argument passed in isn't correct type Comments",
                         "object");
 
-                // Yea, you really should only be able to delete the comment if the seller id matches the one you're currently as
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
+
                 SqlCommand cmd = new SqlCommand(
                     "DELETE FROM [GroupFinal266].[dbo].[Comments] " +
                     "OUTPUT DELETED.[CommentID] " +

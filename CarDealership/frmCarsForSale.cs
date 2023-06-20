@@ -426,6 +426,55 @@ namespace CarDealership
 
         public void AssignBusinessObjectDataToDelete(int rowIndex)
         {
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_CAR)
+            {
+                carType = carsDataGridView.Rows[rowIndex].Cells[2].Value.ToString();
+
+                switch (carType)
+                {
+                    case "Mercedes":
+                        mercedes.carVIN = carsDataGridView.Rows[rowIndex].Cells[0].Value.ToString();
+                        mercedes.age = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[1].Value);
+                        mercedes.make = carType;
+                        mercedes.model = carsDataGridView.Rows[rowIndex].Cells[3].Value.ToString();
+                        mercedes.price = Convert.ToDecimal(carsDataGridView.Rows[rowIndex].Cells[4].Value);
+                        mercedes.color = carsDataGridView.Rows[rowIndex].Cells[5].Value.ToString();
+                        mercedes.miles = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[6].Value);
+                        mercedes.engine = carsDataGridView.Rows[rowIndex].Cells[7].Value.ToString();
+                        break;
+                    case "BMW":
+                        bmw.carVIN = carsDataGridView.Rows[rowIndex].Cells[0].Value.ToString();
+                        bmw.age = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[1].Value);
+                        bmw.make = carType;
+                        bmw.model = carsDataGridView.Rows[rowIndex].Cells[3].Value.ToString();
+                        bmw.price = Convert.ToDecimal(carsDataGridView.Rows[rowIndex].Cells[4].Value);
+                        bmw.color = carsDataGridView.Rows[rowIndex].Cells[5].Value.ToString();
+                        bmw.miles = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[6].Value);
+                        bmw.engine = carsDataGridView.Rows[rowIndex].Cells[7].Value.ToString();
+                        break;
+                    case "Toyota":
+                        toyota.carVIN = carsDataGridView.Rows[rowIndex].Cells[0].Value.ToString();
+                        toyota.age = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[1].Value);
+                        toyota.make = carType;
+                        toyota.model = carsDataGridView.Rows[rowIndex].Cells[3].Value.ToString();
+                        toyota.price = Convert.ToDecimal(carsDataGridView.Rows[rowIndex].Cells[4].Value);
+                        toyota.color = carsDataGridView.Rows[rowIndex].Cells[5].Value.ToString();
+                        toyota.miles = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[6].Value);
+                        toyota.mileage = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[7].Value);
+                        break;
+                    case "Honda":
+                        honda.carVIN = carsDataGridView.Rows[rowIndex].Cells[0].Value.ToString();
+                        honda.age = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[1].Value);
+                        honda.make = carType;
+                        honda.model = carsDataGridView.Rows[rowIndex].Cells[3].Value.ToString();
+                        honda.price = Convert.ToDecimal(carsDataGridView.Rows[rowIndex].Cells[4].Value);
+                        honda.color = carsDataGridView.Rows[rowIndex].Cells[5].Value.ToString();
+                        honda.miles = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[6].Value);
+                        honda.mileage = Convert.ToInt32(carsDataGridView.Rows[rowIndex].Cells[7].Value);
+                        break;
+                }
+            }
+
             if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
             {
                 listing.listingID = Convert.ToInt32(listingDataGridView.Rows[rowIndex].Cells[0].Value);
@@ -434,31 +483,6 @@ namespace CarDealership
                 listing.description = Convert.ToString(listingDataGridView.Rows[rowIndex].Cells[3].Value);
                 listing.creationDateTime = Convert.ToDateTime(listingDataGridView.Rows[rowIndex].Cells[4].Value);
             }
-
-            /*
-            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_CAR)
-            {
-                car = ListingDB.carsCreationDictionary[carMakeComboBox.Text].Invoke();
-                car.carVIN = carVINTextBoxCarInfo.Text;
-                car.age = Convert.ToInt32(carYearTextBox.Text);
-                car.make = carMakeComboBox.Text;
-                car.model = carModelTextBox.Text;
-                car.color = carColorTextBox.Text;
-                car.price = Convert.ToDecimal(carPriceTextBox.Text);
-                car.miles = Convert.ToInt32(carMilesTextBox.Text);
-
-                if (car is Mercedes<string>)
-                    car.engine = carFeaturesTextBox.Text;
-
-                if (car is BMW<string>)
-                    car.engine = carFeaturesTextBox.Text;
-
-                if (car is Honda<int>)
-                    car.mileage = Convert.ToInt32(carFeaturesTextBox.Text);
-
-                if (car is Toyota<int>)
-                    car.mileage = Convert.ToInt32(carFeaturesTextBox.Text);
-            }*/
 
             if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
             {
@@ -474,7 +498,34 @@ namespace CarDealership
         {
             if (e.ColumnIndex == 8)
             {
+                modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_CAR;
 
+                AssignBusinessObjectDataToDelete(e.RowIndex);
+
+                if (!ValidateBusinessObjectData())
+                    return;
+
+                switch (carType)
+                {
+                    case "Mercedes":
+                        if (!carDB.Delete(mercedes, Program.sqlConnection))
+                            MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                        break;
+                    case "BMW":
+                        if (!carDB.Delete(bmw, Program.sqlConnection))
+                            MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                        break;
+                    case "Toyota":
+                        if (!carDB.Delete(toyota, Program.sqlConnection))
+                            MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                        break;
+                    case "Honda":
+                        if (!carDB.Delete(honda, Program.sqlConnection))
+                            MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
+                        break;
+                }
+
+                carsDataGridView.Rows.RemoveAt(e.RowIndex);
             }
         }
 

@@ -131,18 +131,60 @@ namespace CarLibrary
                     "OUTPUT DELETED.[CarVIN] " +
                     "WHERE CarVIN = @CarVIN", sqlConnection);
 
-                // cmd.Parameters.AddWithValue("@CarVIN", obj.carVIN);
+                if (obj is Mercedes<string> mercedes)
+                {
+                    cmd.Parameters.AddWithValue("@CarVIN", mercedes.carVIN);
+                    cmd.Parameters.AddWithValue("@CarYear", mercedes.age);
+                    cmd.Parameters.AddWithValue("@CarMake", mercedes.make);
+                    cmd.Parameters.AddWithValue("@CarModel", mercedes.model);
+                    cmd.Parameters.AddWithValue("@CarPrice", mercedes.price);
+                    cmd.Parameters.AddWithValue("@CarColor", mercedes.color);
+                    cmd.Parameters.AddWithValue("@CarMiles", mercedes.miles);
+                    cmd.Parameters.AddWithValue("@CarFeatures", mercedes.engine);
+                }
+
+                if (obj is BMW<string> bmw)
+                {
+                    cmd.Parameters.AddWithValue("@CarVIN", bmw.carVIN);
+                    cmd.Parameters.AddWithValue("@CarYear", bmw.age);
+                    cmd.Parameters.AddWithValue("@CarMake", bmw.make);
+                    cmd.Parameters.AddWithValue("@CarModel", bmw.model);
+                    cmd.Parameters.AddWithValue("@CarPrice", bmw.price);
+                    cmd.Parameters.AddWithValue("@CarColor", bmw.color);
+                    cmd.Parameters.AddWithValue("@CarMiles", bmw.miles);
+                    cmd.Parameters.AddWithValue("@CarFeatures", bmw.engine);
+                }
+
+                if (obj is Honda<int> honda)
+                {
+                    cmd.Parameters.AddWithValue("@CarVIN", honda.carVIN);
+                    cmd.Parameters.AddWithValue("@CarYear", honda.age);
+                    cmd.Parameters.AddWithValue("@CarMake", honda.make);
+                    cmd.Parameters.AddWithValue("@CarModel", honda.model);
+                    cmd.Parameters.AddWithValue("@CarPrice", honda.price);
+                    cmd.Parameters.AddWithValue("@CarColor", honda.color);
+                    cmd.Parameters.AddWithValue("@CarMiles", honda.miles);
+                    cmd.Parameters.AddWithValue("@CarFeatures", honda.mileage);
+                }
+
+                if (obj is Toyota<int> toyota)
+                {
+                    cmd.Parameters.AddWithValue("@CarVIN", toyota.carVIN);
+                    cmd.Parameters.AddWithValue("@CarYear", toyota.age);
+                    cmd.Parameters.AddWithValue("@CarMake", toyota.make);
+                    cmd.Parameters.AddWithValue("@CarModel", toyota.model);
+                    cmd.Parameters.AddWithValue("@CarPrice", toyota.price);
+                    cmd.Parameters.AddWithValue("@CarColor", toyota.color);
+                    cmd.Parameters.AddWithValue("@CarMiles", toyota.miles);
+                    cmd.Parameters.AddWithValue("@CarFeatures", toyota.mileage);
+                }
 
                 sqlConnection.Open();
 
                 SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (reader.Read())
-                {
-                    int CarVIN = reader.GetInt32(reader.GetOrdinal("CarVIN"));
-
-                    if (CarVIN <= 0)
-                        throw new DataException("Car doesn't exist.");
-                }
+                    if (string.IsNullOrEmpty(reader.GetString(reader.GetOrdinal("CarVIN"))))
+                        throw new DataException("Car doesn't exist");
             }
             catch (Exception ex)
             {

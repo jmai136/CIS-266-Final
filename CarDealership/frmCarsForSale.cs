@@ -85,13 +85,6 @@ namespace CarDealership
             InitializeComponent();
         }
 
-        private void carsBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.carsBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.groupFinal266DataSet);
-        }
-
         private void frmCarsForSale_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'groupFinal266DataSet.Comments' table. You can move, or remove it, as needed.
@@ -110,7 +103,6 @@ namespace CarDealership
             SetUpFilterByComboBox();
             SetUpCarMakeComboBox();
 
-            // It really doesn't make sense for a seller to be able to delete another seller's listing?
             sellerIDTextBox.Text = SellerID.ToString();
 
             LoadSampleCarComponents();
@@ -122,7 +114,6 @@ namespace CarDealership
             descriptionTextBox.Text = "Seller: Hoshi Kask; Car: 2000 Honda Accord marked at $2500";
         }
 
-        // Authenticate first, if the authentication fails, then closes the form.
         public void UserAuthentication()
         {
             UserDB userDB = new UserDB();
@@ -292,6 +283,9 @@ namespace CarDealership
                 return;
             }
 
+            listingBindingSource.ResetBindings(true);
+
+            // Why don't these work?
             listingDataGridView.Update();
             listingDataGridView.Refresh();
         }

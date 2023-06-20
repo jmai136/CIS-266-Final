@@ -78,12 +78,6 @@
             this.DeleteComment = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.listingDataGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CreationDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeleteListing = new System.Windows.Forms.DataGridViewButtonColumn();
             this.listingBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.listingIDTextBox = new System.Windows.Forms.TextBox();
             this.carVINTextBoxListingInfo = new System.Windows.Forms.TextBox();
@@ -104,6 +98,13 @@
             this.carColorTextBox = new System.Windows.Forms.TextBox();
             this.carMilesTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxComments = new System.Windows.Forms.GroupBox();
+            this.groupFinal266DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.listingIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sellerIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.carVINDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.creationDateTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeleteListing = new System.Windows.Forms.DataGridViewButtonColumn();
             listingIDLabel = new System.Windows.Forms.Label();
             carVINLabel = new System.Windows.Forms.Label();
             descriptionLabel = new System.Windows.Forms.Label();
@@ -133,6 +134,7 @@
             this.listingInfoTab.SuspendLayout();
             this.carInfoTab.SuspendLayout();
             this.groupBoxComments.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSetBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // listingIDLabel
@@ -521,11 +523,11 @@
             this.listingDataGridView.AutoGenerateColumns = false;
             this.listingDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.listingDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn9,
-            this.dataGridViewTextBoxColumn10,
-            this.dataGridViewTextBoxColumn11,
-            this.dataGridViewTextBoxColumn12,
-            this.CreationDateTime,
+            this.listingIDDataGridViewTextBoxColumn,
+            this.sellerIDDataGridViewTextBoxColumn,
+            this.carVINDataGridViewTextBoxColumn,
+            this.descriptionDataGridViewTextBoxColumn,
+            this.creationDateTimeDataGridViewTextBoxColumn,
             this.DeleteListing});
             this.listingDataGridView.DataSource = this.listingBindingSource;
             this.listingDataGridView.Location = new System.Drawing.Point(446, 62);
@@ -535,53 +537,10 @@
             this.listingDataGridView.TabIndex = 16;
             this.listingDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.listingDataGridView_CellContentClick);
             // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "ListingID";
-            this.dataGridViewTextBoxColumn9.HeaderText = "ListingID";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "SellerID";
-            this.dataGridViewTextBoxColumn10.HeaderText = "SellerID";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "CarVIN";
-            this.dataGridViewTextBoxColumn11.HeaderText = "CarVIN";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.DataPropertyName = "Description";
-            this.dataGridViewTextBoxColumn12.HeaderText = "Description";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.ReadOnly = true;
-            // 
-            // CreationDateTime
-            // 
-            this.CreationDateTime.DataPropertyName = "CreationDateTime";
-            this.CreationDateTime.HeaderText = "CreationDateTime";
-            this.CreationDateTime.Name = "CreationDateTime";
-            this.CreationDateTime.ReadOnly = true;
-            // 
-            // DeleteListing
-            // 
-            this.DeleteListing.HeaderText = "";
-            this.DeleteListing.Name = "DeleteListing";
-            this.DeleteListing.ReadOnly = true;
-            this.DeleteListing.Text = "Delete";
-            this.DeleteListing.UseColumnTextForButtonValue = true;
-            // 
             // listingBindingSource
             // 
-            this.listingBindingSource.DataMember = "FK_Listing_Sellers";
-            this.listingBindingSource.DataSource = this.sellersBindingSource;
+            this.listingBindingSource.DataMember = "Listing";
+            this.listingBindingSource.DataSource = this.groupFinal266DataSetBindingSource;
             // 
             // listingIDTextBox
             // 
@@ -617,6 +576,7 @@
             // listingIDComboBox
             // 
             this.listingIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.listingBindingSource, "ListingID", true));
+            this.listingIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.listingBindingSource, "ListingID", true));
             this.listingIDComboBox.DataSource = this.listingBindingSource;
             this.listingIDComboBox.DisplayMember = "ListingID";
             this.listingIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -775,12 +735,60 @@
             this.groupBoxComments.Controls.Add(listingIDLabel2);
             this.groupBoxComments.Controls.Add(this.commentsRichTextBox);
             this.groupBoxComments.Controls.Add(commentTextLabel);
-            this.groupBoxComments.Location = new System.Drawing.Point(12, 447);
+            this.groupBoxComments.Location = new System.Drawing.Point(12, 403);
             this.groupBoxComments.Name = "groupBoxComments";
             this.groupBoxComments.Size = new System.Drawing.Size(365, 246);
             this.groupBoxComments.TabIndex = 25;
             this.groupBoxComments.TabStop = false;
             this.groupBoxComments.Text = "Comments";
+            // 
+            // groupFinal266DataSetBindingSource
+            // 
+            this.groupFinal266DataSetBindingSource.DataSource = this.groupFinal266DataSet;
+            this.groupFinal266DataSetBindingSource.Position = 0;
+            // 
+            // listingIDDataGridViewTextBoxColumn
+            // 
+            this.listingIDDataGridViewTextBoxColumn.DataPropertyName = "ListingID";
+            this.listingIDDataGridViewTextBoxColumn.HeaderText = "ListingID";
+            this.listingIDDataGridViewTextBoxColumn.Name = "listingIDDataGridViewTextBoxColumn";
+            this.listingIDDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // sellerIDDataGridViewTextBoxColumn
+            // 
+            this.sellerIDDataGridViewTextBoxColumn.DataPropertyName = "SellerID";
+            this.sellerIDDataGridViewTextBoxColumn.HeaderText = "SellerID";
+            this.sellerIDDataGridViewTextBoxColumn.Name = "sellerIDDataGridViewTextBoxColumn";
+            this.sellerIDDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // carVINDataGridViewTextBoxColumn
+            // 
+            this.carVINDataGridViewTextBoxColumn.DataPropertyName = "CarVIN";
+            this.carVINDataGridViewTextBoxColumn.HeaderText = "CarVIN";
+            this.carVINDataGridViewTextBoxColumn.Name = "carVINDataGridViewTextBoxColumn";
+            this.carVINDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // creationDateTimeDataGridViewTextBoxColumn
+            // 
+            this.creationDateTimeDataGridViewTextBoxColumn.DataPropertyName = "CreationDateTime";
+            this.creationDateTimeDataGridViewTextBoxColumn.HeaderText = "CreationDateTime";
+            this.creationDateTimeDataGridViewTextBoxColumn.Name = "creationDateTimeDataGridViewTextBoxColumn";
+            this.creationDateTimeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // DeleteListing
+            // 
+            this.DeleteListing.HeaderText = "";
+            this.DeleteListing.Name = "DeleteListing";
+            this.DeleteListing.ReadOnly = true;
+            this.DeleteListing.Text = "Delete";
+            this.DeleteListing.UseColumnTextForButtonValue = true;
             // 
             // frmCarsForSale
             // 
@@ -816,6 +824,7 @@
             this.carInfoTab.PerformLayout();
             this.groupBoxComments.ResumeLayout(false);
             this.groupBoxComments.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSetBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -870,12 +879,6 @@
         private System.Windows.Forms.TextBox carColorTextBox;
         private System.Windows.Forms.TextBox carMilesTextBox;
         private System.Windows.Forms.ComboBox carMakeComboBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CreationDateTime;
-        private System.Windows.Forms.DataGridViewButtonColumn DeleteListing;
         private System.Windows.Forms.ComboBox listingIDComboBox;
         private System.Windows.Forms.TextBox sellerIDTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn CommentID;
@@ -883,6 +886,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ListingID;
         private System.Windows.Forms.DataGridViewButtonColumn DeleteComment;
         private System.Windows.Forms.GroupBox groupBoxComments;
+        private System.Windows.Forms.BindingSource groupFinal266DataSetBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn listingIDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sellerIDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn carVINDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn creationDateTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn DeleteListing;
     }
 }
 

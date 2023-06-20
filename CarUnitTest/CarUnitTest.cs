@@ -17,7 +17,8 @@ namespace CarUnitTest
 
         // The terrible way but oh well, if you can figure it out, then optimize it.
         // Just to fullfil chapter 9, make a Connection class then call get connection
-        static SqlConnection sqlConnection = new SqlConnection() { 
+        static SqlConnection sqlConnection = new SqlConnection()
+        {
             ConnectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=GroupFinal266;Integrated Security=True"
         };
 
@@ -27,7 +28,8 @@ namespace CarUnitTest
         [TestMethod]
         public void UserSuccessfulRegistrationWithUniqueProperties()
         {
-            User user = new User() {
+            User user = new User()
+            {
                 email = "opnriop@totallogamsolusi.com",
                 password = "!8Q3TO*liz1j",
                 firstName = "Eli",

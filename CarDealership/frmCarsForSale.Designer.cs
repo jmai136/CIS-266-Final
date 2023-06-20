@@ -98,7 +98,6 @@
             this.carColorTextBox = new System.Windows.Forms.TextBox();
             this.carMilesTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxComments = new System.Windows.Forms.GroupBox();
-            this.groupFinal266DataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.listingIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sellerIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.carVINDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -134,7 +133,6 @@
             this.listingInfoTab.SuspendLayout();
             this.carInfoTab.SuspendLayout();
             this.groupBoxComments.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSetBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // listingIDLabel
@@ -540,7 +538,7 @@
             // listingBindingSource
             // 
             this.listingBindingSource.DataMember = "Listing";
-            this.listingBindingSource.DataSource = this.groupFinal266DataSetBindingSource;
+            this.listingBindingSource.DataSource = this.groupFinal266DataSet;
             // 
             // listingIDTextBox
             // 
@@ -742,11 +740,6 @@
             this.groupBoxComments.TabStop = false;
             this.groupBoxComments.Text = "Comments";
             // 
-            // groupFinal266DataSetBindingSource
-            // 
-            this.groupFinal266DataSetBindingSource.DataSource = this.groupFinal266DataSet;
-            this.groupFinal266DataSetBindingSource.Position = 0;
-            // 
             // listingIDDataGridViewTextBoxColumn
             // 
             this.listingIDDataGridViewTextBoxColumn.DataPropertyName = "ListingID";
@@ -824,7 +817,6 @@
             this.carInfoTab.PerformLayout();
             this.groupBoxComments.ResumeLayout(false);
             this.groupBoxComments.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groupFinal266DataSetBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -886,7 +878,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ListingID;
         private System.Windows.Forms.DataGridViewButtonColumn DeleteComment;
         private System.Windows.Forms.GroupBox groupBoxComments;
-        private System.Windows.Forms.BindingSource groupFinal266DataSetBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn listingIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn sellerIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn carVINDataGridViewTextBoxColumn;

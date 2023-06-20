@@ -110,8 +110,10 @@ namespace CarDealership
 
         private void LoadSampleCarComponents()
         {
-            carVINTextBoxListingInfo.Text = "1HGCG1650Y1081994";
-            descriptionTextBox.Text = "Seller: Hoshi Kask; Car: 2000 Honda Accord marked at $2500";
+            carVINComboBox.SelectedValue = "WID28374910YU1293";
+            descriptionTextBox.Text = "Seller: Hoshi Kask; Car: 2004 Toyota GT86";
+
+            commentsRichTextBox.Text = "Seller: Hoshi Kask; Car: 2004 Toyota GT86WID28374910YU1293";
         }
 
         public void UserAuthentication()
@@ -217,12 +219,12 @@ namespace CarDealership
         public void AssignBusinessObjectDataToUpload()
         {
             // Listing
-            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
+            if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_LISTING) != 0)
             {
                 // Assigning auto incrementing values are just for validation checks to not throw error
                 listing.listingID = 0;
                 listing.sellerID = Convert.ToInt32(sellerIDTextBox.Text);
-                listing.carVIN = carVINTextBoxListingInfo.Text;
+                listing.carVIN = Convert.ToString(carVINComboBox.SelectedValue);
                 listing.description = descriptionTextBox.Text;
                 listing.creationDateTime = Convert.ToDateTime(creationDateTimeDateTimePicker.Text);
             }
@@ -231,10 +233,10 @@ namespace CarDealership
 
             // Comments
             // Probably should only be able to add comments for the seller that you're adding to
-            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
+            if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_COMMENTS) != 0)
             {
                 comments.CommentsID = 0;
-                comments.ListingID = Convert.ToInt32(listingIDComboBox.Text);
+                comments.ListingID = Convert.ToInt32(listingIDComboBox.SelectedValue);
                 comments.CommentText = commentsRichTextBox.Text;
             }
 
@@ -271,7 +273,7 @@ namespace CarDealership
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            modifyingCarComponents |= ModifyingCarComponents.IS_MODIFYING_LISTING;
+            modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_LISTING;
 
             AssignBusinessObjectDataToUpload();
 
@@ -347,11 +349,21 @@ namespace CarDealership
                 if (string.IsNullOrEmpty(commentsRichTextBox.Text))
                     throw new ArgumentException("Please input a comment", "Comment not found");
 
-                modifyingCarComponents |= ModifyingCarComponents.IS_MODIFYING_COMMENTS;
+                modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_COMMENTS;
 
                 AssignBusinessObjectDataToUpload();
 
-                commentsDB.Upload(comments, Program.sqlConnection);
+                if (!commentsDB.Upload(comments, Program.sqlConnection))
+                {
+                    MessageBox.Show(commentsDB.MsgText, commentsDB.MsgCaption);
+                    return;
+                }
+
+                commentsBindingSource.ResetBindings(true);
+
+                // Why don't these work?
+                commentsDataGridView.Update();
+                commentsDataGridView.Refresh();
             }
             catch (Exception ex)
             {
@@ -381,22 +393,33 @@ namespace CarDealership
 
         private void LogoutVerification()
         {
-            EnableControls(false);
-
             if (MessageBox.Show("Y' sure?", "Log out", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 m_frmUsers.EnableControls();
                 Close();
-            }
-            else
-            {
-                EnableControls();
             }
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             LogoutVerification();
+        }
+
+        private void btnUploadAll_Click(object sender, EventArgs e)
+        {
+            modifyingCarComponents = ModifyingCarComponents.IS_MODIFYING_LISTING | ModifyingCarComponents.IS_MODIFYING_COMMENTS;
+
+            AssignBusinessObjectDataToUpload();
+
+            if (!listingDB.Upload(listing, Program.sqlConnection)) {
+                MessageBox.Show(listingDB.MsgText, listingDB.MsgCaption);
+                return;
+            }
+
+            if (!commentsDB.Upload(comments, Program.sqlConnection)) {
+                MessageBox.Show(commentsDB.MsgText, commentsDB.MsgCaption);
+                return;
+            }
         }
     }
 }

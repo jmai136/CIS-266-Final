@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CarLibrary
 {
@@ -20,6 +21,10 @@ namespace CarLibrary
                 if (obj is Comments == false)
                     throw new ArgumentException("Argument passed in isn't correct type Comments",
                         "object");
+
+                foreach (PropertyInfo property in obj.GetType().GetProperties())
+                    if (property.GetValue(obj) == null || string.IsNullOrEmpty(property.GetValue(obj).ToString()))
+                        throw new ArgumentNullException(property.Name, char.ToUpper(property.Name[0]) + property.Name.Substring(1) + " not found");
 
                 // Just for validation's sake, we don't actually need the else statement but check validation
                 SqlCommand cmd = new SqlCommand();
@@ -101,6 +106,5 @@ namespace CarLibrary
             }
             return true;
         }
-
     }
 }

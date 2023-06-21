@@ -422,6 +422,12 @@ namespace CarDealership
                         MessageBox.Show(carDB.MsgText, carDB.MsgCaption);
                     break;
             }
+
+            carsBindingSource.ResetBindings(true);
+
+            // Why don't these work?
+            carsDataGridView.Update();
+            carsDataGridView.Refresh();
         }
 
         public void AssignBusinessObjectDataToDelete(int rowIndex)

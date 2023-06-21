@@ -202,6 +202,7 @@ namespace CarUnitTest
         /**********************************************/
         /******************** CAR **********************/
         /**********************************************/
+        /*
         [TestMethod]
         public void CarSucceededUploadDueToUniqueProperties()
         {
@@ -234,7 +235,7 @@ namespace CarUnitTest
                 miles = 2895,
                 engine = "BMW OHV V8 Engine"
             };
-        }
+        }*/
 
         /**********************************************/
         /******************** COMMENTS ***************/

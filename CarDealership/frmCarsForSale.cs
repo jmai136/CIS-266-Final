@@ -389,7 +389,7 @@ namespace CarDealership
 
             listingBindingSource.ResetBindings(true);
 
-            // Why don't these work?
+           
             listingDataGridView.Update();
             listingDataGridView.Refresh();
         }
@@ -425,7 +425,7 @@ namespace CarDealership
 
             carsBindingSource.ResetBindings(true);
 
-            // Why don't these work?
+           
             carsDataGridView.Update();
             carsDataGridView.Refresh();
         }
@@ -577,7 +577,7 @@ namespace CarDealership
 
                 commentsBindingSource.ResetBindings(true);
 
-                // Why don't these work?
+               
                 commentsDataGridView.Update();
                 commentsDataGridView.Refresh();
             }

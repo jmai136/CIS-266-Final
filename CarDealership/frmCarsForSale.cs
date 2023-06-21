@@ -234,7 +234,7 @@ namespace CarDealership
         public void AssignBusinessObjectDataToUpload()
         {
             // Listing
-            if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_LISTING) != 0)
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_LISTING)
             {
                 // Assigning auto incrementing values are just for validation checks to not throw error
                 listing.listingID = 0;
@@ -245,7 +245,7 @@ namespace CarDealership
             }
 
             // Car? Are we supposed to add cars? Tutor thinks so so we're gonna do that in case.
-            if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_CAR) != 0)
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_CAR)
             {
                 var car = ListingDB.carsCreationDictionary[carMakeComboBox.Text].Invoke();
 
@@ -308,7 +308,7 @@ namespace CarDealership
 
             // Comments
             // Probably should only be able to add comments for the seller that you're adding to
-            if ((modifyingCarComponents & ModifyingCarComponents.IS_MODIFYING_COMMENTS) != 0)
+            if (modifyingCarComponents == ModifyingCarComponents.IS_MODIFYING_COMMENTS)
             {
                 comments.CommentsID = 0;
                 comments.ListingID = Convert.ToInt32(listingIDComboBox.SelectedValue);

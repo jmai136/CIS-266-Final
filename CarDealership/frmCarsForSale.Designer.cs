@@ -104,12 +104,11 @@
             this.carMakeComboBox = new System.Windows.Forms.ComboBox();
             this.carVINTextBoxCarInfo = new System.Windows.Forms.TextBox();
             this.carYearTextBox = new System.Windows.Forms.TextBox();
+            this.carModelTextBox = new System.Windows.Forms.TextBox();
             this.carPriceTextBox = new System.Windows.Forms.TextBox();
             this.carColorTextBox = new System.Windows.Forms.TextBox();
             this.carMilesTextBox = new System.Windows.Forms.TextBox();
             this.tabCommentsInfo = new System.Windows.Forms.TabPage();
-            this.btnUploadAll = new System.Windows.Forms.Button();
-            this.carModelTextBox = new System.Windows.Forms.TextBox();
             listingIDLabel = new System.Windows.Forms.Label();
             carVINLabel = new System.Windows.Forms.Label();
             descriptionLabel = new System.Windows.Forms.Label();
@@ -797,6 +796,13 @@
             this.carYearTextBox.Size = new System.Drawing.Size(252, 20);
             this.carYearTextBox.TabIndex = 3;
             // 
+            // carModelTextBox
+            // 
+            this.carModelTextBox.Location = new System.Drawing.Point(77, 84);
+            this.carModelTextBox.Name = "carModelTextBox";
+            this.carModelTextBox.Size = new System.Drawing.Size(252, 20);
+            this.carModelTextBox.TabIndex = 7;
+            // 
             // carPriceTextBox
             // 
             this.carPriceTextBox.Location = new System.Drawing.Point(77, 110);
@@ -833,29 +839,11 @@
             this.tabCommentsInfo.Text = "Comments Information";
             this.tabCommentsInfo.UseVisualStyleBackColor = true;
             // 
-            // btnUploadAll
-            // 
-            this.btnUploadAll.Location = new System.Drawing.Point(25, 309);
-            this.btnUploadAll.Name = "btnUploadAll";
-            this.btnUploadAll.Size = new System.Drawing.Size(333, 39);
-            this.btnUploadAll.TabIndex = 26;
-            this.btnUploadAll.Text = "Upload All";
-            this.btnUploadAll.UseVisualStyleBackColor = true;
-            this.btnUploadAll.Click += new System.EventHandler(this.btnUploadAll_Click);
-            // 
-            // carModelTextBox
-            // 
-            this.carModelTextBox.Location = new System.Drawing.Point(77, 84);
-            this.carModelTextBox.Name = "carModelTextBox";
-            this.carModelTextBox.Size = new System.Drawing.Size(252, 20);
-            this.carModelTextBox.TabIndex = 7;
-            // 
             // frmCarsForSale
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1259, 723);
-            this.Controls.Add(this.btnUploadAll);
             this.Controls.Add(this.listingTabContainer);
             this.Controls.Add(this.listingDataGridView);
             this.Controls.Add(this.btnLogOut);
@@ -941,7 +929,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn creationDateTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn DeleteListing;
-        private System.Windows.Forms.Button btnUploadAll;
         private System.Windows.Forms.TabPage tabCommentsInfo;
         private System.Windows.Forms.ComboBox carVINComboBox;
         private System.Windows.Forms.Button btnAddCar;

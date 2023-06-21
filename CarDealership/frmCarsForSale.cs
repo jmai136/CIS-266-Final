@@ -122,8 +122,8 @@ namespace CarDealership
 
             carVINTextBoxCarInfo.Text = "X";
             carYearTextBox.Text = "2001";
-            carModelTextBox.Text = "";
-            carColorTextBox.Text = "blue";
+            carModelTextBox.Text = "Z";
+            carColorTextBox.Text = "Blue";
             carPriceTextBox.Text = "0";
             carMilesTextBox.Text = "5000";
             carFeaturesTextBox.Text = "0";
